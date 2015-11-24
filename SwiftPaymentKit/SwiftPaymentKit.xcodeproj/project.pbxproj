@@ -7,12 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		547EECB31C03C67B00866C33 /* SPKCardCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 547EECB21C03C67B00866C33 /* SPKCardCVC.swift */; };
+		547EECB51C03CAB700866C33 /* SPKCardType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 547EECB41C03CAB700866C33 /* SPKCardType.swift */; };
+		547EECB91C03DD1400866C33 /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 547EECB81C03DD1400866C33 /* StringExtension.swift */; };
 		5485FA3E1BFE62F0003DAC35 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5485FA3D1BFE62F0003DAC35 /* AppDelegate.swift */; };
 		5485FA401BFE62F0003DAC35 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5485FA3F1BFE62F0003DAC35 /* ViewController.swift */; };
 		5485FA431BFE62F0003DAC35 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5485FA411BFE62F0003DAC35 /* Main.storyboard */; };
 		5485FA451BFE62F0003DAC35 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5485FA441BFE62F0003DAC35 /* Assets.xcassets */; };
 		5485FA481BFE62F0003DAC35 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5485FA461BFE62F0003DAC35 /* LaunchScreen.storyboard */; };
 		5485FA531BFE62F0003DAC35 /* SwiftPaymentKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5485FA521BFE62F0003DAC35 /* SwiftPaymentKitTests.swift */; };
+		5485FA631BFEA509003DAC35 /* SPKComponentProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5485FA621BFEA509003DAC35 /* SPKComponentProtocol.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -26,6 +30,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		547EECB21C03C67B00866C33 /* SPKCardCVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPKCardCVC.swift; sourceTree = "<group>"; };
+		547EECB41C03CAB700866C33 /* SPKCardType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPKCardType.swift; sourceTree = "<group>"; };
+		547EECB81C03DD1400866C33 /* StringExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
 		5485FA3A1BFE62F0003DAC35 /* SwiftPaymentKit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftPaymentKit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5485FA3D1BFE62F0003DAC35 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5485FA3F1BFE62F0003DAC35 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -36,6 +43,7 @@
 		5485FA4E1BFE62F0003DAC35 /* SwiftPaymentKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftPaymentKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5485FA521BFE62F0003DAC35 /* SwiftPaymentKitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftPaymentKitTests.swift; sourceTree = "<group>"; };
 		5485FA541BFE62F0003DAC35 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5485FA621BFEA509003DAC35 /* SPKComponentProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPKComponentProtocol.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +64,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		547EECB71C03DCEB00866C33 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				547EECB81C03DD1400866C33 /* StringExtension.swift */,
+			);
+			name = Extensions;
+			sourceTree = "<group>";
+		};
 		5485FA311BFE62F0003DAC35 = {
 			isa = PBXGroup;
 			children = (
@@ -79,6 +95,8 @@
 			children = (
 				5485FA3D1BFE62F0003DAC35 /* AppDelegate.swift */,
 				5485FA3F1BFE62F0003DAC35 /* ViewController.swift */,
+				5485FA611BFEA4C9003DAC35 /* Models */,
+				547EECB71C03DCEB00866C33 /* Extensions */,
 				5485FA411BFE62F0003DAC35 /* Main.storyboard */,
 				5485FA441BFE62F0003DAC35 /* Assets.xcassets */,
 				5485FA461BFE62F0003DAC35 /* LaunchScreen.storyboard */,
@@ -94,6 +112,16 @@
 				5485FA541BFE62F0003DAC35 /* Info.plist */,
 			);
 			path = SwiftPaymentKitTests;
+			sourceTree = "<group>";
+		};
+		5485FA611BFEA4C9003DAC35 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				5485FA621BFEA509003DAC35 /* SPKComponentProtocol.swift */,
+				547EECB41C03CAB700866C33 /* SPKCardType.swift */,
+				547EECB21C03C67B00866C33 /* SPKCardCVC.swift */,
+			);
+			name = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -197,8 +225,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5485FA631BFEA509003DAC35 /* SPKComponentProtocol.swift in Sources */,
 				5485FA401BFE62F0003DAC35 /* ViewController.swift in Sources */,
+				547EECB91C03DD1400866C33 /* StringExtension.swift in Sources */,
 				5485FA3E1BFE62F0003DAC35 /* AppDelegate.swift in Sources */,
+				547EECB31C03C67B00866C33 /* SPKCardCVC.swift in Sources */,
+				547EECB51C03CAB700866C33 /* SPKCardType.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -388,6 +420,7 @@
 				5485FA591BFE62F0003DAC35 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		5485FA5A1BFE62F0003DAC35 /* Build configuration list for PBXNativeTarget "SwiftPaymentKitTests" */ = {
 			isa = XCConfigurationList;
@@ -396,6 +429,7 @@
 				5485FA5C1BFE62F0003DAC35 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
