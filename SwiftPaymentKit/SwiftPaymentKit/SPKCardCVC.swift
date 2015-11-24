@@ -14,8 +14,8 @@ class SPKCardCVC: SPKComponentProtocol {
     init(string: String?) {
         if let string = string {
             //Strip non-digits from the CVC string passed in
-            let nonNumericSet = NSCharacterSet.decimalDigitCharacterSet().invertedSet
-            cvc = string.componentsSeparatedByCharactersInSet(nonNumericSet).joinWithSeparator("")
+            cvc = string.stringByReplacingOccurrencesOfString("\\D", withString: "", options: .RegularExpressionSearch,
+                range: string.startIndex..<string.endIndex)
         }
     }
 
