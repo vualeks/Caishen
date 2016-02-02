@@ -12,6 +12,7 @@
 		547EECB91C03DD1400866C33 /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 547EECB81C03DD1400866C33 /* StringExtension.swift */; };
 		547EECBB1C04E4AD00866C33 /* SPKCardExpiry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 547EECBA1C04E4AD00866C33 /* SPKCardExpiry.swift */; };
 		547EECBD1C06389D00866C33 /* SPKCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 547EECBC1C06389D00866C33 /* SPKCard.swift */; };
+		547EECBF1C06574C00866C33 /* SPKCardNumber.swift in Sources */ = {isa = PBXBuildFile; fileRef = 547EECBE1C06574C00866C33 /* SPKCardNumber.swift */; };
 		5485FA3E1BFE62F0003DAC35 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5485FA3D1BFE62F0003DAC35 /* AppDelegate.swift */; };
 		5485FA401BFE62F0003DAC35 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5485FA3F1BFE62F0003DAC35 /* ViewController.swift */; };
 		5485FA431BFE62F0003DAC35 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5485FA411BFE62F0003DAC35 /* Main.storyboard */; };
@@ -37,6 +38,7 @@
 		547EECB81C03DD1400866C33 /* StringExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
 		547EECBA1C04E4AD00866C33 /* SPKCardExpiry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPKCardExpiry.swift; sourceTree = "<group>"; };
 		547EECBC1C06389D00866C33 /* SPKCard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPKCard.swift; sourceTree = "<group>"; };
+		547EECBE1C06574C00866C33 /* SPKCardNumber.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPKCardNumber.swift; sourceTree = "<group>"; };
 		5485FA3A1BFE62F0003DAC35 /* SwiftPaymentKit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftPaymentKit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5485FA3D1BFE62F0003DAC35 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5485FA3F1BFE62F0003DAC35 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -125,6 +127,7 @@
 				547EECB41C03CAB700866C33 /* SPKCardType.swift */,
 				547EECB21C03C67B00866C33 /* SPKCardCVC.swift */,
 				547EECBA1C04E4AD00866C33 /* SPKCardExpiry.swift */,
+				547EECBE1C06574C00866C33 /* SPKCardNumber.swift */,
 				547EECBC1C06389D00866C33 /* SPKCard.swift */,
 			);
 			name = Models;
@@ -236,6 +239,7 @@
 				547EECBB1C04E4AD00866C33 /* SPKCardExpiry.swift in Sources */,
 				5485FA401BFE62F0003DAC35 /* ViewController.swift in Sources */,
 				547EECB91C03DD1400866C33 /* StringExtension.swift in Sources */,
+				547EECBF1C06574C00866C33 /* SPKCardNumber.swift in Sources */,
 				5485FA3E1BFE62F0003DAC35 /* AppDelegate.swift in Sources */,
 				547EECB31C03C67B00866C33 /* SPKCardCVC.swift in Sources */,
 				547EECB51C03CAB700866C33 /* SPKCardType.swift in Sources */,
