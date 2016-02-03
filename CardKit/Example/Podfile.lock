@@ -1,0 +1,14 @@
+PODS:
+  - CardKit (0.1.0)
+
+DEPENDENCIES:
+  - CardKit (from `../`)
+
+EXTERNAL SOURCES:
+  CardKit:
+    :path: ../
+
+SPEC CHECKSUMS:
+  CardKit: 2e2723f61cb976b933c3ff1050ae932fbe465b28
+
+COCOAPODS: 0.39.0

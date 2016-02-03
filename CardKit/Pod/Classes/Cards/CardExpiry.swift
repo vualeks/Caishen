@@ -8,17 +8,17 @@
 
 import Foundation
 
-class SPKCardExpiry: SPKComponentProtocol {
+public class CardExpiry {
     private var monthString: String?
     private var yearString: String?
 
-    lazy var dateFormatter: NSDateFormatter = {
+    public lazy var dateFormatter: NSDateFormatter = {
         var formatter = NSDateFormatter()
         formatter.dateFormat = "yyyy"
         return formatter
     }()
 
-    convenience init(string: String?) {
+    public convenience init(string: String?) {
         guard let string = string else {
             self.init(month: "", year: "")
             return
@@ -53,7 +53,7 @@ class SPKCardExpiry: SPKComponentProtocol {
         }
     }
 
-    convenience init(month: Int, year: Int) {
+    public convenience init(month: Int, year: Int) {
         var monthStr = String(format: "%lu", arguments: [month])
         let yearStr = String(format: "%lu", arguments: [year])
         if monthStr.length() == 1 {
@@ -63,7 +63,7 @@ class SPKCardExpiry: SPKComponentProtocol {
         self.init(month: monthStr, year: yearStr)
     }
 
-    init(month: String, year: String) {
+    public init(month: String, year: String) {
         monthString = month
         yearString = year
 
@@ -76,7 +76,7 @@ class SPKCardExpiry: SPKComponentProtocol {
         }
     }
 
-    func formattedString() -> String? {
+    public func formattedString() -> String? {
         if let yearString = yearString, let monthString = monthString {
             if yearString.length() > 0 {
                 return String(format: "%@/%@", arguments: [monthString, yearString])
@@ -88,7 +88,7 @@ class SPKCardExpiry: SPKComponentProtocol {
         }
     }
 
-    func formattedStringWithTrail() -> String? {
+    public func formattedStringWithTrail() -> String? {
         if let yearString = yearString, let monthString = monthString {
             if monthString.length() == 2 && yearString.length() == 0 {
                 if let formattedString = formattedString() {
@@ -101,15 +101,15 @@ class SPKCardExpiry: SPKComponentProtocol {
         return nil
     }
 
-    func string() -> String? {
+    public func string() -> String? {
         return formattedString()
     }
 
-    func isValid() -> Bool {
+    public func isValid() -> Bool {
         return isValidLength() && isValidDate()
     }
 
-    func isPartiallyValid() -> Bool {
+    public func isPartiallyValid() -> Bool {
         if isValidLength() {
             return isValidDate()
         } else {
@@ -121,14 +121,14 @@ class SPKCardExpiry: SPKComponentProtocol {
         }
     }
 
-    func month() -> Int? {
+    public func month() -> Int? {
         if let monthString = monthString {
             return Int(monthString)
         }
         return nil
     }
 
-    func year() -> Int? {
+    public func year() -> Int? {
         if var yearString = yearString {
             if yearString.length() == 2 {
                 var prefix = dateFormatter.stringFromDate(NSDate())
@@ -173,7 +173,7 @@ class SPKCardExpiry: SPKComponentProtocol {
         return false
     }
 
-    func expiryDate() -> NSDate? {
+    public func expiryDate() -> NSDate? {
         if let month = month(), let year = year() {
             let dateComponents = NSDateComponents()
             dateComponents.day = 1

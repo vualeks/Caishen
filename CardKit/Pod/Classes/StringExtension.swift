@@ -9,6 +9,9 @@
 import Foundation
 
 extension String {
+    /**
+     - returns: The number of characters in the string.
+    */
     func length() -> Int {
         return self.characters.count
     }
@@ -29,5 +32,14 @@ extension String {
         let from = String.UTF16View.Index(range.startIndex, within: utf16view)
         let to = String.UTF16View.Index(range.endIndex, within: utf16view)
         return NSMakeRange(utf16view.startIndex.distanceTo(from), from.distanceTo(to))
+    }
+    
+    /**
+     - parameter fromInclusively: The index of the first character that should be included in the substring.
+     - parameter toExclusively: The index of the last character that should no longer be included in the substring.
+     - returns: Substring starting with the character at index `fromInclusiveley` and ending before the character at index `toExclusively`.
+    */
+    subscript(fromInclusively: Int, toExclusively: Int) -> String {
+        return self.substringWithRange((self.startIndex.advancedBy(fromInclusively)..<self.startIndex.advancedBy(toExclusively)))
     }
 }
