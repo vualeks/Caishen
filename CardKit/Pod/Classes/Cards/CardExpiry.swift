@@ -12,12 +12,19 @@ public class CardExpiry {
     private var monthString: String?
     private var yearString: String?
 
-    public lazy var dateFormatter: NSDateFormatter = {
+    /**
+     A `NSDateFormatter` to extract the year of a given date.
+    */
+    private lazy var dateFormatter: NSDateFormatter = {
         var formatter = NSDateFormatter()
         formatter.dateFormat = "yyyy"
         return formatter
     }()
 
+    /**
+     Creates a `CardExpiry` with the given string.
+     - parameter string:
+    */
     public convenience init(string: String?) {
         guard let string = string else {
             self.init(month: "", year: "")

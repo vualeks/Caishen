@@ -9,7 +9,10 @@
 import UIKit
 
 /**
- A CardValidationResult is an `OptionSetType`, which means, it can be combined with other CardValidationResult. This allows to have multiple validation results in a single object, like having a card number that does not match the card type and an expired card at the same time.
+ A CardValidationResult is an `OptionSetType`. This means, it can be 
+ combined with other CardValidationResult. This allows to have multiple 
+ validation results in a single object, like having a card number that 
+ does not match the card type and an expired card at the same time.
  
  **Example:**
  ````

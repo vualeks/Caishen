@@ -21,7 +21,9 @@ public class Card {
     public var type: CardType? {
         return CardType.CardTypeForNumber(self.bankCardNumber)
     }
-    
+    /**
+     Creates a `Card` with given card number, verification code and expiry date.
+    */
     public init(bankCardNumber: CardNumber, cardVerificationCode: CardCVC, expiryDate: CardExpiry) {
         self.bankCardNumber = bankCardNumber
         self.cardVerificationCode = cardVerificationCode
