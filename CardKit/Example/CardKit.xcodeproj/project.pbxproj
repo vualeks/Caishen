@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		08A3BADD1C62C412001B81D6 /* CardCVCValidatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A3BAD91C62C3CE001B81D6 /* CardCVCValidatorTests.swift */; };
+		08A3BADE1C62C412001B81D6 /* XCTAssertValidation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A3BADA1C62C3CE001B81D6 /* XCTAssertValidation.swift */; };
 		607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD51AFB9204008FA782 /* AppDelegate.swift */; };
 		607FACD81AFB9204008FA782 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD71AFB9204008FA782 /* ViewController.swift */; };
 		607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 607FACD91AFB9204008FA782 /* Main.storyboard */; };
@@ -29,6 +31,8 @@
 
 /* Begin PBXFileReference section */
 		085AE8A9A7696F0D1221CBDE /* Pods-CardKit_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CardKit_Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CardKit_Example/Pods-CardKit_Example.debug.xcconfig"; sourceTree = "<group>"; };
+		08A3BAD91C62C3CE001B81D6 /* CardCVCValidatorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardCVCValidatorTests.swift; sourceTree = "<group>"; };
+		08A3BADA1C62C3CE001B81D6 /* XCTAssertValidation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XCTAssertValidation.swift; sourceTree = "<group>"; };
 		0C5E7B6138055B0324AACC31 /* Pods_CardKit_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CardKit_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		100120E7CF7EA66261A5090B /* CardKit.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = CardKit.podspec; path = ../CardKit.podspec; sourceTree = "<group>"; };
 		5C3C127D599F7AAE7EA401C8 /* Pods-CardKit_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CardKit_Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-CardKit_Tests/Pods-CardKit_Tests.release.xcconfig"; sourceTree = "<group>"; };
@@ -135,6 +139,8 @@
 		607FACE81AFB9204008FA782 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				08A3BAD91C62C3CE001B81D6 /* CardCVCValidatorTests.swift */,
+				08A3BADA1C62C3CE001B81D6 /* XCTAssertValidation.swift */,
 				607FACEB1AFB9204008FA782 /* Tests.swift */,
 				607FACE91AFB9204008FA782 /* Supporting Files */,
 			);
@@ -368,6 +374,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				08A3BADD1C62C412001B81D6 /* CardCVCValidatorTests.swift in Sources */,
+				08A3BADE1C62C412001B81D6 /* XCTAssertValidation.swift in Sources */,
 				607FACEC1AFB9204008FA782 /* Tests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

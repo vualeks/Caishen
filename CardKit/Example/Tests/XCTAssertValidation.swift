@@ -7,8 +7,8 @@
 //
 
 import UIKit
-import CardKit
 import XCTest
+import CardKit
 
 func XCTAssertValid(validationResult: CardValidationResult) {
     XCTAssertTrue(validationResult == CardValidationResult.Valid)
