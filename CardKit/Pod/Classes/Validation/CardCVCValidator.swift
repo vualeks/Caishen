@@ -11,7 +11,7 @@ import UIKit
 public class CardCVCValidator: NSObject {
     public func validateCVC(cvc: CardCVC, forCardType cardType: CardType) -> CardValidationResult {
         return self.checkCVCLength(cvc, forCardType: cardType)
-            .join(self.checkCVCNumeric(cvc))
+            .union(self.checkCVCNumeric(cvc))
     }
     
     /**

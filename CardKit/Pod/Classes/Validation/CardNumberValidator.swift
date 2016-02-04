@@ -10,13 +10,34 @@ import UIKit
 
 public class CardNumberValidator {
     
-    private func lengthMatchesType(length: Int, type: CardType) {
+    private func numberIsNumeric(number: CardNumber) -> CardValidationResult {
+        guard let number = UInt(number.stringValue()) else {
+            return CardValidationResult.NumberIsNotNumeric
+        }
         
+        return CardValidationResult.Valid
     }
     
-    public func validateCardNumber(cardNumber: CardNumber) -> CardValidationResult {
-        let validationResult = CardValidationResult.Valid
-        
-        return validationResult
+    private func lengthMatchesType(length: Int, type: CardType) -> CardValidationResult {
+        switch type {
+        case .CardTypeAmex:
+            if length == 4 {
+                return CardValidationResult.Valid
+            } else {
+                return CardValidationResult.NumberDoesNotMatchType
+            }
+        default:
+            if length == 3 {
+                return CardValidationResult.Valid
+            } else {
+                return CardValidationResult.NumberDoesNotMatchType
+            }
+        }
+    }
+    
+    public func validateCardNumber(cardNumber: CardNumber, forCardType cardType: CardType) -> CardValidationResult {
+        return
+            self.lengthMatchesType(cardNumber.stringValue().length(), type: cardType)
+            .union(self.numberIsNumeric(cardNumber))
     }
 }

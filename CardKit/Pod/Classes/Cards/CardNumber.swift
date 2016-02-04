@@ -9,24 +9,22 @@
 import Foundation
 
 public class CardNumber {
-    internal var number: String
+    private var number: String
     
-    public init?(string: String) {
-        //Strip non-digits from the CVC string passed in
-        number = string.stringByReplacingOccurrencesOfString("\\D", withString: "",
-            options: .RegularExpressionSearch, range: string.startIndex..<string.endIndex)
-        if number.length() < 3 || number.length() > 4 {
-            return nil
-        }
+    public init(string: String) {
+        self.number = string
     }
     
-    internal func last4() -> String {
+    public func last4() -> String? {
         if number.length() >= 4 {
             return number.substringFromIndex(number.endIndex.advancedBy(-4))
         }
-        return ""
+        return nil
     }
     
+    /**
+     - returns: The last group of the card number. In case of an Amex card, this are 5 digits. For other cards, this are the last 4 digits.
+    */
     public func lastGroup() -> String? {
         switch CardType.CardTypeForNumber(self) {
         case .CardTypeAmex:
@@ -37,5 +35,9 @@ public class CardNumber {
             return self.last4()
         }
         return nil
+    }
+    
+    public func stringValue() -> String {
+        return self.number
     }
 }

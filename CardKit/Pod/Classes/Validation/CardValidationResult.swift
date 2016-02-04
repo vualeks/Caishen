@@ -19,18 +19,17 @@ import UIKit
  let result = CardValidationResult.NumberDoesNotMatchType.union(CardValidationResult.CardExpired)
 */
 public struct CardValidationResult: OptionSetType {
+    public let rawValue: Int
+    
     public init(rawValue: Int) {
         self.rawValue = rawValue
     }
     
-    public func join(other: CardValidationResult) -> CardValidationResult {
-        return self.union(other)
-    }
-    
-    public let rawValue: Int
-    
+    // MARK: - Default declarations
     public static let Valid                   = CardValidationResult(rawValue: 0)
     public static let NumberDoesNotMatchType  = CardValidationResult(rawValue: 1 << 0)
     public static let InvalidCVC              = CardValidationResult(rawValue: 1 << 1)
     public static let CardExpired             = CardValidationResult(rawValue: 1 << 2)
+    public static let NumberIsNotNumeric      = CardValidationResult(rawValue: 1 << 3)
+    public static let InvalidDateFormat       = CardValidationResult(rawValue: 1 << 4)
 }

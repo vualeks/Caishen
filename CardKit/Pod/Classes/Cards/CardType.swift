@@ -27,11 +27,11 @@ public enum CardType {
      - returns: Card type for the given bank card number or `.CardTypeUnknown`, if either the card number was too small or not valid for a specific bank.
      */
     public static func CardTypeForNumber(cardNumber: CardNumber) -> CardType {
-        guard cardNumber.number.length() >= 2 else {
+        guard cardNumber.stringValue().length() >= 2 else {
             return .CardTypeUnknown
         }
         
-        let firstTwoDigits = NSString(string: cardNumber.number[0,2]).integerValue
+        let firstTwoDigits = NSString(string: cardNumber.stringValue()[0,2]).integerValue
         
         switch firstTwoDigits {
         case 30, 36, 38, 39:

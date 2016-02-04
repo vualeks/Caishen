@@ -20,10 +20,9 @@ public class CardValidator {
     }
     
     public func validateCard(card: Card) -> CardValidationResult {
-        var validationResult = CardValidationResult.Valid
-        
-        validationResult = validationResult.union(numberValidator.validateCardNumber(card.bankCardNumber))
-        
-        return validationResult
+        return
+            self.numberValidator.validateCardNumber(card.bankCardNumber, forCardType: card.type)
+            .union(self.cvcValidator.validateCVC(card.cardVerificationCode, forCardType: card.type))
+            .union(self.expiryValidator.validateExpiry(card.expiryDate))
     }
 }
