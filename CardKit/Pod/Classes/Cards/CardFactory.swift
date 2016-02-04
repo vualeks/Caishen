@@ -36,8 +36,9 @@ public class CardFactory: NSObject {
         let cardValidator = CardValidator()
         
         // Validate the card. If invalid, throw an exception with details about the validation result.
-        guard cardValidator.validateCard(card) == CardValidationResult.Valid else {
-            throw CardFactoryCreationException.CardValidationFailed(validationResult: CardValidationResult.InvalidDateFormat)
+        let validationResult = cardValidator.validateCard(card)
+        guard validationResult == CardValidationResult.Valid else {
+            throw CardFactoryCreationException.CardValidationFailed(validationResult: validationResult)
         }
         
         return card

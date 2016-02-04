@@ -21,3 +21,7 @@ func XCTAssertInvalidCVC(validationResult: CardValidationResult) {
 func XCTAssertInvalidNumberForType(validationResult: CardValidationResult) {
     XCTAssertTrue(validationResult.isSupersetOf(CardValidationResult.NumberDoesNotMatchType))
 }
+
+func XCTAssertCardExpired(validationresult: CardValidationResult) {
+    XCTAssertTrue(validationresult.isSupersetOf(CardValidationResult.CardExpired))
+}
