@@ -9,14 +9,8 @@
 import Foundation
 
 /**
-A `NSDateFormatter` to extract the year of a given date.
-*/
-private var dateFormatter: NSDateFormatter = {
-    var formatter = NSDateFormatter()
-    formatter.dateFormat = "MM/yyyy"
-    return formatter
-}()
-
+ A `NSDateFormatter` to extract the year of a given date.
+ */
 public class CardExpiry {
     private let month: UInt
     private let year: UInt
@@ -27,14 +21,33 @@ public class CardExpiry {
      */
     public convenience init?(string: String) {
         // This should already provide a valid date, which means that no additional checks for invalid months or years are provided:
-        guard let stringAsDate = dateFormatter.dateFromString(string) else {
+        let regex = try! NSRegularExpression(pattern: "^(\\d{1,2})?[\\s/]*(\\d{1,2})?", options: .CaseInsensitive)
+        var monthStr: String = ""
+        var yearStr: String = ""
+        
+        guard let match = regex.firstMatchInString(string, options: .ReportProgress, range: NSMakeRange(0, string.length())) else {
             return nil
         }
         
-        let month = UInt(NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)!.component(.Month, fromDate: stringAsDate))
-        let year = UInt(NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)!.component(.Year, fromDate: stringAsDate))
+        let monthRange = match.rangeAtIndex(1)
+        if monthRange.length > 0 {
+            if let range = string.rangeFromNSRange(monthRange) {
+                monthStr = string.substringWithRange(range)
+            } else {
+                return nil
+            }
+        } else {
+            return nil
+        }
         
-        self.init(month: month, year: year)
+        let yearRange = match.rangeAtIndex(2)
+        if yearRange.length > 0 {
+            if let range = string.rangeFromNSRange(yearRange) {
+                yearStr = string.substringWithRange(range)
+            }
+        }
+        
+        self.init(month: monthStr, year: yearStr)
     }
     
     /**
@@ -49,12 +62,10 @@ public class CardExpiry {
      Creates a CardExpiry with the given month and year as String.
      */
     public convenience init?(month: String, year: String) {
-        let monthVal = UInt(NSString(string: month).integerValue)
-        let yearVal = UInt(NSString(string: year).integerValue)
-        guard monthVal > 0 && monthVal < 13 else {
+        guard let monthVal = UInt(month) where monthVal > 0 && monthVal < 13 else {
             return nil
         }
-        guard yearVal > 1000 else {
+        guard let yearVal = UInt(year) where yearVal < 100 else {
             return nil
         }
         
@@ -65,12 +76,12 @@ public class CardExpiry {
      Returns the Card expiry date as human readable string with the format MM/YYYY
      */
     public func stringValue() -> String {
-        return String(format: "%2i/%4i", arguments: [self.month, self.year])
+        return String(format: "%2i/%2i", arguments: [self.month, self.year % 100])
     }
     
     /**
      - returns: The card's expiry date as `NSDate`, which is equal to the last day of the month specified on the expiry date.
-    */
+     */
     public func expiryDate() -> NSDate? {
         let dateComponents = NSDateComponents()
         dateComponents.day = 1

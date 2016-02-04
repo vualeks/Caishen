@@ -75,6 +75,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		08A3BAE51C62E77E001B81D6 /* Validation */ = {
+			isa = PBXGroup;
+			children = (
+				08A3BADA1C62C3CE001B81D6 /* XCTAssertValidation.swift */,
+				08A3BAD91C62C3CE001B81D6 /* CardCVCValidatorTests.swift */,
+				08A3BAE31C62DFE4001B81D6 /* CardExpiryValidatorTests.swift */,
+			);
+			name = Validation;
+			sourceTree = "<group>";
+		};
 		1E9F4BF354A66B4DFE2F93E1 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -141,10 +151,8 @@
 		607FACE81AFB9204008FA782 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
-				08A3BAD91C62C3CE001B81D6 /* CardCVCValidatorTests.swift */,
-				08A3BADA1C62C3CE001B81D6 /* XCTAssertValidation.swift */,
+				08A3BAE51C62E77E001B81D6 /* Validation */,
 				607FACEB1AFB9204008FA782 /* Tests.swift */,
-				08A3BAE31C62DFE4001B81D6 /* CardExpiryValidatorTests.swift */,
 				607FACE91AFB9204008FA782 /* Supporting Files */,
 			);
 			path = Tests;

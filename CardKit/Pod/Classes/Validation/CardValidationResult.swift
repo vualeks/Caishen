@@ -31,4 +31,5 @@ public struct CardValidationResult: OptionSetType {
     public static let InvalidCVC              = CardValidationResult(rawValue: 1 << 1)
     public static let CardExpired             = CardValidationResult(rawValue: 1 << 2)
     public static let NumberIsNotNumeric      = CardValidationResult(rawValue: 1 << 3)
+    public static let LuhnTestFailed          = CardValidationResult(rawValue: 1 << 4)
 }

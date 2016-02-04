@@ -34,15 +34,19 @@ class CardExpiryValidatorTests: XCTestCase {
     }
     
     func testInvalidExpiryCreation() {
-        let shouldBeNil = [ CardExpiry(month: "Feb", year: "2016"),
-                            CardExpiry(string: "02/01/2016"),
-                            CardExpiry(string: "2016"),
-                            CardExpiry(month: "13", year: "2016"),
-                            CardExpiry(string: "13/2016") ]
-        let shouldNotBeNil = [  CardExpiry(string: "02 2016"),
+        let shouldBeNil = [     CardExpiry(month: "Feb", year: "2016"),
+                                CardExpiry(string: "02/01/2016"),
+                                CardExpiry(string: "2016"),
+                                CardExpiry(month: "13", year: "2016"),
+                                CardExpiry(month: "13", year: "16"),
+                                CardExpiry(string: "13/2016"),
+                                CardExpiry(string: "13/16"),
+                                CardExpiry(string: "02 2016"),
                                 CardExpiry(string: "02/2016"),
                                 CardExpiry(string: "Feb 2016"),
-                                CardExpiry(string: "Feb/2016") ]
+                                CardExpiry(string: "Feb/2016")]
+        
+        let shouldNotBeNil = [  CardExpiry(string: "02/16") ]
         
         for i in 0..<shouldBeNil.count {
             let obj = shouldBeNil[i]
