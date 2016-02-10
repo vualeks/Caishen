@@ -24,10 +24,10 @@ public class CardNumber {
     
     /**
      - returns: The last group of the card number. In case of an Amex card, this are 5 digits. For other cards, this are the last 4 digits.
-    */
+     */
     public func lastGroup() -> String? {
         switch CardType.CardTypeForNumber(self) {
-        case .CardTypeAmex:
+        case .Amex:
             if number.length() >= 5 {
                 return number.substringFromIndex(number.endIndex.advancedBy(-5))
             }

@@ -19,17 +19,73 @@ import UIKit
  let result = CardValidationResult.NumberDoesNotMatchType.union(CardValidationResult.CardExpired)
 */
 public struct CardValidationResult: OptionSetType {
-    public let rawValue: Int
+    public let rawValue: UInt64
     
-    public init(rawValue: Int) {
+    public init(rawValue: UInt64) {
         self.rawValue = rawValue
+    }
+    
+    public func stringValue() -> String {
+        if self == CardValidationResult.Valid {
+            return "Valid"
+        } else {
+            var resultString = "{\n"
+            if self.isSupersetOf(CardValidationResult.NumberDoesNotMatchType) {
+                resultString += "\tNumber does not match type\n"
+            }
+            if self.isSupersetOf(CardValidationResult.InvalidCVC) {
+                resultString += "\tCVC is invalid\n"
+            }
+            if self.isSupersetOf(CardValidationResult.CardExpired) {
+                resultString += "\tCard has expired\n"
+            }
+            if self.isSupersetOf(CardValidationResult.NumberIsNotNumeric) {
+                resultString += "\tCard number is not numeric\n"
+            }
+            if self.isSupersetOf(CardValidationResult.LuhnTestFailed) {
+                resultString += "\tLuhn test failed for card number\n"
+            }
+            if self.isSupersetOf(CardValidationResult.NumberIncomplete) {
+                resultString += "\tCard number seems to be incomplete\n"
+            }
+            resultString += "}"
+            
+            return resultString
+        }
     }
     
     // MARK: - Default declarations
     public static let Valid                   = CardValidationResult(rawValue: 0)
+    
+    /** 
+     Card number does not match the specified type or is too long.
+     */
     public static let NumberDoesNotMatchType  = CardValidationResult(rawValue: 1 << 0)
-    public static let InvalidCVC              = CardValidationResult(rawValue: 1 << 1)
-    public static let CardExpired             = CardValidationResult(rawValue: 1 << 2)
-    public static let NumberIsNotNumeric      = CardValidationResult(rawValue: 1 << 3)
-    public static let LuhnTestFailed          = CardValidationResult(rawValue: 1 << 4)
+    
+    /**
+     Card number does match the specified type but is too short.
+     - note: This result will be returned for an incompleted card number.
+     */
+    public static let NumberIncomplete        = CardValidationResult(rawValue: 1 << 1)
+    
+    /**
+     Invalid Card Verificaiton Code.
+     */
+    public static let InvalidCVC              = CardValidationResult(rawValue: 1 << 2)
+    
+    /**
+     The card has already expired.
+     */
+    public static let CardExpired             = CardValidationResult(rawValue: 1 << 3)
+    
+    /**
+     Card number does not match the specified type or is too long.
+     */
+    public static let NumberIsNotNumeric      = CardValidationResult(rawValue: 1 << 4)
+    
+    /**
+     The Luhn test failed for the credit card number.
+     - note: This result might be returned for an incompleted card number.
+     */
+    public static let LuhnTestFailed          = CardValidationResult(rawValue: 1 << 5)
 }

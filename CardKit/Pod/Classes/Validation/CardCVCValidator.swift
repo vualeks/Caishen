@@ -22,7 +22,7 @@ public class CardCVCValidator: NSObject {
     */
     private func checkCVCLength(cvc: CardCVC, forCardType cardType: CardType) -> CardValidationResult {
         switch cardType {
-        case .CardTypeAmex:
+        case .Amex:
             // Expect the cvc of an Amex card to be 4 digits long.
             if cvc.length() == 4 {
                 return CardValidationResult.Valid

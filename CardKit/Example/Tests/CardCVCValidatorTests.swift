@@ -32,11 +32,11 @@ class CardCVCValidatorTests: XCTestCase {
         let invalidLengthObject1 = CardCVC(string: "23")
         let invalidLengthObject2 = CardCVC(string: "2345")
         
-        XCTAssertValid(self.validator.validateCVC(validObject, forCardType: .CardTypeVisa))
-        XCTAssertValid(self.validator.validateCVC(invalidLengthObject2, forCardType: .CardTypeAmex))
-        XCTAssertInvalidCVC(self.validator.validateCVC(validObject, forCardType: .CardTypeAmex))
-        XCTAssertInvalidCVC(self.validator.validateCVC(invalidLengthObject1, forCardType: .CardTypeVisa))
-        XCTAssertInvalidCVC(self.validator.validateCVC(invalidLengthObject2, forCardType: .CardTypeVisa))
+        XCTAssertValid(self.validator.validateCVC(validObject, forCardType: .Visa))
+        XCTAssertValid(self.validator.validateCVC(invalidLengthObject2, forCardType: .Amex))
+        XCTAssertInvalidCVC(self.validator.validateCVC(validObject, forCardType: .Amex))
+        XCTAssertInvalidCVC(self.validator.validateCVC(invalidLengthObject1, forCardType: .Visa))
+        XCTAssertInvalidCVC(self.validator.validateCVC(invalidLengthObject2, forCardType: .Visa))
     }
     
     func testValidateCharacters() {
@@ -44,9 +44,9 @@ class CardCVCValidatorTests: XCTestCase {
         let invalidCharacterObject1 = CardCVC(string: "23a")
         let invalidCharacterObject2 = CardCVC(string: "2.5")
         
-        XCTAssertValid(self.validator.validateCVC(validObject, forCardType: .CardTypeVisa))
-        XCTAssertInvalidCVC(self.validator.validateCVC(invalidCharacterObject1, forCardType: .CardTypeVisa))
-        XCTAssertInvalidCVC(self.validator.validateCVC(invalidCharacterObject2, forCardType: .CardTypeVisa))
+        XCTAssertValid(self.validator.validateCVC(validObject, forCardType: .Visa))
+        XCTAssertInvalidCVC(self.validator.validateCVC(invalidCharacterObject1, forCardType: .Visa))
+        XCTAssertInvalidCVC(self.validator.validateCVC(invalidCharacterObject2, forCardType: .Visa))
     }
     
     func testPerformanceExample() {

@@ -39,7 +39,10 @@ extension String {
      - parameter toExclusively: The index of the last character that should no longer be included in the substring.
      - returns: Substring starting with the character at index `fromInclusiveley` and ending before the character at index `toExclusively`.
     */
-    subscript(fromInclusively: Int, toExclusively: Int) -> String {
+    subscript(fromInclusively: Int, toExclusively: Int) -> String? {
+        if self.length() < toExclusively || fromInclusively >= toExclusively {
+            return nil
+        }
         return self.substringWithRange((self.startIndex.advancedBy(fromInclusively)..<self.startIndex.advancedBy(toExclusively)))
     }
 }
