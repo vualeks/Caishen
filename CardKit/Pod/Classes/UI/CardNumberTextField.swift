@@ -3,42 +3,40 @@
 //  Pods
 //
 //  Created by Daniel Vancura on 2/9/16.
-//
+//  Copyright © 2016 Prolific Interactive. All rights reserved.
 //
 
 import UIKit
 
 @IBDesignable
-public class CardNumberTextField: UITextField, UITextFieldDelegate {
+public class CardNumberTextField: StylizedTextField, CardDetailFormDelegate {
     
-    internal var parsedCardNumber: CardNumber?
+    private var parsedCardNumber: CardNumber?
     
-    @IBInspectable
-    public var borderWidth: CGFloat = 0 {
-        didSet {
-            if borderWidth > 0 {
-                self.borderStyle = .None
-                self.layer.borderWidth = CGFloat(borderWidth)
-            } else {
-                self.borderStyle = .RoundedRect
-                self.layer.borderWidth = 0
-            }
+    public var copiesDesignToSubviews: Bool = true
+    
+    /**
+     The view that shows the credit card's logo when a card type has been detected.
+     */
+    public var logoView: CardIssuerLogoView? {
+        set {
+            self.leftView = newValue
+        }
+        get {
+            return self.leftView as? CardIssuerLogoView
         }
     }
     
-    @IBInspectable
-    public var cornerRadius: CGFloat = 0 {
-        didSet {
-            if cornerRadius >= 0 {
-                self.layer.cornerRadius = cornerRadius
-            }
+    /**
+     The view that is used to enter detail for a bank card.
+     This form lets the user enter the card's CVC and expiry.
+     */
+    public var cardDetailForm: CardDetailForm? {
+        set {
+            self.rightView = newValue
         }
-    }
-    
-    @IBInspectable
-    public var borderColor: UIColor = UIColor.blackColor() {
-        didSet {
-            self.layer.borderColor = self.borderColor.CGColor
+        get {
+            return self.rightView as? CardDetailForm
         }
     }
     
@@ -46,20 +44,6 @@ public class CardNumberTextField: UITextField, UITextFieldDelegate {
     public var cardNumberSeparator: String = "-" {
         didSet {
             self.placeholder = self.cardNumberFormatter.formattedCardNumber(self.placeholder ?? "1234123412341234", forCardType: .Visa)
-        }
-    }
-    
-    @IBInspectable
-    public var logoBackgroundColor: UIColor = UIColor.whiteColor().colorWithAlphaComponent(0.0) {
-        didSet {
-            self.cardIssuerLogoView?.backgroundColor = logoBackgroundColor
-        }
-    }
-    
-    @IBInspectable
-    public var logoViewWidth: CGFloat = 30 {
-        didSet {
-            self.cardIssuerLogoView?.bounds.size.width = logoViewWidth
         }
     }
     
@@ -82,8 +66,7 @@ public class CardNumberTextField: UITextField, UITextFieldDelegate {
     private var cardType: CardType = .Unknown {
         willSet {
             if cardType != newValue {
-                print(newValue)
-                self.cardIssuerLogoView?.displayLogoForCardType(newValue)
+                (self.leftView as? CardIssuerLogoView)?.displayLogoForCardType(newValue)
             }
         }
     }
@@ -94,55 +77,43 @@ public class CardNumberTextField: UITextField, UITextFieldDelegate {
         }
     }
     
-    /**
-     The view that is displayed next to the card number text field.
-     */
-    public var cardIssuerLogoView: CardIssuerLogoView? {
-        set {
-            self.leftView = newValue
-            if let _ = newValue {
-                self.leftViewMode = .Always
-            } else {
-                self.leftViewMode = .Never
-            }
-        }
-        get {
-            return self.leftView as? CardIssuerLogoView
-        }
-    }
-    
     private func userDidEnterValidCardNumber(number: CardNumber) {
         self.cardType = CardType.CardTypeForNumber(number)
+        
+        self.cardDetailForm = NSBundle(forClass: CardDetailForm.self).loadNibNamed("CardDetailForm", owner: self, options: nil).first as? CardDetailForm
+        
+        if let view = self.cardDetailForm where self.copiesDesignToSubviews {
+            view.subviews.forEach({
+                if let textField = $0 as? StylizedTextField {
+                    textField.borderColor = self.borderColor
+                    textField.borderWidth = self.borderWidth
+                    textField.cornerRadius = self.cornerRadius
+                    textField.backgroundColor = self.backgroundColor
+                }
+            })
+            view.backgroundColor = self.backgroundColor
+        }
+        
+        self.cardDetailForm?.delegate = self
+        
+        self.animateOpenDetail()
     }
     
     private func userEnteredPartiallyValidCardNumber(number: CardNumber) {
         self.cardType = CardType.CardTypeForNumber(number)
     }
     
-    public required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        
-        self.postInit()
-    }
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        
-        self.postInit()
-    }
-    
-    private func postInit() {
-        self.delegate = self
-        self.leftViewMode = .Always
+    override func postInit() {
+        super.postInit()
         self.leftView = CardIssuerLogoView()
-        self.cardIssuerLogoView?.displayLogoForCardType(.Unknown)
+        (self.leftView as? CardIssuerLogoView)?.displayLogoForCardType(.Unknown)
         self.leftView?.contentMode = .ScaleAspectFit
         self.leftView?.clipsToBounds = true
-        self.leftView?.bounds = self.bounds
-        self.leftView?.bounds.size.width = self.logoViewWidth
     }
     
-    public func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
+    // MARK: - Text field delegate
+    
+    public override func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
         let textFieldText = NSString(string: textField.text ?? "")
         
         let newText = cardNumberFormatter.unformattedCardNumber(textFieldText.stringByReplacingCharactersInRange(range, withString: string))
@@ -178,5 +149,43 @@ public class CardNumberTextField: UITextField, UITextFieldDelegate {
         }
         
         return newTextIsNumeric
+    }
+    
+    // MARK: - Card detail animation
+    
+    private func animateOpenDetail() {
+        self.rightView?.frame.origin.x = self.bounds.width - self.rightViewWidth
+        self.rightView?.frame.size.width = self.bounds.width - self.leftViewWidth
+        UIView.animateWithDuration(1, animations: {
+            self.rightView?.frame.origin.x = self.bounds.origin.x + self.leftViewWidth
+            self.rightView?.frame.size.width = self.bounds.width - self.leftViewWidth
+        })
+    }
+    
+    private func animateCloseDetail() {
+        UIView.animateWithDuration(1, animations: {
+            if var frame = self.rightView?.frame {
+                frame.origin.x = self.bounds.width
+                self.rightView?.frame.origin = frame.origin
+            }
+            }, completion: { _ -> Void in
+                self.rightView?.removeFromSuperview()
+                self.rightView = nil
+        })
+    }
+    
+    // MARK: - Card detail form delegate
+    
+    public func cardDetailFormDidFinish(form: CardDetailForm, withCVC cvc: CardCVC, withExpiry expiry: CardExpiry) {
+        // Notify own delegate about this
+        // ...
+        
+        // Dismiss the detail view
+        self.animateCloseDetail()
+    }
+    
+    public func cardDetailFormShouldDismiss() {
+        // Dismiss the detail view
+        self.animateCloseDetail()
     }
 }

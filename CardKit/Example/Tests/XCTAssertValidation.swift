@@ -3,7 +3,7 @@
 //  Pods
 //
 //  Created by Daniel Vancura on 2/3/16.
-//
+//  Copyright © 2016 Prolific Interactive. All rights reserved.
 //
 
 import UIKit
@@ -16,6 +16,10 @@ func XCTAssertValid(validationResult: CardValidationResult) {
 
 func XCTAssertInvalidCVC(validationResult: CardValidationResult) {
     XCTAssertTrue(validationResult.isSupersetOf(CardValidationResult.InvalidCVC), "Expected an invalid CVC, but got \(validationResult.stringValue())")
+}
+
+func XCTAssertIncompleteCVC(validationResult: CardValidationResult) {
+    XCTAssertTrue(validationResult.isSupersetOf(CardValidationResult.CVCIncomplete), "Expected an incomplete CVC, but got \(validationResult.stringValue())")
 }
 
 func XCTAssertInvalidNumberForType(validationResult: CardValidationResult) {

@@ -3,7 +3,7 @@
 //  Pods
 //
 //  Created by Daniel Vancura on 2/3/16.
-//
+//  Copyright © 2016 Prolific Interactive. All rights reserved.
 //
 
 import XCTest
@@ -34,8 +34,8 @@ class CardCVCValidatorTests: XCTestCase {
         
         XCTAssertValid(self.validator.validateCVC(validObject, forCardType: .Visa))
         XCTAssertValid(self.validator.validateCVC(invalidLengthObject2, forCardType: .Amex))
-        XCTAssertInvalidCVC(self.validator.validateCVC(validObject, forCardType: .Amex))
-        XCTAssertInvalidCVC(self.validator.validateCVC(invalidLengthObject1, forCardType: .Visa))
+        XCTAssertIncompleteCVC(self.validator.validateCVC(validObject, forCardType: .Amex))
+        XCTAssertIncompleteCVC(self.validator.validateCVC(invalidLengthObject1, forCardType: .Visa))
         XCTAssertInvalidCVC(self.validator.validateCVC(invalidLengthObject2, forCardType: .Visa))
     }
     

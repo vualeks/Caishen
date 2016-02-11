@@ -3,7 +3,7 @@
 //  CardKit
 //
 //  Created by Daniel Vancura on 2/3/16.
-//  Copyright © 2016 CocoaPods. All rights reserved.
+//  Copyright © 2016 Prolific Interactive. All rights reserved.
 //
 
 import XCTest

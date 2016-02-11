@@ -33,6 +33,9 @@ public struct CardValidationResult: OptionSetType {
             if self.isSupersetOf(CardValidationResult.NumberDoesNotMatchType) {
                 resultString += "\tNumber does not match type\n"
             }
+            if self.isSupersetOf(CardValidationResult.CVCIncomplete) {
+                resultString += "\tCVC is too short\n"
+            }
             if self.isSupersetOf(CardValidationResult.InvalidCVC) {
                 resultString += "\tCVC is invalid\n"
             }
@@ -74,18 +77,23 @@ public struct CardValidationResult: OptionSetType {
     public static let InvalidCVC              = CardValidationResult(rawValue: 1 << 2)
     
     /**
+     The Card Verification Code is too short.
+     */
+    public static let CVCIncomplete           = CardValidationResult(rawValue: 1 << 3)
+    
+    /**
      The card has already expired.
      */
-    public static let CardExpired             = CardValidationResult(rawValue: 1 << 3)
+    public static let CardExpired             = CardValidationResult(rawValue: 1 << 4)
     
     /**
      Card number does not match the specified type or is too long.
      */
-    public static let NumberIsNotNumeric      = CardValidationResult(rawValue: 1 << 4)
+    public static let NumberIsNotNumeric      = CardValidationResult(rawValue: 1 << 5)
     
     /**
      The Luhn test failed for the credit card number.
      - note: This result might be returned for an incompleted card number.
      */
-    public static let LuhnTestFailed          = CardValidationResult(rawValue: 1 << 5)
+    public static let LuhnTestFailed          = CardValidationResult(rawValue: 1 << 6)
 }

@@ -3,7 +3,7 @@
 //  CardKit
 //
 //  Created by Daniel Vancura on 02/03/2016.
-//  Copyright (c) 2016 Daniel Vancura. All rights reserved.
+//  Copyright © 2016 Prolific Interactive. All rights reserved.
 //
 
 import UIKit

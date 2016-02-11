@@ -24,14 +24,18 @@ public class CardCVCValidator: NSObject {
         switch cardType {
         case .Amex:
             // Expect the cvc of an Amex card to be 4 digits long.
-            if cvc.length() == 4 {
+            if cvc.length() < 4 {
+                return CardValidationResult.CVCIncomplete
+            } else if cvc.length() == 4 {
                 return CardValidationResult.Valid
             } else {
                 return CardValidationResult.InvalidCVC
             }
         default:
             // Expect the cvc of other cards to be 3 digits long.
-            if cvc.length() == 3 {
+            if cvc.length() < 3 {
+                return CardValidationResult.CVCIncomplete
+            } else if cvc.length() == 3 {
                 return CardValidationResult.Valid
             } else {
                 return CardValidationResult.InvalidCVC
