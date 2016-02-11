@@ -36,13 +36,16 @@ public class CardNumberFormatter: NSObject {
     }
     
     /**
-     Formats the given card number string based on the card type.
+     Formats the given card number string based on the detected card type.
+     - seealso: CardType.CardTypeForNumber
+     - seealso: CardType.numberGroupingForCardType
      - parameter cardNumberString: The card number's unformatted string representation.
-     - parameter cardType: The card type for which the card number is supposed to be formatted.
      - returns: Formatted card number string.
      */
-    public func formattedCardNumber(cardNumberString: String, forCardType cardType: CardType) -> String {
+    public func formattedCardNumber(cardNumberString: String) -> String {
         let regex: NSRegularExpression
+        
+        let cardType = CardType.CardTypeForNumber(CardNumber(string: cardNumberString))
         do {
             let groups = CardType.numberGroupingForCardType(cardType)
             var pattern = ""
@@ -60,6 +63,63 @@ public class CardNumberFormatter: NSObject {
         }
         
         return NSArray(array: self.splitString(cardNumberString, withRegex: regex)).componentsJoinedByString(self.separator)
+    }
+    
+    /**
+     Computes the index of the cursor position after unformatting the textField's content.
+     - parameter textField: The textField containing a formatted string.
+     - returns: The index of the cursor position or nil, if no selected text was found.
+     */
+    public func cursorPositionAfterUnformattingText(text: String, inTextField textField: UITextField) -> Int? {
+        guard let selectedRange = textField.selectedTextRange else {
+            return nil
+        }
+        let addedCharacters = text.length() - (textField.text ?? "").length()
+        
+        let position = textField.offsetFromPosition(textField.beginningOfDocument, toPosition: selectedRange.start) + addedCharacters
+        
+        let formattedString = text ?? ""
+        let components = formattedString.componentsSeparatedByString(self.separator)
+        
+        // Find the component that contains the cursor
+        var componentContainingCursor = 0
+        var stringParsingIndex = 0
+        for i in 0..<components.count {
+            stringParsingIndex += components[i].length()
+            if position <= stringParsingIndex {
+                componentContainingCursor = i
+                break
+            }
+            stringParsingIndex += self.separator.length()
+        }
+        
+        return position - componentContainingCursor * self.separator.length()
+    }
+    
+    public func cursorPositionAfterFormattingText(text: String, inTextField textField: UITextField) -> Int? {
+        guard let selectedRange = textField.selectedTextRange else {
+            return nil
+        }
+        let addedCharacters = self.formattedCardNumber(text).length() - (textField.text ?? "").length()
+        
+        let position = textField.offsetFromPosition(textField.beginningOfDocument, toPosition: selectedRange.start) + addedCharacters
+        
+        let formattedString = self.formattedCardNumber(text)
+        let components = formattedString.componentsSeparatedByString(self.separator)
+        
+        // Find the component that contains the cursor
+        var componentContainingCursor = 0
+        var stringParsingIndex = 0
+        for i in 0..<components.count {
+            stringParsingIndex += components[i].length()
+            if position <= stringParsingIndex {
+                componentContainingCursor = i
+                break
+            }
+            stringParsingIndex += self.separator.length()
+        }
+        
+        return position + componentContainingCursor * self.separator.length()
     }
     
     /**

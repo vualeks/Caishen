@@ -13,8 +13,6 @@ public class CardNumberTextField: StylizedTextField, CardDetailFormDelegate {
     
     private var parsedCardNumber: CardNumber?
     
-    public var copiesDesignToSubviews: Bool = true
-    
     /**
      The view that shows the credit card's logo when a card type has been detected.
      */
@@ -43,7 +41,7 @@ public class CardNumberTextField: StylizedTextField, CardDetailFormDelegate {
     @IBInspectable
     public var cardNumberSeparator: String = "-" {
         didSet {
-            self.placeholder = self.cardNumberFormatter.formattedCardNumber(self.placeholder ?? "1234123412341234", forCardType: .Visa)
+            self.placeholder = self.cardNumberFormatter.formattedCardNumber(self.placeholder ?? "1234123412341234")
         }
     }
     
@@ -56,7 +54,7 @@ public class CardNumberTextField: StylizedTextField, CardDetailFormDelegate {
             
             // Format the placeholder, if not already done
             if isUnformatted && self.cardNumberSeparator != "" {
-                self.placeholder = self.cardNumberFormatter.formattedCardNumber(placeholder, forCardType: .Visa)
+                self.placeholder = self.cardNumberFormatter.formattedCardNumber(placeholder)
             } else {
                 return
             }
@@ -82,18 +80,6 @@ public class CardNumberTextField: StylizedTextField, CardDetailFormDelegate {
         
         self.cardDetailForm = NSBundle(forClass: CardDetailForm.self).loadNibNamed("CardDetailForm", owner: self, options: nil).first as? CardDetailForm
         
-        if let view = self.cardDetailForm where self.copiesDesignToSubviews {
-            view.subviews.forEach({
-                if let textField = $0 as? StylizedTextField {
-                    textField.borderColor = self.borderColor
-                    textField.borderWidth = self.borderWidth
-                    textField.cornerRadius = self.cornerRadius
-                    textField.backgroundColor = self.backgroundColor
-                }
-            })
-            view.backgroundColor = self.backgroundColor
-        }
-        
         self.cardDetailForm?.delegate = self
         
         self.animateOpenDetail()
@@ -111,7 +97,16 @@ public class CardNumberTextField: StylizedTextField, CardDetailFormDelegate {
         self.leftView?.clipsToBounds = true
     }
     
-    // MARK: - Text field delegate
+    private func setTextAndCursorPositionForTextField(textField: UITextField, newText: String) {
+        let cursorPositionAfterChanges = cardNumberFormatter.cursorPositionAfterFormattingText(self.cardNumberFormatter.unformattedCardNumber(newText), inTextField: textField)!
+        
+        textField.text = cardNumberFormatter.formattedCardNumber(cardNumberFormatter.unformattedCardNumber(newText))
+        if let position = textField.positionFromPosition(textField.beginningOfDocument, offset: cursorPositionAfterChanges) {
+            textField.selectedTextRange = textField.textRangeFromPosition(position, toPosition: position)
+            
+            print("Cursor after formatting: \(position)")
+        }
+    }
     
     public override func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
         let textFieldText = NSString(string: textField.text ?? "")
@@ -130,18 +125,18 @@ public class CardNumberTextField: StylizedTextField, CardDetailFormDelegate {
         let cardNumberValidator = CardNumberValidator()
         
         if let parsedCardNumber = parsedCardNumber {
-            let cardType = CardType.CardTypeForNumber(parsedCardNumber)
-            
             let partialValidation = cardNumberValidator.checkCardNumberPartiallyValid(parsedCardNumber)
             let completeValidation = cardNumberValidator.validateCardNumber(parsedCardNumber)
             
             if completeValidation == CardValidationResult.Valid {
                 self.userDidEnterValidCardNumber(parsedCardNumber)
-                textField.text = cardNumberFormatter.formattedCardNumber(newText, forCardType: cardType)
+                self.setTextAndCursorPositionForTextField(textField, newText: newText)
+                
                 return false
             } else if partialValidation == CardValidationResult.Valid {
                 self.userEnteredPartiallyValidCardNumber(parsedCardNumber)
-                textField.text = cardNumberFormatter.formattedCardNumber(newText, forCardType: cardType)
+                self.setTextAndCursorPositionForTextField(textField, newText: newText)
+                
                 return false
             } else {
                 return false
@@ -156,14 +151,16 @@ public class CardNumberTextField: StylizedTextField, CardDetailFormDelegate {
     private func animateOpenDetail() {
         self.rightView?.frame.origin.x = self.bounds.width - self.rightViewWidth
         self.rightView?.frame.size.width = self.bounds.width - self.leftViewWidth
-        UIView.animateWithDuration(1, animations: {
+        UIView.animateWithDuration(0.7, animations: {
             self.rightView?.frame.origin.x = self.bounds.origin.x + self.leftViewWidth
             self.rightView?.frame.size.width = self.bounds.width - self.leftViewWidth
+            }, completion: { _ -> Void in
+                self.cardDetailForm?.cvcTextField?.becomeFirstResponder()
         })
     }
     
     private func animateCloseDetail() {
-        UIView.animateWithDuration(1, animations: {
+        UIView.animateWithDuration(0.7, animations: {
             if var frame = self.rightView?.frame {
                 frame.origin.x = self.bounds.width
                 self.rightView?.frame.origin = frame.origin

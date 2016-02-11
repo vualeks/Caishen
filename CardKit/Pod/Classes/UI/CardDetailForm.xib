@@ -11,13 +11,13 @@
             <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="CVC" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="t8r-xa-fSC" customClass="StylizedTextField" customModule="CardKit" customModuleProvider="target">
-                    <rect key="frame" x="0.0" y="285" width="474" height="30"/>
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="CVC" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="t8r-xa-fSC" customClass="StylizedTextField" customModule="CardKit" customModuleProvider="target">
+                    <rect key="frame" x="0.0" y="292" width="474" height="17"/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <textInputTraits key="textInputTraits"/>
                 </textField>
-                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="YY" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="prl-0m-3Kl" customClass="StylizedTextField" customModule="CardKit" customModuleProvider="target">
-                    <rect key="frame" x="540" y="285" width="60" height="30"/>
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="YY" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="prl-0m-3Kl" customClass="StylizedTextField" customModule="CardKit" customModuleProvider="target">
+                    <rect key="frame" x="540" y="292" width="60" height="17"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="60" id="qXM-2F-7v0"/>
                     </constraints>
@@ -25,7 +25,7 @@
                     <textInputTraits key="textInputTraits"/>
                 </textField>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="/" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hsf-hE-0JC">
-                    <rect key="frame" x="532" y="289" width="6" height="21"/>
+                    <rect key="frame" x="532" y="290" width="6" height="21"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="21" id="r5b-zA-JOE"/>
                     </constraints>
@@ -33,8 +33,8 @@
                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="MM" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="JxX-BC-LKN" customClass="StylizedTextField" customModule="CardKit" customModuleProvider="target">
-                    <rect key="frame" x="482" y="285" width="48" height="30"/>
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="MM" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="JxX-BC-LKN" customClass="StylizedTextField" customModule="CardKit" customModuleProvider="target">
+                    <rect key="frame" x="482" y="292" width="48" height="17"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="48" id="Yfh-m0-vg5"/>
                     </constraints>
@@ -42,7 +42,7 @@
                     <textInputTraits key="textInputTraits"/>
                 </textField>
             </subviews>
-            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstItem="prl-0m-3Kl" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="AsM-dX-0wb"/>
                 <constraint firstItem="JxX-BC-LKN" firstAttribute="leading" secondItem="t8r-xa-fSC" secondAttribute="trailing" constant="8" symbolic="YES" id="Cae-AI-HOt"/>

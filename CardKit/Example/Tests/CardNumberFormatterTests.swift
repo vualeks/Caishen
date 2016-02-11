@@ -30,7 +30,7 @@ class CardNumberFormatterTests: XCTestCase {
         
         let testNumber = CardNumber(string: "4123123412341234")
         
-        let formattedTestNumber = self.formatter.formattedCardNumber(testNumber.stringValue(), forCardType: CardType.CardTypeForNumber(testNumber))
+        let formattedTestNumber = self.formatter.formattedCardNumber(testNumber.stringValue())
         
         XCTAssertEqual(formattedTestNumber, "4123-1234-1234-1234")
     }
