@@ -36,7 +36,7 @@
                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="MM" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="JxX-BC-LKN" customClass="StylizedTextField" customModule="CardKit" customModuleProvider="target">
                     <rect key="frame" x="482" y="292" width="48" height="17"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="48" id="Yfh-m0-vg5"/>
+                        <constraint firstAttribute="width" constant="48" id="pWq-Me-uGG"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <textInputTraits key="textInputTraits"/>
@@ -45,15 +45,23 @@
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstItem="prl-0m-3Kl" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="AsM-dX-0wb"/>
-                <constraint firstItem="JxX-BC-LKN" firstAttribute="leading" secondItem="t8r-xa-fSC" secondAttribute="trailing" constant="8" symbolic="YES" id="Cae-AI-HOt"/>
                 <constraint firstItem="t8r-xa-fSC" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="Osq-I7-5Ew"/>
+                <constraint firstItem="JxX-BC-LKN" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="PTc-ms-IJz"/>
                 <constraint firstItem="prl-0m-3Kl" firstAttribute="leading" secondItem="Hsf-hE-0JC" secondAttribute="trailing" constant="2" id="TO8-qy-OpF"/>
                 <constraint firstItem="t8r-xa-fSC" firstAttribute="baseline" secondItem="prl-0m-3Kl" secondAttribute="baseline" id="aVI-CV-AhG"/>
+                <constraint firstItem="Hsf-hE-0JC" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="avu-EO-vuZ"/>
                 <constraint firstAttribute="trailing" secondItem="prl-0m-3Kl" secondAttribute="trailing" id="bLy-B1-XcY"/>
+                <constraint firstItem="t8r-xa-fSC" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="c31-jQ-KqI"/>
                 <constraint firstItem="prl-0m-3Kl" firstAttribute="centerY" secondItem="Hsf-hE-0JC" secondAttribute="centerY" id="eHj-GI-A5o"/>
-                <constraint firstItem="Hsf-hE-0JC" firstAttribute="leading" secondItem="JxX-BC-LKN" secondAttribute="trailing" constant="2" id="fhe-F3-AN3"/>
-                <constraint firstItem="JxX-BC-LKN" firstAttribute="baseline" secondItem="Hsf-hE-0JC" secondAttribute="baseline" constant="-1" id="mm1-0w-sJj"/>
+                <constraint firstItem="Hsf-hE-0JC" firstAttribute="leading" secondItem="JxX-BC-LKN" secondAttribute="trailing" constant="2" id="rEi-2h-w06"/>
+                <constraint firstItem="JxX-BC-LKN" firstAttribute="leading" secondItem="t8r-xa-fSC" secondAttribute="trailing" constant="8" id="z0A-4c-bmg"/>
             </constraints>
+            <variation key="default">
+                <mask key="constraints">
+                    <exclude reference="aVI-CV-AhG"/>
+                    <exclude reference="eHj-GI-A5o"/>
+                </mask>
+            </variation>
             <connections>
                 <outlet property="cvcTextField" destination="t8r-xa-fSC" id="BTo-cq-RlX"/>
                 <outlet property="monthTextField" destination="JxX-BC-LKN" id="1Qz-w3-EHx"/>

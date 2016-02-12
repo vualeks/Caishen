@@ -13,6 +13,11 @@ public class CardNumberTextField: StylizedTextField, CardDetailFormDelegate {
     
     private var parsedCardNumber: CardNumber?
     
+    @IBInspectable
+    public var invalidInputColor: UIColor = UIColor.redColor()
+    
+    private var validInputColor: UIColor?
+    
     /**
      The view that shows the credit card's logo when a card type has been detected.
      */
@@ -95,6 +100,7 @@ public class CardNumberTextField: StylizedTextField, CardDetailFormDelegate {
         (self.leftView as? CardIssuerLogoView)?.displayLogoForCardType(.Unknown)
         self.leftView?.contentMode = .ScaleAspectFit
         self.leftView?.clipsToBounds = true
+        self.validInputColor = self.textColor
     }
     
     public override func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
@@ -120,15 +126,18 @@ public class CardNumberTextField: StylizedTextField, CardDetailFormDelegate {
             if completeValidation == CardValidationResult.Valid {
                 self.userDidEnterValidCardNumber(parsedCardNumber)
                 self.cardNumberFormatter.replaceRangeFormatted(range, inTextField: textField, withString: string)
+                self.textColor = self.validInputColor
                 
                 return false
             } else if partialValidation == CardValidationResult.Valid {
                 self.userEnteredPartiallyValidCardNumber(parsedCardNumber)
+                self.textColor = self.validInputColor
                 self.cardNumberFormatter.replaceRangeFormatted(range, inTextField: textField, withString: string)
                 
                 return false
             } else {
-                return false
+                self.textColor = self.invalidInputColor
+                return cardNumberValidator.checkCardNumberPartiallyValid(CardNumber(string: textFieldText as String)) == .Valid
             }
         }
         
@@ -174,18 +183,4 @@ public class CardNumberTextField: StylizedTextField, CardDetailFormDelegate {
         // Dismiss the detail view
         self.animateCloseDetail()
     }
-    
-    // MARK: - Key input protocol
-    
-    /*public override func insertText(text: String) {
-        
-    }
-    
-    public override func deleteBackward() {
-        
-    }
-    
-    public override func hasText() -> Bool {
-        return self.text != nil
-    }*/
 }
