@@ -97,17 +97,6 @@ public class CardNumberTextField: StylizedTextField, CardDetailFormDelegate {
         self.leftView?.clipsToBounds = true
     }
     
-    private func setTextAndCursorPositionForTextField(textField: UITextField, newText: String) {
-        let cursorPositionAfterChanges = cardNumberFormatter.cursorPositionAfterFormattingText(self.cardNumberFormatter.unformattedCardNumber(newText), inTextField: textField)!
-        
-        textField.text = cardNumberFormatter.formattedCardNumber(cardNumberFormatter.unformattedCardNumber(newText))
-        if let position = textField.positionFromPosition(textField.beginningOfDocument, offset: cursorPositionAfterChanges) {
-            textField.selectedTextRange = textField.textRangeFromPosition(position, toPosition: position)
-            
-            print("Cursor after formatting: \(position)")
-        }
-    }
-    
     public override func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
         let textFieldText = NSString(string: textField.text ?? "")
         
@@ -130,12 +119,12 @@ public class CardNumberTextField: StylizedTextField, CardDetailFormDelegate {
             
             if completeValidation == CardValidationResult.Valid {
                 self.userDidEnterValidCardNumber(parsedCardNumber)
-                self.setTextAndCursorPositionForTextField(textField, newText: newText)
+                self.cardNumberFormatter.replaceRangeFormatted(range, inTextField: textField, withString: string)
                 
                 return false
             } else if partialValidation == CardValidationResult.Valid {
                 self.userEnteredPartiallyValidCardNumber(parsedCardNumber)
-                self.setTextAndCursorPositionForTextField(textField, newText: newText)
+                self.cardNumberFormatter.replaceRangeFormatted(range, inTextField: textField, withString: string)
                 
                 return false
             } else {
@@ -185,4 +174,18 @@ public class CardNumberTextField: StylizedTextField, CardDetailFormDelegate {
         // Dismiss the detail view
         self.animateCloseDetail()
     }
+    
+    // MARK: - Key input protocol
+    
+    /*public override func insertText(text: String) {
+        
+    }
+    
+    public override func deleteBackward() {
+        
+    }
+    
+    public override func hasText() -> Bool {
+        return self.text != nil
+    }*/
 }

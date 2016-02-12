@@ -96,30 +96,62 @@ public class CardNumberFormatter: NSObject {
         return position - componentContainingCursor * self.separator.length()
     }
     
-    public func cursorPositionAfterFormattingText(text: String, inTextField textField: UITextField) -> Int? {
-        guard let selectedRange = textField.selectedTextRange else {
-            return nil
-        }
-        let addedCharacters = self.formattedCardNumber(text).length() - (textField.text ?? "").length()
-        
-        let position = textField.offsetFromPosition(textField.beginningOfDocument, toPosition: selectedRange.start) + addedCharacters
-        
-        let formattedString = self.formattedCardNumber(text)
-        let components = formattedString.componentsSeparatedByString(self.separator)
-        
-        // Find the component that contains the cursor
-        var componentContainingCursor = 0
-        var stringParsingIndex = 0
-        for i in 0..<components.count {
-            stringParsingIndex += components[i].length()
-            if position <= stringParsingIndex {
-                componentContainingCursor = i
+    private func indexInUnformattedString(index: Int, formattedString: String) -> Int {
+        var componentWithIndex = 0
+        var charCount = 0
+        for component in formattedString.componentsSeparatedByString(self.separator) {
+            charCount += component.length()
+            if charCount >= index {
                 break
+            } else {
+                componentWithIndex += 1
+                charCount += self.separator.length()
             }
-            stringParsingIndex += self.separator.length()
         }
         
-        return position + componentContainingCursor * self.separator.length()
+        return index - componentWithIndex * self.separator.length()
+    }
+    
+    private func indexInFormattedString(index: Int, unformattedString: String) -> Int {
+        var charIdx = 0
+        let formattedString = self.formattedCardNumber(unformattedString)
+        
+        let groups = formattedString.componentsSeparatedByString(self.separator)
+        
+        for i in 0..<groups.count {
+            let groupChars = groups[i].length()
+            
+            charIdx += groupChars
+            if charIdx >= index {
+                return min(index + i * self.separator.length(), formattedString.length())
+            }
+        }
+        
+        return 0
+    }
+    
+    public func replaceRangeFormatted(range: NSRange, inTextField textField: UITextField, withString string: String) {
+        
+        let newValueUnformatted = self.unformattedCardNumber(NSString(string: textField.text ?? "").stringByReplacingCharactersInRange(range, withString: string))
+        let oldValueUnformatted = self.unformattedCardNumber(textField.text ?? "")
+        
+        let newValue = self.formattedCardNumber(newValueUnformatted)
+        let oldValue = textField.text ?? ""
+        
+        var position: UITextPosition?
+        if let start = textField.selectedTextRange?.start {
+            let oldCursorPosition = textField.offsetFromPosition(textField.beginningOfDocument, toPosition: start)
+            let oldCursorPositionUnformatted = self.indexInUnformattedString(oldCursorPosition, formattedString: oldValue)
+            let newCursorPositionUnformatted = oldCursorPositionUnformatted + (newValueUnformatted.length() - oldValueUnformatted.length())
+            let newCursorPositionFormatted = self.indexInFormattedString(newCursorPositionUnformatted, unformattedString: newValueUnformatted)
+            
+            position = textField.positionFromPosition(textField.beginningOfDocument, offset: newCursorPositionFormatted)
+        }
+        
+        textField.text = newValue
+        if let position = position {
+            textField.selectedTextRange = textField.textRangeFromPosition(position, toPosition: position)
+        }
     }
     
     /**
