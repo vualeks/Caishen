@@ -65,12 +65,10 @@ public class CardViewController: UIViewController, UITextFieldDelegate, CardNumb
             let yearTextField = yearTextField {
                 return
         }
-        guard let nib = getNibBundle().loadNibNamed(getNibName(), owner: self, options: nil) where nib.count > 1, let firstObjectInNib = nib.first as? UIView,
-            let secondObjectInNib = nib[1] as? UIView else {
+        guard let nib = getNibBundle().loadNibNamed(getNibName(), owner: self, options: nil), let firstObjectInNib = nib.first as? UIView else {
                 fatalError("The nib is expected to contain two views:\n-   The first view with the 'cardImageView' located left of the 'numberTextField'\n-   The second view with 'cvcTextField', 'cvcTextField' and 'cvcTextField' (situated in that order from left to right).")
         }
         self.view = firstObjectInNib
-        self.cardInfoView = secondObjectInNib
         
         guard let cardImageView = cardImageView,
             let numberTextField = numberTextField,
@@ -120,11 +118,6 @@ public class CardViewController: UIViewController, UITextFieldDelegate, CardNumb
      
      **Alternatively:**
      Assign all outlets in your Storyboard. If all outlets have been assigned, a CardViewController will not opt for the Nib.
-     
-     - The Nib is expected to provide 2 (two!) views.
-     - The first view in the list will be used to display the card number text field and the image view for the card image.
-     - The second view in the list will be used to display the month, year and cvc text fields and will slide over the first view when a valid credit card number has been provided (potentially hiding it, if the background is not transparent).
-     - Within the Nib, all outlets have to be assigned to CardViewController. Set the file's owner's class to your CardViewController's subclass and assign its outlets appropriately.
      */
     public func getNibName() -> String {
         return "CardView"
@@ -135,11 +128,6 @@ public class CardViewController: UIViewController, UITextFieldDelegate, CardNumb
      
      **Alternatively:**
      Assign all outlets in your Storyboard. If all outlets have been assigned, a CardViewController will not opt for the Nib.
-     
-     - The Nib is expected to provide 2 (two!) views.
-     - The first view in the list will be used to display the card number text field and the image view for the card image.
-     - The second view in the list will be used to display the month, year and cvc text fields and will slide over the first view when a valid credit card number has been provided (potentially hiding it, if the background is not transparent).
-     - Within the Nib, all outlets have to be assigned to CardViewController. Set the file's owner's class to your CardViewController's subclass and assign its outlets appropriately.
      */
     public func getNibBundle() -> NSBundle {
         return NSBundle(forClass: self.dynamicType)

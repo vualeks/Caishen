@@ -9,12 +9,12 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CardViewController" customModule="CardKit" customModuleProvider="target">
             <connections>
                 <outlet property="cardImageView" destination="puU-AL-gPV" id="AIn-X0-fGf"/>
-                <outlet property="cardInfoView" destination="mS0-iw-6su" id="qUu-zm-dXO"/>
+                <outlet property="cardInfoView" destination="8iN-aK-Jz9" id="esE-ci-h9N"/>
                 <outlet property="cvcTextField" destination="HOM-PC-B5m" id="dFv-Ti-Hef"/>
-                <outlet property="monthTextField" destination="fJ1-My-f5V" id="nbO-23-lbf"/>
+                <outlet property="monthTextField" destination="5cX-Z5-afy" id="bXA-0j-EIb"/>
                 <outlet property="numberTextField" destination="T6o-6e-fLS" id="EGe-97-cvQ"/>
                 <outlet property="view" destination="iN0-l3-epB" id="Fm0-db-wz4"/>
-                <outlet property="yearTextField" destination="5TD-fT-8O1" id="Cga-fq-DeO"/>
+                <outlet property="yearTextField" destination="CgE-Em-qHJ" id="3Mf-RK-Pnk"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
@@ -40,70 +40,70 @@
                 <button opaque="NO" alpha="0.0" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="contactAdd" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YQU-u1-yfJ">
                     <rect key="frame" x="570" y="289" width="22" height="22"/>
                 </button>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8iN-aK-Jz9">
+                    <rect key="frame" x="89" y="0.0" width="511" height="600"/>
+                    <subviews>
+                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="MM" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="5cX-Z5-afy" customClass="StylizedTextField" customModule="CardKit" customModuleProvider="target">
+                            <rect key="frame" x="30" y="0.0" width="37" height="600"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="37" id="ncp-hx-z25"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                            <textInputTraits key="textInputTraits"/>
+                        </textField>
+                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="YY" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="CgE-Em-qHJ" customClass="StylizedTextField" customModule="CardKit" customModuleProvider="target">
+                            <rect key="frame" x="89" y="0.0" width="30" height="600"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                            <textInputTraits key="textInputTraits"/>
+                        </textField>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="/" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DD8-kX-0ru">
+                            <rect key="frame" x="75" y="290" width="6" height="20"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="CVC" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="HOM-PC-B5m" customClass="StylizedTextField" customModule="CardKit" customModuleProvider="target">
+                            <rect key="frame" x="157" y="0.0" width="44" height="600"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="44" id="Qg6-cj-7bj"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                            <textInputTraits key="textInputTraits"/>
+                        </textField>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstItem="5cX-Z5-afy" firstAttribute="top" secondItem="8iN-aK-Jz9" secondAttribute="top" id="2Zp-xN-g24"/>
+                        <constraint firstAttribute="bottom" secondItem="HOM-PC-B5m" secondAttribute="bottom" id="D8T-2E-T05"/>
+                        <constraint firstItem="HOM-PC-B5m" firstAttribute="leading" secondItem="CgE-Em-qHJ" secondAttribute="trailing" constant="38" id="Fk1-3U-WZ1"/>
+                        <constraint firstItem="5cX-Z5-afy" firstAttribute="bottom" secondItem="CgE-Em-qHJ" secondAttribute="bottom" id="K27-9l-pGM"/>
+                        <constraint firstItem="CgE-Em-qHJ" firstAttribute="height" secondItem="8iN-aK-Jz9" secondAttribute="height" id="S9Q-tZ-J9h"/>
+                        <constraint firstAttribute="bottom" secondItem="5cX-Z5-afy" secondAttribute="bottom" id="XM4-dt-rH1"/>
+                        <constraint firstItem="5cX-Z5-afy" firstAttribute="leading" secondItem="8iN-aK-Jz9" secondAttribute="leading" constant="30" id="ZRt-wD-4om"/>
+                        <constraint firstItem="5cX-Z5-afy" firstAttribute="centerY" secondItem="DD8-kX-0ru" secondAttribute="centerY" id="gPj-h0-kbB"/>
+                        <constraint firstItem="CgE-Em-qHJ" firstAttribute="leading" secondItem="DD8-kX-0ru" secondAttribute="trailing" constant="8" id="mqG-6S-dv0"/>
+                        <constraint firstItem="HOM-PC-B5m" firstAttribute="top" secondItem="8iN-aK-Jz9" secondAttribute="top" id="pKk-pg-dWg"/>
+                        <constraint firstItem="5cX-Z5-afy" firstAttribute="centerY" secondItem="8iN-aK-Jz9" secondAttribute="centerY" id="xCX-AH-Opc"/>
+                        <constraint firstItem="DD8-kX-0ru" firstAttribute="leading" secondItem="5cX-Z5-afy" secondAttribute="trailing" constant="8" id="yCR-Mr-RWe"/>
+                    </constraints>
+                </view>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstItem="T6o-6e-fLS" firstAttribute="bottom" secondItem="puU-AL-gPV" secondAttribute="bottom" id="1V7-sy-z02"/>
                 <constraint firstItem="YQU-u1-yfJ" firstAttribute="centerY" secondItem="T6o-6e-fLS" secondAttribute="centerY" id="2Ub-la-T9W"/>
                 <constraint firstItem="T6o-6e-fLS" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="2hP-5w-uAi"/>
+                <constraint firstAttribute="trailing" secondItem="8iN-aK-Jz9" secondAttribute="trailing" id="Dm5-lS-7gW"/>
                 <constraint firstAttribute="bottom" secondItem="T6o-6e-fLS" secondAttribute="bottom" id="EXF-wl-GHl"/>
+                <constraint firstItem="8iN-aK-Jz9" firstAttribute="top" secondItem="T6o-6e-fLS" secondAttribute="top" id="YX9-sz-o70"/>
                 <constraint firstItem="T6o-6e-fLS" firstAttribute="trailing" secondItem="iN0-l3-epB" secondAttribute="trailingMargin" id="cma-zJ-pDA"/>
                 <constraint firstItem="puU-AL-gPV" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="fP2-Mh-h6I"/>
+                <constraint firstItem="8iN-aK-Jz9" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="89" id="hOK-B4-zWu"/>
                 <constraint firstItem="YQU-u1-yfJ" firstAttribute="trailing" secondItem="T6o-6e-fLS" secondAttribute="trailing" id="iVL-cL-yeJ"/>
+                <constraint firstItem="8iN-aK-Jz9" firstAttribute="bottom" secondItem="T6o-6e-fLS" secondAttribute="bottom" id="jeW-Hm-63K"/>
                 <constraint firstItem="T6o-6e-fLS" firstAttribute="top" secondItem="puU-AL-gPV" secondAttribute="top" id="kbb-nn-KKP"/>
                 <constraint firstItem="T6o-6e-fLS" firstAttribute="leading" secondItem="puU-AL-gPV" secondAttribute="trailing" constant="3" id="wk0-uM-9Ur"/>
             </constraints>
-        </view>
-        <view contentMode="scaleToFill" id="mS0-iw-6su">
-            <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-            <subviews>
-                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="MM" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="fJ1-My-f5V" customClass="StylizedTextField" customModule="CardKit" customModuleProvider="target">
-                    <rect key="frame" x="252" y="0.0" width="37" height="600"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="37" id="G8C-ar-8HE"/>
-                    </constraints>
-                    <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                    <textInputTraits key="textInputTraits"/>
-                </textField>
-                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="YY" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="5TD-fT-8O1" customClass="StylizedTextField" customModule="CardKit" customModuleProvider="target">
-                    <rect key="frame" x="311" y="0.0" width="29.5" height="600"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                    <textInputTraits key="textInputTraits"/>
-                </textField>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="/" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="y9B-vN-uNr">
-                    <rect key="frame" x="297" y="290" width="6" height="20"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                    <nil key="highlightedColor"/>
-                </label>
-                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="CVC" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="HOM-PC-B5m" customClass="StylizedTextField" customModule="CardKit" customModuleProvider="target">
-                    <rect key="frame" x="503" y="0.0" width="44" height="600"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="44" id="Qg6-cj-7bj"/>
-                    </constraints>
-                    <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                    <textInputTraits key="textInputTraits"/>
-                </textField>
-            </subviews>
-            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-            <constraints>
-                <constraint firstAttribute="bottom" secondItem="HOM-PC-B5m" secondAttribute="bottom" id="6HZ-FC-7AE"/>
-                <constraint firstItem="fJ1-My-f5V" firstAttribute="top" secondItem="HOM-PC-B5m" secondAttribute="top" id="BVP-wM-NCr"/>
-                <constraint firstItem="5TD-fT-8O1" firstAttribute="leading" secondItem="y9B-vN-uNr" secondAttribute="trailing" constant="8" id="Crl-t1-R3j"/>
-                <constraint firstItem="fJ1-My-f5V" firstAttribute="centerY" secondItem="mS0-iw-6su" secondAttribute="centerY" id="Epb-Aq-zyq"/>
-                <constraint firstItem="fJ1-My-f5V" firstAttribute="bottom" secondItem="HOM-PC-B5m" secondAttribute="bottom" id="Pjt-71-Cvl"/>
-                <constraint firstItem="y9B-vN-uNr" firstAttribute="centerX" secondItem="mS0-iw-6su" secondAttribute="centerX" id="Q3u-jt-xIP"/>
-                <constraint firstItem="y9B-vN-uNr" firstAttribute="centerY" secondItem="mS0-iw-6su" secondAttribute="centerY" id="Ugf-ox-nfM"/>
-                <constraint firstItem="HOM-PC-B5m" firstAttribute="centerY" secondItem="mS0-iw-6su" secondAttribute="centerY" id="XHQ-sd-PW3"/>
-                <constraint firstAttribute="bottom" secondItem="5TD-fT-8O1" secondAttribute="bottom" id="ayE-yz-mSe"/>
-                <constraint firstAttribute="trailing" secondItem="HOM-PC-B5m" secondAttribute="trailing" constant="53" id="hfO-dg-Slg"/>
-                <constraint firstItem="5TD-fT-8O1" firstAttribute="centerY" secondItem="mS0-iw-6su" secondAttribute="centerY" id="wVy-XV-tO3"/>
-                <constraint firstItem="y9B-vN-uNr" firstAttribute="leading" secondItem="fJ1-My-f5V" secondAttribute="trailing" constant="8" symbolic="YES" id="xIb-tF-lab"/>
-                <constraint firstItem="HOM-PC-B5m" firstAttribute="top" secondItem="mS0-iw-6su" secondAttribute="top" id="yLM-cs-wHL"/>
-                <constraint firstItem="5TD-fT-8O1" firstAttribute="top" secondItem="mS0-iw-6su" secondAttribute="top" id="ycA-4z-fk6"/>
-            </constraints>
-            <point key="canvasLocation" x="1040" y="246"/>
         </view>
     </objects>
     <resources>
