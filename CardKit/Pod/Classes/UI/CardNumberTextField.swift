@@ -89,8 +89,7 @@ public class CardNumberTextField: StylizedTextField {
         self.cardType = CardType.CardTypeForNumber(number)
     }
     
-    override func postInit() {
-        super.postInit()
+    public override func willMoveToSuperview(newSuperview: UIView?) {
         self.validInputColor = self.textColor
     }
     

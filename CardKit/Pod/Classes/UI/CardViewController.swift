@@ -25,10 +25,23 @@ public class CardViewController: UIViewController, UITextFieldDelegate, CardNumb
     public var cardNumber: CardNumber?
     public var cardCVC: CardCVC?
     public var cardExpiry: CardExpiry? {
-        guard let month = monthString, year = yearString else {
-            return nil
+        set {
+            guard let components = newValue?.stringValue().componentsSeparatedByString("/") where components.count == 2 else {
+                return
+            }
+            guard components[0].length() == 2 && components[1].length() == 4 else {
+                return
+            }
+            
+            monthString = components[0]
+            yearString = components[1][2,4]
         }
-        return CardExpiry(month: month, year: year)
+        get {
+            guard let month = monthString, year = yearString else {
+                return nil
+            }
+            return CardExpiry(month: month, year: year)
+        }
     }
     public var cardType: CardType {
         guard let number = cardNumber else {
@@ -37,11 +50,10 @@ public class CardViewController: UIViewController, UITextFieldDelegate, CardNumb
         
         return CardType.CardTypeForNumber(number)
     }
-    @IBInspectable
     private var monthString: String?
     private var yearString: String?
     
-    public override func loadView() {
+    public final override func loadView() {
         super.loadView()
         
         if let view = view,
@@ -67,11 +79,6 @@ public class CardViewController: UIViewController, UITextFieldDelegate, CardNumb
             let yearTextField = yearTextField else {
                 fatalError("Some outlets have not been assigned in the provided Nib. Please check the outlet links for 'cardImageView', 'numberTextField', 'cvcTextField', 'monthTextField', 'yearTextField'")
         }
-    }
-    
-    public override func prepareForInterfaceBuilder() {
-        super.prepareForInterfaceBuilder()
-        loadView()
     }
     
     public override func viewDidLoad() {
@@ -103,27 +110,51 @@ public class CardViewController: UIViewController, UITextFieldDelegate, CardNumb
         cardInfoView?.frame.origin = view.frame.origin
         moveSecondaryViewOut()
         
-        cardInfoView?.autoresizesSubviews = false
+        //cardInfoView?.autoresizesSubviews = false
     }
     
+    // MARK: - View customization
+    
+    /**
+     You can override this function to provide your own Nib. If you do so, please override 'getNibBundle' as well to provide the right NSBundle to load the nib file. The Nibs you provide are expected to be structured in a specific way.
+     
+     **Alternatively:**
+     Assign all outlets in your Storyboard. If all outlets have been assigned, a CardViewController will not opt for the Nib.
+     
+     - The Nib is expected to provide 2 (two!) views.
+     - The first view in the list will be used to display the card number text field and the image view for the card image.
+     - The second view in the list will be used to display the month, year and cvc text fields and will slide over the first view when a valid credit card number has been provided (potentially hiding it, if the background is not transparent).
+     - Within the Nib, all outlets have to be assigned to CardViewController. Set the file's owner's class to your CardViewController's subclass and assign its outlets appropriately.
+     */
     public func getNibName() -> String {
         return "CardView"
     }
     
+    /**
+     You can override this function to provide the NSBundle for your own Nib. If you do so, please override 'getNibName' as well to provide the right Nib to load the nib file. The Nibs you provide are expected to be structured in a specific way.
+     
+     **Alternatively:**
+     Assign all outlets in your Storyboard. If all outlets have been assigned, a CardViewController will not opt for the Nib.
+     
+     - The Nib is expected to provide 2 (two!) views.
+     - The first view in the list will be used to display the card number text field and the image view for the card image.
+     - The second view in the list will be used to display the month, year and cvc text fields and will slide over the first view when a valid credit card number has been provided (potentially hiding it, if the background is not transparent).
+     - Within the Nib, all outlets have to be assigned to CardViewController. Set the file's owner's class to your CardViewController's subclass and assign its outlets appropriately.
+     */
     public func getNibBundle() -> NSBundle {
         return NSBundle(forClass: self.dynamicType)
     }
     
     // MARK: - Validity checks
     
-    private func isCVCValid(cvc: String, partiallyValid: Bool) -> Bool {
+    public func isCVCValid(cvc: String, partiallyValid: Bool) -> Bool {
         if cvc.length() == 0 && partiallyValid {
             return true
         }
         return CardCVCValidator().validateCVC(CardCVC(string: cvc), forCardType: self.cardType) == .Valid || partiallyValid && CardCVCValidator().validateCVC(CardCVC(string: cvc), forCardType: self.cardType) == .CVCIncomplete
     }
     
-    private func isMonthValid(month: String, partiallyValid: Bool) -> Bool {
+    public func isMonthValid(month: String, partiallyValid: Bool) -> Bool {
         if partiallyValid && month.length() == 0 {
             return true
         }
@@ -139,7 +170,7 @@ public class CardViewController: UIViewController, UITextFieldDelegate, CardNumb
         return ((monthInt >= 1 && monthInt <= 12) || (partiallyValid && month == "0")) && (partiallyValid || month.length() == 2)
     }
     
-    private func isYearValid(year: String, partiallyValid: Bool) -> Bool {
+    public func isYearValid(year: String, partiallyValid: Bool) -> Bool {
         if partiallyValid && year.length() == 0 {
             return true
         }
@@ -162,7 +193,7 @@ public class CardViewController: UIViewController, UITextFieldDelegate, CardNumb
         }
     }
     
-    public func textFieldDidChange(textField: UITextField) {
+    public final func textFieldDidChange(textField: UITextField) {
         switch textField {
         case cvcTextField:
             if isCVCValid(textField.text ?? "", partiallyValid: false) {
@@ -183,7 +214,7 @@ public class CardViewController: UIViewController, UITextFieldDelegate, CardNumb
         }
     }
     
-    public func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
+    public final func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
         let newValue = NSString(string: textField.text ?? "").stringByReplacingCharactersInRange(range, withString: string)
         switch textField {
         case cvcTextField:
@@ -219,21 +250,21 @@ public class CardViewController: UIViewController, UITextFieldDelegate, CardNumb
     
     // MARK: - View animations
     
-    private func moveNumberFieldLeft() {
+    public func moveNumberFieldLeft() {
         if let rect = numberTextField.rectForLastGroup() {
             numberTextField.transform = CGAffineTransformTranslate(self.numberTextField.transform, -rect.origin.x, 0)
         }
     }
     
-    private func moveNumberFieldRight() {
+    public func moveNumberFieldRight() {
         numberTextField.transform = CGAffineTransformIdentity
     }
     
-    private func moveSecondaryViewIn() {
+    public func moveSecondaryViewIn() {
         cardInfoView?.transform = CGAffineTransformIdentity
     }
     
-    private func moveSecondaryViewOut() {
+    public func moveSecondaryViewOut() {
         cardInfoView?.transform = CGAffineTransformMakeTranslation(view.bounds.width, 0)
     }
     

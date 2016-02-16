@@ -40,87 +40,16 @@ public class StylizedTextField: UITextField, UITextFieldDelegate {
         }
     }
     
-    @IBInspectable
-    public var leftViewBackgroundColor: UIColor = UIColor.whiteColor().colorWithAlphaComponent(0.0) {
-        didSet {
-            self.leftView?.backgroundColor = leftViewBackgroundColor
-        }
-    }
-    
-    @IBInspectable
-    public var rightViewBackgroundColor: UIColor = UIColor.whiteColor().colorWithAlphaComponent(0.0) {
-        didSet {
-            self.rightView?.backgroundColor = rightViewBackgroundColor
-        }
-    }
-    
-    @IBInspectable
-    public var leftViewWidth: CGFloat = 30 {
-        didSet {
-            self.leftView?.frame = self.bounds
-            self.leftView?.frame.size.width = leftViewWidth
-        }
-    }
-    
-    @IBInspectable
-    public var rightViewWidth: CGFloat = 30 {
-        didSet {
-            self.rightView?.frame = self.bounds
-            self.rightView?.frame.size.width = self.rightViewWidth
-        }
-    }
-    
-    /**
-     The view that is displayed next to the card number text field.
-     */
-    public override var leftView: UIView? {
-        set {
-            super.leftView = newValue
-            if let _ = newValue {
-                super.leftViewMode = .Always
-            } else {
-                super.leftViewMode = .Never
-            }
-        }
-        get {
-            return super.leftView
-        }
-    }
-    
-    /**
-     The view that is displayed next to the card number text field.
-     */
-    public override var rightView: UIView? {
-        set {
-            super.rightView = newValue
-            if let _ = newValue {
-                super.rightViewMode = .Always
-            } else {
-                super.rightViewMode = .Never
-            }
-        }
-        get {
-            return super.rightView
-        }
-    }
-    
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         
         self.delegate = self
-        self.postInit()
     }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         
         self.delegate = self
-        self.postInit()
-    }
-    
-    internal func postInit() {
-        self.leftViewWidth = self.leftViewWidth + 0
-        self.rightViewWidth = self.rightViewWidth + 0
     }
     
     public func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
