@@ -43,6 +43,25 @@ public enum CardType {
         }
     }
     
+    public static func imageNameForCardType(cardType: CardType) -> String {
+        switch cardType {
+        case .Amex:
+            return "Amex"
+        case .DinersClub:
+            return "Diners"
+        case .Discover:
+            return "Discover"
+        case .JCB:
+            return "JCB"
+        case .MasterCard:
+            return "MasterCard"
+        case .Visa:
+            return "Visa"
+        default:
+            return "Unknown"
+        }
+    }
+    
     /**
      Determines the card type for a specific bank card number.
      

@@ -18,7 +18,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mrk-g6-1Pc" customClass="CardNumberPicker" customModule="CardKit">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mrk-g6-1Pc" customClass="CardNumberPicker" customModule="CardKit">
                                 <rect key="frame" x="58" y="84" width="67" height="40"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
@@ -32,21 +32,18 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                                 <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="leftViewWidth">
-                                        <real key="value" value="25"/>
-                                    </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="number" keyPath="rightViewWidth">
                                         <real key="value" value="30"/>
                                     </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="string" keyPath="cardNumberSeparator" value="   -   "/>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="cardNumberSeparator" value="  -  "/>
                                     <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
-                                        <color key="value" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                        <color key="value" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
-                                        <real key="value" value="0.40000000000000002"/>
+                                        <real key="value" value="0.0"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                        <real key="value" value="4"/>
+                                        <real key="value" value="5"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="color" keyPath="rightViewBackgroundColor">
                                         <color key="value" red="0.43529411759999997" green="0.4431372549" blue="0.47450980390000003" alpha="1" colorSpace="calibratedRGB"/>
@@ -54,13 +51,32 @@
                                     <userDefinedRuntimeAttribute type="color" keyPath="leftViewBackgroundColor">
                                         <color key="value" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                     </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="leftViewWidth">
+                                        <real key="value" value="30"/>
+                                    </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </textField>
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hlC-ih-9yX">
+                                <rect key="frame" x="20" y="497" width="560" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="bMV-Ni-wgN"/>
+                                </constraints>
+                                <connections>
+                                    <segue destination="mtf-qA-LoK" kind="embed" id="GZL-dH-SXP"/>
+                                </connections>
+                            </containerView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="mrk-g6-1Pc" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" constant="64" id="7od-4E-QK4"/>
                             <constraint firstItem="LYR-fS-Fj6" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" id="D7b-1W-KYx"/>
                             <constraint firstItem="LYR-fS-Fj6" firstAttribute="trailing" secondItem="kh9-bI-dsS" secondAttribute="trailingMargin" id="Jsz-jJ-Qlm"/>
+                            <constraint firstAttribute="bottom" secondItem="mrk-g6-1Pc" secondAttribute="bottom" constant="476" id="OlL-5h-Eiy"/>
+                            <constraint firstItem="hlC-ih-9yX" firstAttribute="leading" secondItem="LYR-fS-Fj6" secondAttribute="leading" id="ciV-0w-m6W"/>
+                            <constraint firstAttribute="trailing" secondItem="mrk-g6-1Pc" secondAttribute="trailing" constant="475" id="lh0-dl-ck6"/>
+                            <constraint firstItem="LYR-fS-Fj6" firstAttribute="top" secondItem="hlC-ih-9yX" secondAttribute="bottom" constant="8" symbolic="YES" id="u64-Od-7ZL"/>
+                            <constraint firstItem="hlC-ih-9yX" firstAttribute="trailing" secondItem="LYR-fS-Fj6" secondAttribute="trailing" id="uUs-DU-Gp0"/>
+                            <constraint firstItem="mrk-g6-1Pc" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" constant="38" id="wie-xy-JvR"/>
                             <constraint firstAttribute="bottom" secondItem="LYR-fS-Fj6" secondAttribute="bottom" constant="20" symbolic="YES" id="zRG-Qx-O8V"/>
                         </constraints>
                     </view>
@@ -68,6 +84,20 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="245" y="259"/>
+        </scene>
+        <!--Card View Controller-->
+        <scene sceneID="Igm-k1-sJK">
+            <objects>
+                <viewController id="mtf-qA-LoK" customClass="CardViewController" customModule="CardKit" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="SkZ-CT-QB9">
+                        <rect key="frame" x="0.0" y="0.0" width="560" height="50"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Qa0-Yd-TFQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="245" y="688.5"/>
         </scene>
     </scenes>
 </document>

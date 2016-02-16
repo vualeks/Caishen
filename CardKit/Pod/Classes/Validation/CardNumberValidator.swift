@@ -11,8 +11,10 @@ import UIKit
 public class CardNumberValidator: NSObject {
     
     private func numberIsNumeric(number: CardNumber) -> CardValidationResult {
-        guard let _ = UInt(number.stringValue()) else {
-            return CardValidationResult.NumberIsNotNumeric
+        for c in number.stringValue().characters {
+            if !["0","1","2","3","4","5","6","7","8","9"].contains(c) {
+                return CardValidationResult.NumberIsNotNumeric
+            }
         }
         
         return CardValidationResult.Valid
@@ -36,7 +38,7 @@ public class CardNumberValidator: NSObject {
             if odd {
                 digit = digit * 2
             }
-            if digit > 9 {
+            if digit > 9 {3
                 digit = digit - 9
             }
             sum += digit

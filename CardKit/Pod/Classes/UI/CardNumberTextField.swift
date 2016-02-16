@@ -8,40 +8,22 @@
 
 import UIKit
 
+@objc
+public protocol CardNumberTextFieldDelegate {
+    optional func cardNumberTextField(cardNumberTextField: CardNumberTextField, didChangeText text: String)
+    optional func cardNumberTextField(cardNumberTextField: CardNumberTextField, didEnterValidCardNumber cardNumber: CardNumber)
+}
+
 @IBDesignable
-public class CardNumberTextField: StylizedTextField, CardDetailFormDelegate {
+public class CardNumberTextField: StylizedTextField {
     
-    private var parsedCardNumber: CardNumber?
+    public private(set) var parsedCardNumber: CardNumber?
+    public var cardNumberTextFieldDelegate: CardNumberTextFieldDelegate?
     
     @IBInspectable
     public var invalidInputColor: UIColor = UIColor.redColor()
     
     private var validInputColor: UIColor?
-    
-    /**
-     The view that shows the credit card's logo when a card type has been detected.
-     */
-    public var logoView: CardIssuerLogoView? {
-        set {
-            self.leftView = newValue
-        }
-        get {
-            return self.leftView as? CardIssuerLogoView
-        }
-    }
-    
-    /**
-     The view that is used to enter detail for a bank card.
-     This form lets the user enter the card's CVC and expiry.
-     */
-    public var cardDetailForm: CardDetailForm? {
-        set {
-            self.rightView = newValue
-        }
-        get {
-            return self.rightView as? CardDetailForm
-        }
-    }
     
     @IBInspectable
     public var cardNumberSeparator: String = "-" {
@@ -66,13 +48,32 @@ public class CardNumberTextField: StylizedTextField, CardDetailFormDelegate {
         }
     }
     
-    private var cardType: CardType = .Unknown {
-        willSet {
-            if cardType != newValue {
-                (self.leftView as? CardIssuerLogoView)?.displayLogoForCardType(newValue)
-            }
+    private func rectForTextRange(range: NSRange, inTextField textField: UITextField) -> CGRect? {
+        guard let rangeStart = textField.positionFromPosition(textField.beginningOfDocument, offset: range.location) else {
+            return nil
         }
+        guard let rangeEnd = textField.positionFromPosition(rangeStart, offset: range.length) else {
+            return nil
+        }
+        guard let textRange = textField.textRangeFromPosition(rangeStart, toPosition: rangeEnd) else {
+            return nil
+        }
+        
+        return textField.firstRectForRange(textRange)
     }
+    
+    public func rectForLastGroup() -> CGRect? {
+        guard let lastGroupLength = text?.componentsSeparatedByString(cardNumberFormatter.separator).last?.length() else {
+            return nil
+        }
+        guard let textLength = text?.length() else {
+            return nil
+        }
+        
+        return rectForTextRange(NSMakeRange(textLength - lastGroupLength, lastGroupLength), inTextField: self)
+    }
+    
+    private var cardType: CardType = .Unknown
     
     private var cardNumberFormatter: CardNumberFormatter {
         get {
@@ -82,12 +83,6 @@ public class CardNumberTextField: StylizedTextField, CardDetailFormDelegate {
     
     private func userDidEnterValidCardNumber(number: CardNumber) {
         self.cardType = CardType.CardTypeForNumber(number)
-        
-        self.cardDetailForm = NSBundle(forClass: CardDetailForm.self).loadNibNamed("CardDetailForm", owner: self, options: nil).first as? CardDetailForm
-        
-        self.cardDetailForm?.delegate = self
-        
-        self.animateOpenDetail()
     }
     
     private func userEnteredPartiallyValidCardNumber(number: CardNumber) {
@@ -96,10 +91,6 @@ public class CardNumberTextField: StylizedTextField, CardDetailFormDelegate {
     
     override func postInit() {
         super.postInit()
-        self.leftView = CardIssuerLogoView()
-        (self.leftView as? CardIssuerLogoView)?.displayLogoForCardType(.Unknown)
-        self.leftView?.contentMode = .ScaleAspectFit
-        self.leftView?.clipsToBounds = true
         self.validInputColor = self.textColor
     }
     
@@ -128,59 +119,24 @@ public class CardNumberTextField: StylizedTextField, CardDetailFormDelegate {
                 self.cardNumberFormatter.replaceRangeFormatted(range, inTextField: textField, withString: string)
                 self.textColor = self.validInputColor
                 
+                self.cardNumberTextFieldDelegate?.cardNumberTextField?(self, didEnterValidCardNumber: CardNumber(string: self.cardNumberFormatter.unformattedCardNumber(newText)))
+                
                 return false
             } else if partialValidation == CardValidationResult.Valid {
                 self.userEnteredPartiallyValidCardNumber(parsedCardNumber)
                 self.textColor = self.validInputColor
                 self.cardNumberFormatter.replaceRangeFormatted(range, inTextField: textField, withString: string)
                 
+                self.cardNumberTextFieldDelegate?.cardNumberTextField?(self, didChangeText: newText)
+                
                 return false
             } else {
                 self.textColor = self.invalidInputColor
-                return cardNumberValidator.checkCardNumberPartiallyValid(CardNumber(string: textFieldText as String)) == .Valid
+                
+                return false
             }
         }
         
         return newTextIsNumeric
-    }
-    
-    // MARK: - Card detail animation
-    
-    private func animateOpenDetail() {
-        self.rightView?.frame.origin.x = self.bounds.width - self.rightViewWidth
-        self.rightView?.frame.size.width = self.bounds.width - self.leftViewWidth
-        UIView.animateWithDuration(0.7, animations: {
-            self.rightView?.frame.origin.x = self.bounds.origin.x + self.leftViewWidth
-            self.rightView?.frame.size.width = self.bounds.width - self.leftViewWidth
-            }, completion: { _ -> Void in
-                self.cardDetailForm?.cvcTextField?.becomeFirstResponder()
-        })
-    }
-    
-    private func animateCloseDetail() {
-        UIView.animateWithDuration(0.7, animations: {
-            if var frame = self.rightView?.frame {
-                frame.origin.x = self.bounds.width
-                self.rightView?.frame.origin = frame.origin
-            }
-            }, completion: { _ -> Void in
-                self.rightView?.removeFromSuperview()
-                self.rightView = nil
-        })
-    }
-    
-    // MARK: - Card detail form delegate
-    
-    public func cardDetailFormDidFinish(form: CardDetailForm, withCVC cvc: CardCVC, withExpiry expiry: CardExpiry) {
-        // Notify own delegate about this
-        // ...
-        
-        // Dismiss the detail view
-        self.animateCloseDetail()
-    }
-    
-    public func cardDetailFormShouldDismiss() {
-        // Dismiss the detail view
-        self.animateCloseDetail()
     }
 }

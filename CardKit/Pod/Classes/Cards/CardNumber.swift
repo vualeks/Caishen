@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class CardNumber {
+public class CardNumber: NSObject {
     private var number: String
     
     public init(string: String) {
