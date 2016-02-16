@@ -20,8 +20,8 @@ public class CardViewController: UIViewController, UITextFieldDelegate, CardNumb
     @IBOutlet public weak var cvcTextField: UITextField!
     @IBOutlet public weak var monthTextField: UITextField!
     @IBOutlet public weak var yearTextField: UITextField!
-    @IBOutlet public weak var cardDetailButton: UIButton!
-    private var cardInfoView: UIView?
+    
+    @IBOutlet public weak var cardInfoView: UIView?
     public var cardNumber: CardNumber?
     public var cardCVC: CardCVC?
     public var cardExpiry: CardExpiry? {
@@ -37,16 +37,41 @@ public class CardViewController: UIViewController, UITextFieldDelegate, CardNumb
         
         return CardType.CardTypeForNumber(number)
     }
+    @IBInspectable
     private var monthString: String?
     private var yearString: String?
     
     public override func loadView() {
-        if let view = NSBundle(forClass: CardViewController.self).loadNibNamed(getNibName(), owner: self, options: nil).first as? UIView {
-            self.view = view
+        super.loadView()
+        
+        if let view = view,
+            let cardInfoView = cardInfoView,
+            let cardImageView = cardImageView,
+            let numberTextField = numberTextField,
+            let cvcTextField = cvcTextField,
+            let monthTextField = monthTextField,
+            let yearTextField = yearTextField {
+                return
         }
-        if let view = NSBundle(forClass: CardViewController.self).loadNibNamed(getNibName(), owner: self, options: nil)[1] as? UIView {
-            cardInfoView = view
+        guard let nib = getNibBundle().loadNibNamed(getNibName(), owner: self, options: nil) where nib.count > 1, let firstObjectInNib = nib.first as? UIView,
+            let secondObjectInNib = nib[1] as? UIView else {
+                fatalError("The nib is expected to contain two views:\n-   The first view with the 'cardImageView' located left of the 'numberTextField'\n-   The second view with 'cvcTextField', 'cvcTextField' and 'cvcTextField' (situated in that order from left to right).")
         }
+        self.view = firstObjectInNib
+        self.cardInfoView = secondObjectInNib
+        
+        guard let cardImageView = cardImageView,
+            let numberTextField = numberTextField,
+            let cvcTextField = cvcTextField,
+            let monthTextField = monthTextField,
+            let yearTextField = yearTextField else {
+                fatalError("Some outlets have not been assigned in the provided Nib. Please check the outlet links for 'cardImageView', 'numberTextField', 'cvcTextField', 'monthTextField', 'yearTextField'")
+        }
+    }
+    
+    public override func prepareForInterfaceBuilder() {
+        super.prepareForInterfaceBuilder()
+        loadView()
     }
     
     public override func viewDidLoad() {
@@ -59,13 +84,34 @@ public class CardViewController: UIViewController, UITextFieldDelegate, CardNumb
         monthTextField?.delegate = self
         yearTextField?.delegate = self
         
+        [numberTextField,cvcTextField,monthTextField,yearTextField].forEach({
+            $0.keyboardType = .NumberPad
+        })
+        
         [numberTextField, cvcTextField, monthTextField, yearTextField].forEach({
             $0.addTarget(self, action: Selector("textFieldDidChange:"), forControlEvents: UIControlEvents.EditingChanged)
         })
     }
     
+    public override func viewWillAppear(animated: Bool) {
+        if let secondaryView = cardInfoView {
+            if secondaryView.superview != view.superview {
+                view.addSubview(secondaryView)
+            }
+        }
+        cardInfoView?.frame = view.frame
+        cardInfoView?.frame.origin = view.frame.origin
+        moveSecondaryViewOut()
+        
+        cardInfoView?.autoresizesSubviews = false
+    }
+    
     public func getNibName() -> String {
         return "CardView"
+    }
+    
+    public func getNibBundle() -> NSBundle {
+        return NSBundle(forClass: self.dynamicType)
     }
     
     // MARK: - Validity checks
@@ -121,7 +167,6 @@ public class CardViewController: UIViewController, UITextFieldDelegate, CardNumb
         case cvcTextField:
             if isCVCValid(textField.text ?? "", partiallyValid: false) {
                 cardCVC = CardCVC(string: textField.text!)
-                monthTextField.becomeFirstResponder()
             }
         case monthTextField:
             if isMonthValid(textField.text ?? "", partiallyValid: false) {
@@ -131,11 +176,7 @@ public class CardViewController: UIViewController, UITextFieldDelegate, CardNumb
         case yearTextField:
             if isYearValid(textField.text ?? "", partiallyValid: false) {
                 yearString = textField.text!
-                if !isCVCValid(cvcTextField.text ?? "", partiallyValid: false) {
-                    cvcTextField.becomeFirstResponder()
-                } else if !isMonthValid(monthTextField.text ?? "", partiallyValid: false) {
-                    monthTextField.becomeFirstResponder()
-                }
+                cvcTextField.becomeFirstResponder()
             }
         default:
             break
@@ -165,16 +206,6 @@ public class CardViewController: UIViewController, UITextFieldDelegate, CardNumb
     }
     
     public func cardNumberTextField(cardNumberTextField: CardNumberTextField, didEnterValidCardNumber cardNumber: CardNumber) {
-        if let secondaryView = cardInfoView {
-            if secondaryView.superview != view.superview {
-                view.addSubview(secondaryView)
-            }
-        }
-        cardInfoView?.frame = view.frame
-        cardInfoView?.frame.origin = view.frame.origin
-        cardInfoView?.frame.origin.x += view.frame.width
-        
-        cardInfoView?.autoresizesSubviews = false
         
         UIView.animateWithDuration(1.0, animations: {
             self.moveNumberFieldLeft()
@@ -183,7 +214,7 @@ public class CardViewController: UIViewController, UITextFieldDelegate, CardNumb
         
         self.cardNumber = cardNumber
         
-        cvcTextField.becomeFirstResponder()
+        monthTextField.becomeFirstResponder()
     }
     
     // MARK: - View animations
@@ -199,11 +230,11 @@ public class CardViewController: UIViewController, UITextFieldDelegate, CardNumb
     }
     
     private func moveSecondaryViewIn() {
-        cardInfoView?.transform = CGAffineTransformMakeTranslation(-view.bounds.width, 0)
+        cardInfoView?.transform = CGAffineTransformIdentity
     }
     
     private func moveSecondaryViewOut() {
-        cardInfoView?.transform = CGAffineTransformIdentity
+        cardInfoView?.transform = CGAffineTransformMakeTranslation(view.bounds.width, 0)
     }
     
     // MARK: - UIView methods

@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10102" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10080"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CardViewController" customModule="CardKit" customModuleProvider="target">
             <connections>
-                <outlet property="cardDetailButton" destination="YQU-u1-yfJ" id="A2n-Wq-Q7Q"/>
                 <outlet property="cardImageView" destination="puU-AL-gPV" id="AIn-X0-fGf"/>
                 <outlet property="cvcTextField" destination="HOM-PC-B5m" id="dFv-Ti-Hef"/>
                 <outlet property="monthTextField" destination="fJ1-My-f5V" id="nbO-23-lbf"/>
@@ -22,9 +21,9 @@
             <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="0000000000000000" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="T6o-6e-fLS" customClass="CardNumberTextField" customModule="CardKit" customModuleProvider="target">
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" placeholder="0000000000000000" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="T6o-6e-fLS" customClass="CardNumberTextField" customModule="CardKit" customModuleProvider="target">
                     <rect key="frame" x="33" y="0.0" width="559" height="600"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="20"/>
                     <textInputTraits key="textInputTraits"/>
                     <userDefinedRuntimeAttributes>
                         <userDefinedRuntimeAttribute type="string" keyPath="cardNumberSeparator" value=" - "/>
@@ -58,53 +57,52 @@
             <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
-                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="CVC" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="HOM-PC-B5m" customClass="StylizedTextField" customModule="CardKit" customModuleProvider="target">
-                    <rect key="frame" x="442" y="0.0" width="44" height="600"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="44" id="lA2-eR-vJI"/>
-                    </constraints>
-                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                    <textInputTraits key="textInputTraits"/>
-                </textField>
                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="MM" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="fJ1-My-f5V" customClass="StylizedTextField" customModule="CardKit" customModuleProvider="target">
-                    <rect key="frame" x="494" y="0.0" width="37" height="600"/>
+                    <rect key="frame" x="252" y="0.0" width="37" height="600"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="37" id="siB-f1-Q3f"/>
+                        <constraint firstAttribute="width" constant="37" id="G8C-ar-8HE"/>
                     </constraints>
-                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="20"/>
                     <textInputTraits key="textInputTraits"/>
                 </textField>
                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="YY" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="5TD-fT-8O1" customClass="StylizedTextField" customModule="CardKit" customModuleProvider="target">
-                    <rect key="frame" x="539" y="0.0" width="61" height="600"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="61" id="ljc-Op-9k6"/>
-                    </constraints>
-                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <rect key="frame" x="311" y="0.0" width="29.5" height="600"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="20"/>
                     <textInputTraits key="textInputTraits"/>
                 </textField>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="/" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="y9B-vN-uNr">
-                    <rect key="frame" x="532" y="289" width="6" height="20"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="/" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="y9B-vN-uNr">
+                    <rect key="frame" x="297" y="290" width="6" height="20"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                     <nil key="highlightedColor"/>
                 </label>
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="CVC" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="HOM-PC-B5m" customClass="StylizedTextField" customModule="CardKit" customModuleProvider="target">
+                    <rect key="frame" x="503" y="0.0" width="44" height="600"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="44" id="Qg6-cj-7bj"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                    <textInputTraits key="textInputTraits"/>
+                </textField>
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstItem="5TD-fT-8O1" firstAttribute="top" secondItem="mS0-iw-6su" secondAttribute="top" id="21o-Ae-8SJ"/>
-                <constraint firstItem="y9B-vN-uNr" firstAttribute="centerY" secondItem="5TD-fT-8O1" secondAttribute="centerY" constant="-2" id="6ST-04-2Fb"/>
-                <constraint firstAttribute="bottom" secondItem="5TD-fT-8O1" secondAttribute="bottom" id="BUV-2f-cr6"/>
-                <constraint firstAttribute="trailing" secondItem="5TD-fT-8O1" secondAttribute="trailing" id="Gcl-Fe-xuq"/>
-                <constraint firstItem="fJ1-My-f5V" firstAttribute="leading" secondItem="HOM-PC-B5m" secondAttribute="trailing" constant="8" symbolic="YES" id="HWa-ME-LQU"/>
-                <constraint firstItem="5TD-fT-8O1" firstAttribute="leading" secondItem="fJ1-My-f5V" secondAttribute="trailing" constant="8" id="IHy-Pr-AEh"/>
-                <constraint firstItem="5TD-fT-8O1" firstAttribute="leading" secondItem="y9B-vN-uNr" secondAttribute="trailing" constant="1" id="MjC-oh-y0f"/>
-                <constraint firstAttribute="bottom" secondItem="fJ1-My-f5V" secondAttribute="bottom" id="MnG-PE-ff2"/>
-                <constraint firstAttribute="bottom" secondItem="HOM-PC-B5m" secondAttribute="bottom" id="QKm-Dq-cjF"/>
-                <constraint firstItem="HOM-PC-B5m" firstAttribute="top" secondItem="mS0-iw-6su" secondAttribute="top" id="RBk-bz-JOl"/>
-                <constraint firstItem="fJ1-My-f5V" firstAttribute="top" secondItem="mS0-iw-6su" secondAttribute="top" id="hj9-x6-b4B"/>
-                <constraint firstItem="y9B-vN-uNr" firstAttribute="leading" secondItem="fJ1-My-f5V" secondAttribute="trailing" constant="1" id="kgw-lW-pdn"/>
+                <constraint firstAttribute="bottom" secondItem="HOM-PC-B5m" secondAttribute="bottom" id="6HZ-FC-7AE"/>
+                <constraint firstItem="fJ1-My-f5V" firstAttribute="top" secondItem="HOM-PC-B5m" secondAttribute="top" id="BVP-wM-NCr"/>
+                <constraint firstItem="5TD-fT-8O1" firstAttribute="leading" secondItem="y9B-vN-uNr" secondAttribute="trailing" constant="8" id="Crl-t1-R3j"/>
+                <constraint firstItem="fJ1-My-f5V" firstAttribute="centerY" secondItem="mS0-iw-6su" secondAttribute="centerY" id="Epb-Aq-zyq"/>
+                <constraint firstItem="fJ1-My-f5V" firstAttribute="bottom" secondItem="HOM-PC-B5m" secondAttribute="bottom" id="Pjt-71-Cvl"/>
+                <constraint firstItem="y9B-vN-uNr" firstAttribute="centerX" secondItem="mS0-iw-6su" secondAttribute="centerX" id="Q3u-jt-xIP"/>
+                <constraint firstItem="y9B-vN-uNr" firstAttribute="centerY" secondItem="mS0-iw-6su" secondAttribute="centerY" id="Ugf-ox-nfM"/>
+                <constraint firstItem="HOM-PC-B5m" firstAttribute="centerY" secondItem="mS0-iw-6su" secondAttribute="centerY" id="XHQ-sd-PW3"/>
+                <constraint firstAttribute="bottom" secondItem="5TD-fT-8O1" secondAttribute="bottom" id="ayE-yz-mSe"/>
+                <constraint firstAttribute="trailing" secondItem="HOM-PC-B5m" secondAttribute="trailing" constant="53" id="hfO-dg-Slg"/>
+                <constraint firstItem="5TD-fT-8O1" firstAttribute="centerY" secondItem="mS0-iw-6su" secondAttribute="centerY" id="wVy-XV-tO3"/>
+                <constraint firstItem="y9B-vN-uNr" firstAttribute="leading" secondItem="fJ1-My-f5V" secondAttribute="trailing" constant="8" symbolic="YES" id="xIb-tF-lab"/>
+                <constraint firstItem="HOM-PC-B5m" firstAttribute="top" secondItem="mS0-iw-6su" secondAttribute="top" id="yLM-cs-wHL"/>
+                <constraint firstItem="5TD-fT-8O1" firstAttribute="top" secondItem="mS0-iw-6su" secondAttribute="top" id="ycA-4z-fk6"/>
             </constraints>
-            <point key="canvasLocation" x="994" y="386"/>
+            <point key="canvasLocation" x="1040" y="246"/>
         </view>
     </objects>
     <resources>
