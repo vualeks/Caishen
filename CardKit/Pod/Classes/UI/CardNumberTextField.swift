@@ -23,28 +23,26 @@ public class CardNumberTextField: StylizedTextField {
     @IBInspectable
     public var invalidInputColor: UIColor = UIColor.redColor()
     
-    private var validInputColor: UIColor?
-    
     @IBInspectable
     public var cardNumberSeparator: String = "-" {
         didSet {
-            self.placeholder = self.cardNumberFormatter.formattedCardNumber(self.placeholder ?? "1234123412341234")
+        self.placeholder = self.cardNumberFormatter.formattedCardNumber(self.placeholder ?? "1234123412341234")
         }
     }
     
     override public var placeholder: String? {
         didSet {
-            guard let placeholder = placeholder else {
-                return
-            }
-            let isUnformatted = (placeholder == self.cardNumberFormatter.unformattedCardNumber(placeholder))
-            
-            // Format the placeholder, if not already done
-            if isUnformatted && self.cardNumberSeparator != "" {
-                self.placeholder = self.cardNumberFormatter.formattedCardNumber(placeholder)
-            } else {
-                return
-            }
+        guard let placeholder = placeholder else {
+            return
+        }
+        let isUnformatted = (placeholder == self.cardNumberFormatter.unformattedCardNumber(placeholder))
+        
+        // Format the placeholder, if not already done
+        if isUnformatted && self.cardNumberSeparator != "" {
+            self.placeholder = self.cardNumberFormatter.formattedCardNumber(placeholder)
+        } else {
+            return
+        }
         }
     }
     
@@ -89,8 +87,21 @@ public class CardNumberTextField: StylizedTextField {
         self.cardType = CardType.CardTypeForNumber(number)
     }
     
-    public override func willMoveToSuperview(newSuperview: UIView?) {
-        self.validInputColor = self.textColor
+    private func flashTextFieldInvalid() {
+        NSOperationQueue().addOperationWithBlock({
+            let oldTextColor = self.textColor
+            dispatch_async(dispatch_get_main_queue(), {
+                UIView.animateWithDuration(0.5, animations: {
+                    self.textColor = self.invalidInputColor
+                })
+            })
+            NSThread.sleepForTimeInterval(0.5)
+            dispatch_async(dispatch_get_main_queue(), {
+                UIView.animateWithDuration(0.5, animations: {
+                    self.textColor = oldTextColor
+                })
+            })
+        })
     }
     
     public override func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
@@ -114,23 +125,22 @@ public class CardNumberTextField: StylizedTextField {
             let completeValidation = cardNumberValidator.validateCardNumber(parsedCardNumber)
             
             if completeValidation == CardValidationResult.Valid {
-                self.userDidEnterValidCardNumber(parsedCardNumber)
-                self.cardNumberFormatter.replaceRangeFormatted(range, inTextField: textField, withString: string)
-                self.textColor = self.validInputColor
+                userDidEnterValidCardNumber(parsedCardNumber)
+                cardNumberFormatter.replaceRangeFormatted(range, inTextField: textField, withString: string)
                 
-                self.cardNumberTextFieldDelegate?.cardNumberTextField?(self, didEnterValidCardNumber: CardNumber(string: self.cardNumberFormatter.unformattedCardNumber(newText)))
+                cardNumberTextFieldDelegate?.cardNumberTextField?(self, didEnterValidCardNumber: CardNumber(string: self.cardNumberFormatter.unformattedCardNumber(newText)))
                 
                 return false
             } else if partialValidation == CardValidationResult.Valid {
-                self.userEnteredPartiallyValidCardNumber(parsedCardNumber)
-                self.textColor = self.validInputColor
-                self.cardNumberFormatter.replaceRangeFormatted(range, inTextField: textField, withString: string)
+                userEnteredPartiallyValidCardNumber(parsedCardNumber)
                 
-                self.cardNumberTextFieldDelegate?.cardNumberTextField?(self, didChangeText: newText)
+                cardNumberFormatter.replaceRangeFormatted(range, inTextField: textField, withString: string)
+                
+                cardNumberTextFieldDelegate?.cardNumberTextField?(self, didChangeText: newText)
                 
                 return false
             } else {
-                self.textColor = self.invalidInputColor
+                flashTextFieldInvalid()
                 
                 return false
             }

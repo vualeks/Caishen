@@ -20,8 +20,8 @@ public class CardViewController: UIViewController, UITextFieldDelegate, CardNumb
     @IBOutlet public weak var cvcTextField: UITextField!
     @IBOutlet public weak var monthTextField: UITextField!
     @IBOutlet public weak var yearTextField: UITextField!
-    
     @IBOutlet public weak var cardInfoView: UIView?
+    @IBInspectable public var textColor: UIColor?
     public var cardNumber: CardNumber?
     public var cardCVC: CardCVC?
     public var cardExpiry: CardExpiry? {
@@ -63,10 +63,10 @@ public class CardViewController: UIViewController, UITextFieldDelegate, CardNumb
             let cvcTextField = cvcTextField,
             let monthTextField = monthTextField,
             let yearTextField = yearTextField {
-                return
+            return
         }
         guard let nib = getNibBundle().loadNibNamed(getNibName(), owner: self, options: nil), let firstObjectInNib = nib.first as? UIView else {
-                fatalError("The nib is expected to contain two views:\n-   The first view with the 'cardImageView' located left of the 'numberTextField'\n-   The second view with 'cvcTextField', 'cvcTextField' and 'cvcTextField' (situated in that order from left to right).")
+            fatalError("The nib is expected to contain two views:\n-   The first view with the 'cardImageView' located left of the 'numberTextField'\n-   The second view with 'cvcTextField', 'cvcTextField' and 'cvcTextField' (situated in that order from left to right).")
         }
         self.view = firstObjectInNib
         
@@ -89,6 +89,8 @@ public class CardViewController: UIViewController, UITextFieldDelegate, CardNumb
         monthTextField?.delegate = self
         yearTextField?.delegate = self
         
+        cvcTextField.addObserver(self, forKeyPath: "text", options: NSKeyValueObservingOptions.New, context: nil)
+        
         [numberTextField,cvcTextField,monthTextField,yearTextField].forEach({
             $0.keyboardType = .NumberPad
         })
@@ -96,6 +98,18 @@ public class CardViewController: UIViewController, UITextFieldDelegate, CardNumb
         [numberTextField, cvcTextField, monthTextField, yearTextField].forEach({
             $0.addTarget(self, action: Selector("textFieldDidChange:"), forControlEvents: UIControlEvents.EditingChanged)
         })
+        
+        if let textColor = textColor {
+            [numberTextField, monthTextField, yearTextField, cvcTextField].forEach({
+                $0?.textColor = textColor
+            })
+        }
+    }
+    
+    public override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
+        if keyPath == "text" {
+            
+        }
     }
     
     public override func viewWillAppear(animated: Bool) {

@@ -42,7 +42,7 @@
                                 </connections>
                             </containerView>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="hlC-ih-9yX" firstAttribute="trailing" secondItem="kh9-bI-dsS" secondAttribute="trailingMargin" id="2xz-i0-S80"/>
                             <constraint firstItem="mrk-g6-1Pc" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" constant="64" id="7od-4E-QK4"/>
@@ -73,6 +73,11 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="color" keyPath="textColor">
+                            <color key="value" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Qa0-Yd-TFQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -82,6 +87,10 @@
         <scene sceneID="0IB-Lu-Xnv">
             <objects>
                 <viewController id="7gQ-y5-YgY" customClass="CardViewController" customModule="CardKit" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="doP-Zw-6nN"/>
+                        <viewControllerLayoutGuide type="bottom" id="jwT-sM-Mih"/>
+                    </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="Uwq-H4-Nwy">
                         <rect key="frame" x="0.0" y="0.0" width="317" height="36"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
