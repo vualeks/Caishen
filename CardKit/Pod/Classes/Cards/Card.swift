@@ -15,12 +15,7 @@ public class Card {
     public let bankCardNumber: CardNumber
     public let cardVerificationCode: CardCVC
     public let expiryDate: CardExpiry
-    /**
-     Provides the card's type based on its bank card number
-    */
-    public var type: CardType {
-        return CardType.CardTypeForNumber(self.bankCardNumber)
-    }
+    
     /**
      Creates a `Card` with given card number, verification code and expiry date.
     */
@@ -33,7 +28,7 @@ public class Card {
     /**
      - returns: True if the card has been validated successfully.
     */
-    public func isValid() -> Bool {
-        return CardValidator().validateCard(self) == CardValidationResult.Valid
+    public func isValid(cardTypeRegister: CardTypeRegister) -> Bool {
+        return CardValidator(cardTypeRegister: cardTypeRegister).validateCard(self) == CardValidationResult.Valid
     }
 }

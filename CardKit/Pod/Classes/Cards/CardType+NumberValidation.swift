@@ -1,14 +1,14 @@
 //
-//  CardNumberValidator.swift
-//  CardKit
+//  CardType+NumberValidation.swift
+//  Pods
 //
-//  Created by Daniel Vancura on 2/2/16.
-//  Copyright © 2016 Prolific Interactive. All rights reserved.
+//  Created by Daniel Vancura on 2/17/16.
+//
 //
 
-import UIKit
+import Foundation
 
-public class CardNumberValidator: NSObject {
+public extension CardType {
     
     private func numberIsNumeric(number: CardNumber) -> CardValidationResult {
         for c in number.stringValue().characters {
@@ -67,8 +67,8 @@ public class CardNumberValidator: NSObject {
         }
     }
     
-    private func lengthMatchesType(length: Int, type: CardType) -> CardValidationResult {
-        return self.testLength(length, assumingLength: CardType.expectedLengthForCardType(type))
+    private func lengthMatchesType(length: Int) -> CardValidationResult {
+        return self.testLength(length, assumingLength: expectedCardNumberLength())
     }
     
     /**
@@ -89,10 +89,7 @@ public class CardNumberValidator: NSObject {
     }
     
     public func validateCardNumber(cardNumber: CardNumber) -> CardValidationResult {
-        let cardType = CardType.CardTypeForNumber(cardNumber)
-        
-        return
-            self.lengthMatchesType(cardNumber.stringValue().length(), type: cardType)
+        return lengthMatchesType(cardNumber.stringValue().length())
                 .union(self.numberIsNumeric(cardNumber))
                 .union(self.numberIsValidLuhn(cardNumber))
     }

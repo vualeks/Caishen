@@ -11,19 +11,13 @@ import CardKit
 
 class CardCVCValidatorTests: XCTestCase {
     
-    var validator: CardCVCValidator!
-    
     override func setUp() {
         super.setUp()
-        
-        self.validator = CardCVCValidator()
         // Put setup code here. This method is called before the invocation of each test method in the class.
     }
     
     override func tearDown() {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
-        self.validator = nil
-        
         super.tearDown()
     }
     
@@ -32,11 +26,11 @@ class CardCVCValidatorTests: XCTestCase {
         let invalidLengthObject1 = CardCVC(string: "23")
         let invalidLengthObject2 = CardCVC(string: "2345")
         
-        XCTAssertValid(self.validator.validateCVC(validObject, forCardType: .Visa))
-        XCTAssertValid(self.validator.validateCVC(invalidLengthObject2, forCardType: .Amex))
-        XCTAssertIncompleteCVC(self.validator.validateCVC(validObject, forCardType: .Amex))
-        XCTAssertIncompleteCVC(self.validator.validateCVC(invalidLengthObject1, forCardType: .Visa))
-        XCTAssertInvalidCVC(self.validator.validateCVC(invalidLengthObject2, forCardType: .Visa))
+        XCTAssertValid(VisaCardType().validateCVC(validObject))
+        XCTAssertValid(AmexCardType().validateCVC(invalidLengthObject2))
+        XCTAssertIncompleteCVC(AmexCardType().validateCVC(validObject))
+        XCTAssertIncompleteCVC(VisaCardType().validateCVC(invalidLengthObject1))
+        XCTAssertInvalidCVC(VisaCardType().validateCVC(invalidLengthObject2))
     }
     
     func testValidateCharacters() {
@@ -44,9 +38,9 @@ class CardCVCValidatorTests: XCTestCase {
         let invalidCharacterObject1 = CardCVC(string: "23a")
         let invalidCharacterObject2 = CardCVC(string: "2.5")
         
-        XCTAssertValid(self.validator.validateCVC(validObject, forCardType: .Visa))
-        XCTAssertInvalidCVC(self.validator.validateCVC(invalidCharacterObject1, forCardType: .Visa))
-        XCTAssertInvalidCVC(self.validator.validateCVC(invalidCharacterObject2, forCardType: .Visa))
+        XCTAssertValid(VisaCardType().validateCVC(validObject))
+        XCTAssertInvalidCVC(VisaCardType().validateCVC(invalidCharacterObject1))
+        XCTAssertInvalidCVC(VisaCardType().validateCVC(invalidCharacterObject2))
     }
     
     func testPerformanceExample() {

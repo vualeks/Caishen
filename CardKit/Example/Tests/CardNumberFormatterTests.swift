@@ -16,7 +16,7 @@ class CardNumberFormatterTests: XCTestCase {
     override func setUp() {
         super.setUp()
         
-        self.formatter = CardNumberFormatter()
+        self.formatter = CardNumberFormatter(cardTypeRegister: CardTypeRegister.sharedCardTypeRegister)
         // Put setup code here. This method is called before the invocation of each test method in the class.
     }
     

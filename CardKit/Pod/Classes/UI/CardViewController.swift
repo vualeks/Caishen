@@ -22,6 +22,8 @@ public class CardViewController: UIViewController, UITextFieldDelegate, CardNumb
     @IBOutlet public weak var yearTextField: UITextField!
     @IBOutlet public weak var cardInfoView: UIView?
     @IBInspectable public var textColor: UIColor?
+    public var unknownCardTypeImage: UIImage? = UIImage(named: "Unknown")
+    public var cardTypeRegister: CardTypeRegister = CardTypeRegister.sharedCardTypeRegister
     public var cardNumber: CardNumber?
     public var cardCVC: CardCVC?
     public var cardExpiry: CardExpiry? {
@@ -43,12 +45,12 @@ public class CardViewController: UIViewController, UITextFieldDelegate, CardNumb
             return CardExpiry(month: month, year: year)
         }
     }
-    public var cardType: CardType {
+    public var cardType: CardType? {
         guard let number = cardNumber else {
-            return CardType.Unknown
+            return nil
         }
         
-        return CardType.CardTypeForNumber(number)
+        return cardTypeRegister.cardTypeForNumber(number)
     }
     private var monthString: String?
     private var yearString: String?
@@ -56,13 +58,13 @@ public class CardViewController: UIViewController, UITextFieldDelegate, CardNumb
     public final override func loadView() {
         super.loadView()
         
-        if let view = view,
-            let cardInfoView = cardInfoView,
-            let cardImageView = cardImageView,
-            let numberTextField = numberTextField,
-            let cvcTextField = cvcTextField,
-            let monthTextField = monthTextField,
-            let yearTextField = yearTextField {
+        if let _ = view,
+            let _ = cardInfoView,
+            let _ = cardImageView,
+            let _ = numberTextField,
+            let _ = cvcTextField,
+            let _ = monthTextField,
+            let _ = yearTextField {
             return
         }
         guard let nib = getNibBundle().loadNibNamed(getNibName(), owner: self, options: nil), let firstObjectInNib = nib.first as? UIView else {
@@ -70,11 +72,11 @@ public class CardViewController: UIViewController, UITextFieldDelegate, CardNumb
         }
         self.view = firstObjectInNib
         
-        guard let cardImageView = cardImageView,
-            let numberTextField = numberTextField,
-            let cvcTextField = cvcTextField,
-            let monthTextField = monthTextField,
-            let yearTextField = yearTextField else {
+        guard let _ = cardImageView,
+            let _ = numberTextField,
+            let _ = cvcTextField,
+            let _ = monthTextField,
+            let _ = yearTextField else {
                 fatalError("Some outlets have not been assigned in the provided Nib. Please check the outlet links for 'cardImageView', 'numberTextField', 'cvcTextField', 'monthTextField', 'yearTextField'")
         }
     }
@@ -82,7 +84,7 @@ public class CardViewController: UIViewController, UITextFieldDelegate, CardNumb
     public override func viewDidLoad() {
         super.viewDidLoad()
         
-        cardImageView.image = UIImage(named: CardType.imageNameForCardType(.Unknown))
+        cardImageView.image = unknownCardTypeImage
         numberTextField?.cardNumberTextFieldDelegate = self
         numberTextField.addTarget(self, action: Selector("textFieldDidBeginEditing:"), forControlEvents: UIControlEvents.EditingDidBegin)
         cvcTextField?.delegate = self
@@ -153,7 +155,7 @@ public class CardViewController: UIViewController, UITextFieldDelegate, CardNumb
         if cvc.length() == 0 && partiallyValid {
             return true
         }
-        return CardCVCValidator().validateCVC(CardCVC(string: cvc), forCardType: self.cardType) == .Valid || partiallyValid && CardCVCValidator().validateCVC(CardCVC(string: cvc), forCardType: self.cardType) == .CVCIncomplete
+        return (cardType?.validateCVC(cvc) == .Valid) ?? false || partiallyValid && (cardType?.validateCVC(cvc) == .CVCIncomplete) ?? false
     }
     
     public func isMonthValid(month: String, partiallyValid: Bool) -> Bool {
@@ -234,7 +236,7 @@ public class CardViewController: UIViewController, UITextFieldDelegate, CardNumb
     
     public func cardNumberTextField(cardNumberTextField: CardNumberTextField, didChangeText text: String) {
         if let cardNumber = cardNumberTextField.parsedCardNumber {
-            cardImageView.image = UIImage(named: CardType.imageNameForCardType(CardType.CardTypeForNumber(cardNumber)))
+            cardImageView.image = cardTypeRegister.cardTypeForNumber(cardNumber)?.cardTypeImage() ?? unknownCardTypeImage
         }
     }
     

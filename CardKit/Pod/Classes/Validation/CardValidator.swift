@@ -9,20 +9,20 @@
 import UIKit
 
 public class CardValidator {
-    private let numberValidator: CardNumberValidator
-    private let cvcValidator: CardCVCValidator
     private let expiryValidator: CardExpiryDateValidator
+    public let cardTypeRegister: CardTypeRegister
     
-    init() {
-        self.numberValidator = CardNumberValidator()
-        self.cvcValidator = CardCVCValidator()
-        self.expiryValidator = CardExpiryDateValidator()
+    init(cardTypeRegister: CardTypeRegister) {
+        expiryValidator = CardExpiryDateValidator()
+        self.cardTypeRegister = cardTypeRegister
     }
     
     public func validateCard(card: Card) -> CardValidationResult {
-        return
-            self.numberValidator.validateCardNumber(card.bankCardNumber)
-            .union(self.cvcValidator.validateCVC(card.cardVerificationCode, forCardType: card.type))
+        let numberValidationResult = cardTypeRegister.cardTypeForNumber(card.bankCardNumber)?.validateCardNumber(card.bankCardNumber)
+        let cvcValidationResult = cardTypeRegister.cardTypeForNumber(card.bankCardNumber)?.validateCVC(card.cardVerificationCode.stringValue())
+        
+        return (numberValidationResult ?? .Valid)
+            .union(cvcValidationResult ?? .Valid)
             .union(self.expiryValidator.validateExpiry(card.expiryDate))
     }
 }

@@ -17,19 +17,21 @@ public protocol CardNumberTextFieldDelegate {
 @IBDesignable
 public class CardNumberTextField: StylizedTextField {
     
+    private var cardType: CardType?
+    private var cardNumberFormatter: CardNumberFormatter {
+        get {
+            return CardNumberFormatter(separator: self.cardNumberSeparator, cardTypeRegister: cardTypeRegister)
+        }
+    }
     public private(set) var parsedCardNumber: CardNumber?
     public var cardNumberTextFieldDelegate: CardNumberTextFieldDelegate?
-    
-    @IBInspectable
-    public var invalidInputColor: UIColor = UIColor.redColor()
-    
-    @IBInspectable
-    public var cardNumberSeparator: String = "-" {
+    public var cardTypeRegister: CardTypeRegister = CardTypeRegister.sharedCardTypeRegister
+    @IBInspectable public var invalidInputColor: UIColor = UIColor.redColor()
+    @IBInspectable public var cardNumberSeparator: String = "-" {
         didSet {
         self.placeholder = self.cardNumberFormatter.formattedCardNumber(self.placeholder ?? "1234123412341234")
         }
     }
-    
     override public var placeholder: String? {
         didSet {
         guard let placeholder = placeholder else {
@@ -71,20 +73,12 @@ public class CardNumberTextField: StylizedTextField {
         return rectForTextRange(NSMakeRange(textLength - lastGroupLength, lastGroupLength), inTextField: self)
     }
     
-    private var cardType: CardType = .Unknown
-    
-    private var cardNumberFormatter: CardNumberFormatter {
-        get {
-            return CardNumberFormatter(separator: self.cardNumberSeparator)
-        }
-    }
-    
     private func userDidEnterValidCardNumber(number: CardNumber) {
-        self.cardType = CardType.CardTypeForNumber(number)
+        self.cardType = cardTypeRegister.cardTypeForNumber(number)
     }
     
     private func userEnteredPartiallyValidCardNumber(number: CardNumber) {
-        self.cardType = CardType.CardTypeForNumber(number)
+        self.cardType = cardTypeRegister.cardTypeForNumber(number)
     }
     
     private func flashTextFieldInvalid() {
@@ -112,17 +106,16 @@ public class CardNumberTextField: StylizedTextField {
         let newTextIsNumeric = UInt(newText) != nil
         
         if newText.length() == 0 {
-            self.cardType = .Unknown
+            self.cardType = nil
             return true
         }
         
         // Create a card number with the newly formed string.
         self.parsedCardNumber = CardNumber(string: newText)
-        let cardNumberValidator = CardNumberValidator()
         
         if let parsedCardNumber = parsedCardNumber {
-            let partialValidation = cardNumberValidator.checkCardNumberPartiallyValid(parsedCardNumber)
-            let completeValidation = cardNumberValidator.validateCardNumber(parsedCardNumber)
+            let partialValidation = cardTypeRegister.cardTypeForNumber(parsedCardNumber)?.checkCardNumberPartiallyValid(parsedCardNumber)
+            let completeValidation = cardTypeRegister.cardTypeForNumber(parsedCardNumber)?.validateCardNumber(parsedCardNumber)
             
             if completeValidation == CardValidationResult.Valid {
                 userDidEnterValidCardNumber(parsedCardNumber)

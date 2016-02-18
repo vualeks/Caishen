@@ -11,8 +11,6 @@ import CardKit
 
 class CardNumberValidatorTests: XCTestCase {
     
-    private var validator: CardNumberValidator!
-    
     private let validAmexNumbers = [
         "340911175774790","344498905015187","377181528611711",
         "371389712775871","344349423631619","376524623963118",
@@ -58,8 +56,6 @@ class CardNumberValidatorTests: XCTestCase {
 
     override func setUp() {
         super.setUp()
-        
-        self.validator = CardNumberValidator()
         // Put setup code here. This method is called before the invocation of each test method in the class.
     }
     
@@ -71,32 +67,32 @@ class CardNumberValidatorTests: XCTestCase {
     func testValidCards() {
         print("Validate Visa")
         self.validVisaNumbers.forEach({
-            XCTAssertEqual(CardType.CardTypeForNumber(CardNumber(string: $0)), CardType.Visa)
-            XCTAssertValid(self.validator.validateCardNumber(CardNumber(string: $0)))
+            XCTAssertEqual(CardTypeRegister.sharedCardTypeRegister.cardTypeForNumber(CardNumber(string: $0))?.cardTypeName(), VisaCardType().cardTypeName())
+            XCTAssertValid(VisaCardType().validateCardNumber(CardNumber(string: $0)))
         })
         
         print("Validate Amex")
         self.validAmexNumbers.forEach({
-            XCTAssertEqual(CardType.CardTypeForNumber(CardNumber(string: $0)), CardType.Amex)
-            XCTAssertValid(self.validator.validateCardNumber(CardNumber(string: $0)))
+            XCTAssertEqual(CardTypeRegister.sharedCardTypeRegister.cardTypeForNumber(CardNumber(string: $0))?.cardTypeName(), AmexCardType().cardTypeName())
+            XCTAssertValid(AmexCardType().validateCardNumber(CardNumber(string: $0)))
         })
         
         print("Validate Diners Club")
         self.validDinersClubNumbers.forEach({
-            XCTAssertEqual(CardType.CardTypeForNumber(CardNumber(string: $0)), CardType.DinersClub)
-            XCTAssertValid(self.validator.validateCardNumber(CardNumber(string: $0)))
+            XCTAssertEqual(CardTypeRegister.sharedCardTypeRegister.cardTypeForNumber(CardNumber(string: $0))?.cardTypeName(), DinersClubCardType().cardTypeName())
+            XCTAssertValid(DinersClubCardType().validateCardNumber(CardNumber(string: $0)))
         })
         
         print("Validate Discover")
         self.validDiscoverNumbers.forEach({
-            XCTAssertEqual(CardType.CardTypeForNumber(CardNumber(string: $0)), CardType.Discover)
-            XCTAssertValid(self.validator.validateCardNumber(CardNumber(string: $0)))
+            XCTAssertEqual(CardTypeRegister.sharedCardTypeRegister.cardTypeForNumber(CardNumber(string: $0))?.cardTypeName(), DiscoverCardType().cardTypeName())
+            XCTAssertValid(DiscoverCardType().validateCardNumber(CardNumber(string: $0)))
         })
         
         print("Validate JCB")
         self.validJCBNumbers.forEach({
-            XCTAssertEqual(CardType.CardTypeForNumber(CardNumber(string: $0)), CardType.JCB, "Card number was interpreted as wrong kind: \($0)")
-            XCTAssertValid(self.validator.validateCardNumber(CardNumber(string: $0)))
+            XCTAssertEqual(CardTypeRegister.sharedCardTypeRegister.cardTypeForNumber(CardNumber(string: $0))?.cardTypeName(), JCBCardType().cardTypeName(), "Card number was interpreted as wrong kind: \($0)")
+            XCTAssertValid(JCBCardType().validateCardNumber(CardNumber(string: $0)))
         })
     }
 
@@ -115,19 +111,19 @@ class CardNumberValidatorTests: XCTestCase {
         let tooLongJCB = "35301113333000000"
         let tooLongMasterCard = "55555555555544444"
         
-        XCTAssertIncompleteNumber(self.validator.validateCardNumber(CardNumber(string: tooShortVisa)))
-        XCTAssertIncompleteNumber(self.validator.validateCardNumber(CardNumber(string: tooShortAmex)))
-        XCTAssertIncompleteNumber(self.validator.validateCardNumber(CardNumber(string: tooShortDiners)))
-        XCTAssertIncompleteNumber(self.validator.validateCardNumber(CardNumber(string: tooShortDiscover)))
-        XCTAssertIncompleteNumber(self.validator.validateCardNumber(CardNumber(string: tooShortJCB)))
-        XCTAssertIncompleteNumber(self.validator.validateCardNumber(CardNumber(string: tooShortMasterCard)))
+        XCTAssertIncompleteNumber(VisaCardType().validateCardNumber(CardNumber(string: tooShortVisa)))
+        XCTAssertIncompleteNumber(AmexCardType().validateCardNumber(CardNumber(string: tooShortAmex)))
+        XCTAssertIncompleteNumber(DinersClubCardType().validateCardNumber(CardNumber(string: tooShortDiners)))
+        XCTAssertIncompleteNumber(DiscoverCardType().validateCardNumber(CardNumber(string: tooShortDiscover)))
+        XCTAssertIncompleteNumber(JCBCardType().validateCardNumber(CardNumber(string: tooShortJCB)))
+        XCTAssertIncompleteNumber(MasterCardCardType().validateCardNumber(CardNumber(string: tooShortMasterCard)))
         
-        XCTAssertInvalidNumberForType(self.validator.validateCardNumber(CardNumber(string: tooLongVisa)))
-        XCTAssertInvalidNumberForType(self.validator.validateCardNumber(CardNumber(string: tooLongAmex)))
-        XCTAssertInvalidNumberForType(self.validator.validateCardNumber(CardNumber(string: tooLongDiners)))
-        XCTAssertInvalidNumberForType(self.validator.validateCardNumber(CardNumber(string: tooLongDiscover)))
-        XCTAssertInvalidNumberForType(self.validator.validateCardNumber(CardNumber(string: tooLongJCB)))
-        XCTAssertInvalidNumberForType(self.validator.validateCardNumber(CardNumber(string: tooLongMasterCard)))
+        XCTAssertInvalidNumberForType(VisaCardType().validateCardNumber(CardNumber(string: tooLongVisa)))
+        XCTAssertInvalidNumberForType(AmexCardType().validateCardNumber(CardNumber(string: tooLongAmex)))
+        XCTAssertInvalidNumberForType(DinersClubCardType().validateCardNumber(CardNumber(string: tooLongDiners)))
+        XCTAssertInvalidNumberForType(DiscoverCardType().validateCardNumber(CardNumber(string: tooLongDiscover)))
+        XCTAssertInvalidNumberForType(JCBCardType().validateCardNumber(CardNumber(string: tooLongJCB)))
+        XCTAssertInvalidNumberForType(MasterCardCardType().validateCardNumber(CardNumber(string: tooLongMasterCard)))
     }
     
     /**
@@ -142,7 +138,7 @@ class CardNumberValidatorTests: XCTestCase {
         
         let invalidLuhnTestVisa: [String] = allValidCardNumbers.map({
             guard let intValue = Int($0) else {
-                XCTFail("The credit card number is supposed to be parseable to an Integer!")
+                XCTFail("The credit card number \($0) is supposed to be parseable to an Integer!")
                 return ""
             }
             
@@ -159,7 +155,7 @@ class CardNumberValidatorTests: XCTestCase {
         
         
         invalidLuhnTestVisa.forEach({
-            XCTAssertLuhnTestFailed(self.validator.validateCardNumber(CardNumber(string: $0)))
+            XCTAssertLuhnTestFailed(VisaCardType().validateCardNumber(CardNumber(string: $0)))
         })
     }
 

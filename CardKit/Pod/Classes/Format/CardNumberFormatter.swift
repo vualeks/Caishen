@@ -10,20 +10,22 @@ import UIKit
 
 public class CardNumberFormatter: NSObject {
     public var separator: String
+    private var cardTypeRegister: CardTypeRegister
     
     /**
      Creates a `CardNumberFormatter` with the provided separator for formatting.
      - parameter separator: The separator that is used for grouping the card number.
      */
-    public init(separator: String) {
+    public init(separator: String, cardTypeRegister: CardTypeRegister) {
         self.separator = separator
+        self.cardTypeRegister = cardTypeRegister
     }
     
     /**
      Creates a default `CardNumberFormatter` with a single space as separator for formatting.
      */
-    public convenience override init() {
-        self.init(separator: " ")
+    public convenience init(cardTypeRegister: CardTypeRegister) {
+        self.init(separator: " ", cardTypeRegister: cardTypeRegister)
     }
     
     /**
@@ -45,9 +47,9 @@ public class CardNumberFormatter: NSObject {
     public func formattedCardNumber(cardNumberString: String) -> String {
         let regex: NSRegularExpression
         
-        let cardType = CardType.CardTypeForNumber(CardNumber(string: cardNumberString))
+        let cardType = cardTypeRegister.cardTypeForNumber(CardNumber(string: cardNumberString))
         do {
-            let groups = CardType.numberGroupingForCardType(cardType)
+            let groups = cardType?.cardNumberGrouping() ?? [4,4,4,4]
             var pattern = ""
             var first = true
             for group in groups {
