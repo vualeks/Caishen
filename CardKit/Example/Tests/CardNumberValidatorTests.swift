@@ -137,7 +137,7 @@ class CardNumberValidatorTests: XCTestCase {
         allValidCardNumbers.appendContentsOf(self.validJCBNumbers)
         
         let invalidLuhnTestVisa: [String] = allValidCardNumbers.map({
-            guard let intValue = Int($0) else {
+            guard let intValue = Int64($0) else {
                 XCTFail("The credit card number \($0) is supposed to be parseable to an Integer!")
                 return ""
             }

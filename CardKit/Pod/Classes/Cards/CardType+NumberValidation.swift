@@ -20,7 +20,7 @@ public extension CardType {
         return CardValidationResult.Valid
     }
     
-    private func numberIsValidLuhn(number: CardNumber) -> CardValidationResult {
+    public func numberIsValidLuhn(number: CardNumber) -> CardValidationResult {
         var odd = true
         var sum = 0
         let digits = NSMutableArray(capacity: number.stringValue().length())
@@ -75,7 +75,7 @@ public extension CardType {
      Returns Valid, if the card validation succeeded or the card validation failed because of the Luhn test or insufficient card number length, both of which are not important for incomplete card numbers.
      */
     public func checkCardNumberPartiallyValid(cardNumber: CardNumber) -> CardValidationResult {
-        let validationResult = self.validateCardNumber(cardNumber)
+        let validationResult = validateCardNumber(cardNumber)
         let completeNumberButLuhnTestFailed = !validationResult.isSupersetOf(CardValidationResult.NumberIncomplete) && validationResult.isSupersetOf(CardValidationResult.LuhnTestFailed)
         
         if completeNumberButLuhnTestFailed {
@@ -90,7 +90,7 @@ public extension CardType {
     
     public func validateCardNumber(cardNumber: CardNumber) -> CardValidationResult {
         return lengthMatchesType(cardNumber.stringValue().length())
-                .union(self.numberIsNumeric(cardNumber))
-                .union(self.numberIsValidLuhn(cardNumber))
+                .union(numberIsNumeric(cardNumber))
+                .union(numberIsValidLuhn(cardNumber))
     }
 }

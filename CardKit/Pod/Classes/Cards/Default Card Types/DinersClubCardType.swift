@@ -35,13 +35,7 @@ public class DinersClubCardType: NSObject, CardType {
         self.image = image
     }
     
-    public func checkCardNumberAgainstCardType(cardNumber: CardNumber) -> Bool {
-        if let val2 = cardNumber.stringValue()[0,2], let val3 = cardNumber.stringValue()[0,3], let val4 = cardNumber.stringValue()[0,4] where
-            ["300","301","302","303","304","305","309"].contains(val3) && val4 != "3096"
-                || ["2014","2149"].contains(val4)
-                || ["36","38","39"].contains(val2) {
-            return true
-        }
-        return false
+    public func cardDigitsIdentifyingCardType() -> Set<Int> {
+        return Set(300...305).union( Set([36, 38, 39, 309, 2014, 2149]) )
     }
 }

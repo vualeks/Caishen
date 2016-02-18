@@ -29,5 +29,5 @@ public protocol CardType {
     
     func overrideImageForCardType(image: UIImage)
     
-    func checkCardNumberAgainstCardType(cardNumber: CardNumber) -> Bool
+    func cardDigitsIdentifyingCardType() -> Set<Int>
 }

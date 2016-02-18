@@ -36,7 +36,7 @@ public class VisaCardType: NSObject, CardType {
         self.image = image
     }
     
-    public func checkCardNumberAgainstCardType(cardNumber: CardNumber) -> Bool {
-        return cardNumber.stringValue().characters.first == "4"
+    public func cardDigitsIdentifyingCardType() -> Set<Int> {
+        return Set([4])
     }
 }

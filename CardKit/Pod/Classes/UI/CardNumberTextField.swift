@@ -81,9 +81,20 @@ public class CardNumberTextField: StylizedTextField {
         self.cardType = cardTypeRegister.cardTypeForNumber(number)
     }
     
+    private struct SaveOldColor {
+        static var onceToken: dispatch_once_t = 0
+        static var oldTextColor: UIColor?
+        
+        init(textColor: UIColor?) {
+            dispatch_once(&SaveOldColor.onceToken, {
+                SaveOldColor.oldTextColor = textColor
+            })
+        }
+    }
+    
     private func flashTextFieldInvalid() {
         NSOperationQueue().addOperationWithBlock({
-            let oldTextColor = self.textColor
+            SaveOldColor(textColor: self.textColor)
             dispatch_async(dispatch_get_main_queue(), {
                 UIView.animateWithDuration(0.5, animations: {
                     self.textColor = self.invalidInputColor
@@ -92,7 +103,7 @@ public class CardNumberTextField: StylizedTextField {
             NSThread.sleepForTimeInterval(0.5)
             dispatch_async(dispatch_get_main_queue(), {
                 UIView.animateWithDuration(0.5, animations: {
-                    self.textColor = oldTextColor
+                    self.textColor = SaveOldColor.oldTextColor
                 })
             })
         })
@@ -105,19 +116,21 @@ public class CardNumberTextField: StylizedTextField {
         
         let newTextIsNumeric = UInt(newText) != nil
         
-        if newText.length() == 0 {
-            self.cardType = nil
-            return true
-        }
-        
         // Create a card number with the newly formed string.
-        self.parsedCardNumber = CardNumber(string: newText)
+        parsedCardNumber = CardNumber(string: newText)
         
         if let parsedCardNumber = parsedCardNumber {
             let partialValidation = cardTypeRegister.cardTypeForNumber(parsedCardNumber)?.checkCardNumberPartiallyValid(parsedCardNumber)
             let completeValidation = cardTypeRegister.cardTypeForNumber(parsedCardNumber)?.validateCardNumber(parsedCardNumber)
             
-            if completeValidation == CardValidationResult.Valid {
+            if completeValidation == nil && partialValidation == nil && newText.length() <= 6 {
+                userEnteredPartiallyValidCardNumber(parsedCardNumber)
+                cardNumberFormatter.replaceRangeFormatted(range, inTextField: textField, withString: string)
+                
+                cardNumberTextFieldDelegate?.cardNumberTextField?(self, didChangeText: newText)
+                
+                return false
+            } else if completeValidation == CardValidationResult.Valid {
                 userDidEnterValidCardNumber(parsedCardNumber)
                 cardNumberFormatter.replaceRangeFormatted(range, inTextField: textField, withString: string)
                 
@@ -126,7 +139,6 @@ public class CardNumberTextField: StylizedTextField {
                 return false
             } else if partialValidation == CardValidationResult.Valid {
                 userEnteredPartiallyValidCardNumber(parsedCardNumber)
-                
                 cardNumberFormatter.replaceRangeFormatted(range, inTextField: textField, withString: string)
                 
                 cardNumberTextFieldDelegate?.cardNumberTextField?(self, didChangeText: newText)

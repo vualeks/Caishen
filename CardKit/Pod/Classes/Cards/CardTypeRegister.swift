@@ -13,6 +13,7 @@ private var sharedRegister: CardTypeRegister!
 
 public class CardTypeRegister {
     
+    public private(set) var registeredCardTypes: [String:CardType]
     public static var sharedCardTypeRegister: CardTypeRegister {
         dispatch_once(&onceToken, {
             sharedRegister = CardTypeRegister()
@@ -20,15 +21,19 @@ public class CardTypeRegister {
         
         return sharedRegister
     }
+    private var cardNumbersIdentifyingCardTypes: Set<Int>
     
-    public private(set) var registeredCardTypes: [String:CardType] = [
-        AmexCardType().cardTypeName():          AmexCardType(),
-        DinersClubCardType().cardTypeName():    DinersClubCardType(),
-        DiscoverCardType().cardTypeName():      DiscoverCardType(),
-        JCBCardType().cardTypeName():           JCBCardType(),
-        MasterCardCardType().cardTypeName():    MasterCardCardType(),
-        VisaCardType().cardTypeName():          VisaCardType()
-    ]
+    public init() {
+        cardNumbersIdentifyingCardTypes = Set()
+        registeredCardTypes = [
+            AmexCardType().cardTypeName():          AmexCardType(),
+            DinersClubCardType().cardTypeName():    DinersClubCardType(),
+            DiscoverCardType().cardTypeName():      DiscoverCardType(),
+            JCBCardType().cardTypeName():           JCBCardType(),
+            MasterCardCardType().cardTypeName():    MasterCardCardType(),
+            VisaCardType().cardTypeName():          VisaCardType()
+        ]
+    }
     
     public func registerCardType(cardType: CardType) {
         registeredCardTypes[cardType.cardTypeName()] = cardType
@@ -47,8 +52,16 @@ public class CardTypeRegister {
     }
     
     public func cardTypeForNumber(cardNumber: CardNumber) -> CardType? {
-        return registeredCardTypes.values.filter({
-            $0.checkCardNumberAgainstCardType(cardNumber)
-        }).first
+        for i in (0...min(cardNumber.stringValue().length(), 6)).reverse() {
+            if let substring = cardNumber.stringValue()[0,i], let substringAsNumber = Int(substring) {
+                if let firstMatchingCardType = registeredCardTypes.values.filter({
+                    $0.cardDigitsIdentifyingCardType().contains(substringAsNumber)
+                }).first {
+                    return firstMatchingCardType
+                }
+            }
+        }
+        
+        return nil
     }
 }

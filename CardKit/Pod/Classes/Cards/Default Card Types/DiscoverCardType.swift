@@ -35,14 +35,7 @@ public class DiscoverCardType: NSObject, CardType {
         self.image = image
     }
     
-    public func checkCardNumberAgainstCardType(cardNumber: CardNumber) -> Bool {
-        if let val4 = cardNumber.stringValue()[0,4], let val3 = cardNumber.stringValue()[0,3] where
-            "6001" == val4
-                || ["300","301","302","303","304","305","309","644","645","646","647","648","649"].contains(val3) {
-            return true
-        } else if let number = Int(cardNumber.stringValue()[0,6] ?? "") where number >= 622126 && number <= 622925 {
-            return true
-        }
-        return false
+    public func cardDigitsIdentifyingCardType() -> Set<Int> {
+        return Set(644...649).union( Set(622126...622925) ).union( Set([6011]) )
     }
 }

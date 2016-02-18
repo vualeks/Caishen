@@ -34,7 +34,7 @@ public class MasterCardCardType: NSObject, CardType {
         self.image = image
     }
     
-    public func checkCardNumberAgainstCardType(cardNumber: CardNumber) -> Bool {
-        return ["51","52","53","54","55"].contains(cardNumber.stringValue()[0,2] ?? "")
+    public func cardDigitsIdentifyingCardType() -> Set<Int> {
+        return Set(51...55)
     }
 }

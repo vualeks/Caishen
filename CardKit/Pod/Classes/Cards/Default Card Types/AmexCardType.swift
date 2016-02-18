@@ -35,10 +35,7 @@ public class AmexCardType: NSObject, CardType {
         self.image = image
     }
     
-    public func checkCardNumberAgainstCardType(cardNumber: CardNumber) -> Bool {
-        if let val = cardNumber.stringValue()[0,2] where ["34","37"].contains(val) {
-            return true
-        }
-        return false
+    public func cardDigitsIdentifyingCardType() -> Set<Int> {
+        return Set([34,37])
     }
 }

@@ -36,10 +36,7 @@ public class JCBCardType: NSObject, CardType {
         self.image = image
     }
     
-    public func checkCardNumberAgainstCardType(cardNumber: CardNumber) -> Bool {
-        if let number = Int(cardNumber.stringValue()[0,4] ?? "") where number >= 3528 && number <= 3589 || [3088, 3096, 3112, 3158, 3337].contains(number) {
-            return true
-        }
-        return false
+    public func cardDigitsIdentifyingCardType() -> Set<Int> {
+        return Set(3528...3589).union( Set([3088, 3096, 3112, 3158, 3337]) )
     }
 }
