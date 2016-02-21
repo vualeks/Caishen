@@ -45,7 +45,7 @@ public class CardViewController: UIViewController, UITextFieldDelegate, CardNumb
             return CardExpiry(month: month, year: year)
         }
     }
-    public var cardType: CardType? {
+    public var cardType: CardType.Type? {
         guard let number = cardNumber else {
             return nil
         }
@@ -190,7 +190,7 @@ public class CardViewController: UIViewController, UITextFieldDelegate, CardNumb
     
     public func textFieldDidBeginEditing(textField: UITextField) {
         if textField == numberTextField {
-            UIView.animateWithDuration(1.0, animations: {
+            UIView.animateWithDuration(1.0, animations: { [unowned self] _ in
                 self.moveSecondaryViewOut()
                 self.moveNumberFieldRight()
             })
@@ -242,7 +242,7 @@ public class CardViewController: UIViewController, UITextFieldDelegate, CardNumb
     
     public func cardNumberTextField(cardNumberTextField: CardNumberTextField, didEnterValidCardNumber cardNumber: CardNumber) {
         
-        UIView.animateWithDuration(1.0, animations: {
+        UIView.animateWithDuration(1.0, animations: { [unowned self] _ in
             self.moveNumberFieldLeft()
             self.moveSecondaryViewIn()
         })

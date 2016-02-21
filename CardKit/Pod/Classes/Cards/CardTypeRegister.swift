@@ -13,7 +13,7 @@ private var sharedRegister: CardTypeRegister!
 
 public class CardTypeRegister {
     
-    public private(set) var registeredCardTypes: [String:CardType]
+    public private(set) var registeredCardTypes: [CardType.Type]
     public static var sharedCardTypeRegister: CardTypeRegister {
         dispatch_once(&onceToken, {
             sharedRegister = CardTypeRegister()
@@ -26,35 +26,38 @@ public class CardTypeRegister {
     public init() {
         cardNumbersIdentifyingCardTypes = Set()
         registeredCardTypes = [
-            AmexCardType().cardTypeName():          AmexCardType(),
-            DinersClubCardType().cardTypeName():    DinersClubCardType(),
-            DiscoverCardType().cardTypeName():      DiscoverCardType(),
-            JCBCardType().cardTypeName():           JCBCardType(),
-            MasterCardCardType().cardTypeName():    MasterCardCardType(),
-            VisaCardType().cardTypeName():          VisaCardType()
+            AmexCardType.self,
+            DinersClubCardType.self,
+            DiscoverCardType.self,
+            JCBCardType.self,
+            MasterCardCardType.self,
+            VisaCardType.self
         ]
     }
     
-    public func registerCardType(cardType: CardType) {
-        registeredCardTypes[cardType.cardTypeName()] = cardType
+    public func registerCardType(cardType: CardType.Type) {
+        if registeredCardTypes.contains({$0 == cardType}) {
+            return
+        }
+        registeredCardTypes.append(cardType)
     }
     
-    public func unregisterCardType(cardType: CardType) {
-        registeredCardTypes.removeValueForKey(cardType.cardTypeName())
+    public func unregisterCardType(cardType: CardType.Type) {
+        registeredCardTypes = registeredCardTypes.filter({$0 != cardType})
     }
     
-    public func setRegisteredCardTypes<Seq: SequenceType where Seq.Generator.Element == CardType>(newRegisteredCardTypes: Seq) {
-        registeredCardTypes = [:]
+    public func setRegisteredCardTypes<Seq: SequenceType where Seq.Generator.Element == CardType.Type>(newRegisteredCardTypes: Seq) {
+        registeredCardTypes = []
         
         newRegisteredCardTypes.forEach({
-            registeredCardTypes[$0.cardTypeName()] = $0
+            registeredCardTypes.append($0)
         })
     }
     
-    public func cardTypeForNumber(cardNumber: CardNumber) -> CardType? {
+    public func cardTypeForNumber(cardNumber: CardNumber) -> CardType.Type? {
         for i in (0...min(cardNumber.stringValue().length(), 6)).reverse() {
             if let substring = cardNumber.stringValue()[0,i], let substringAsNumber = Int(substring) {
-                if let firstMatchingCardType = registeredCardTypes.values.filter({
+                if let firstMatchingCardType = registeredCardTypes.filter({
                     $0.cardDigitsIdentifyingCardType().contains(substringAsNumber)
                 }).first {
                     return firstMatchingCardType

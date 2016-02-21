@@ -8,35 +8,31 @@
 
 import UIKit
 
-public class JCBCardType: NSObject, CardType {
+public struct JCBCardType: CardType {
     
-    private var image: UIImage = UIImage(named: "JCB") ?? UIImage()
+    private static var image: UIImage = UIImage(named: "JCB") ?? UIImage()
     
-    public func cardTypeName() -> String {
+    public static func cardTypeName() -> String {
         return "JCB"
     }
     
-    public func expectedCVCLength() -> Int {
+    public static func expectedCVCLength() -> Int {
         return 3
     }
     
-    public func expectedCardNumberLength() -> Int {
-        return 16
-    }
-    
-    public func cardNumberGrouping() -> [Int] {
+    public static func cardNumberGrouping() -> [Int] {
         return [4,4,4,4]
     }
     
-    public func cardTypeImage() -> UIImage {
+    public static func cardTypeImage() -> UIImage {
         return image
     }
     
-    public func overrideImageForCardType(image: UIImage) {
+    public static func overrideImageForCardType(image: UIImage) {
         self.image = image
     }
     
-    public func cardDigitsIdentifyingCardType() -> Set<Int> {
+    public static func cardDigitsIdentifyingCardType() -> Set<Int> {
         return Set(3528...3589).union( Set([3088, 3096, 3112, 3158, 3337]) )
     }
 }

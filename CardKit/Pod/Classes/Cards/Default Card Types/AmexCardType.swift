@@ -8,34 +8,31 @@
 
 import UIKit
 
-public class AmexCardType: NSObject, CardType {
-    private var image: UIImage = UIImage(named: "Amex") ?? UIImage()
+public struct AmexCardType: CardType {
     
-    public func cardTypeName() -> String {
+    private static var image: UIImage = UIImage(named: "Amex") ?? UIImage()
+    
+    public static func cardTypeName() -> String {
         return "Amex"
     }
     
-    public func expectedCVCLength() -> Int {
+    public static func expectedCVCLength() -> Int {
         return 4
     }
     
-    public func expectedCardNumberLength() -> Int {
-        return 15
-    }
-    
-    public func cardNumberGrouping() -> [Int] {
+    public static func cardNumberGrouping() -> [Int] {
         return [4,6,5]
     }
     
-    public func cardTypeImage() -> UIImage {
+    public static func cardTypeImage() -> UIImage {
         return image
     }
     
-    public func overrideImageForCardType(image: UIImage) {
+    public static func overrideImageForCardType(image: UIImage) {
         self.image = image
     }
     
-    public func cardDigitsIdentifyingCardType() -> Set<Int> {
+    public static func cardDigitsIdentifyingCardType() -> Set<Int> {
         return Set([34,37])
     }
 }

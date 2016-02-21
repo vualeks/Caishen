@@ -8,35 +8,31 @@
 
 import UIKit
 
-public class VisaCardType: NSObject, CardType {
+public struct VisaCardType: CardType {
     
-    private var image: UIImage = UIImage(named: "Visa") ?? UIImage()
+    private static var image: UIImage = UIImage(named: "Visa") ?? UIImage()
     
-    public func cardTypeName() -> String {
+    public static func cardTypeName() -> String {
         return "Visa"
     }
     
-    public func expectedCVCLength() -> Int {
+    public static func expectedCVCLength() -> Int {
         return 3
     }
     
-    public func expectedCardNumberLength() -> Int {
-        return 16
-    }
-    
-    public func cardNumberGrouping() -> [Int] {
+    public static func cardNumberGrouping() -> [Int] {
         return [4,4,4,4]
     }
     
-    public func cardTypeImage() -> UIImage {
+    public static func cardTypeImage() -> UIImage {
         return image
     }
     
-    public func overrideImageForCardType(image: UIImage) {
+    public static func overrideImageForCardType(image: UIImage) {
         self.image = image
     }
     
-    public func cardDigitsIdentifyingCardType() -> Set<Int> {
+    public static func cardDigitsIdentifyingCardType() -> Set<Int> {
         return Set([4])
     }
 }

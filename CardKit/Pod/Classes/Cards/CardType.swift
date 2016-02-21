@@ -11,23 +11,17 @@ import Foundation
 /**
  A `CardType` is a predefined type for different bank cards. Bank card types can be determined by using a bank cards number with `CardType.ForNumber(bankCardNumber)`
  */
-
-
-
-@objc
 public protocol CardType {
     
-    func cardTypeName() -> String
+    static func cardTypeName() -> String
     
-    func expectedCardNumberLength() -> Int
+    static func expectedCVCLength() -> Int
     
-    func expectedCVCLength() -> Int
+    static func cardNumberGrouping() -> [Int]
     
-    func cardNumberGrouping() -> [Int]
+    static func cardTypeImage() -> UIImage
     
-    func cardTypeImage() -> UIImage
+    static func overrideImageForCardType(image: UIImage)
     
-    func overrideImageForCardType(image: UIImage)
-    
-    func cardDigitsIdentifyingCardType() -> Set<Int>
+    static func cardDigitsIdentifyingCardType() -> Set<Int>
 }

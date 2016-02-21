@@ -10,11 +10,11 @@ import Foundation
 
 public extension CardType {
     
-    public func validateCVC(cvc: CardCVC) -> CardValidationResult {
+    public static func validateCVC(cvc: CardCVC) -> CardValidationResult {
         return validateCVC(cvc.stringValue())
     }
     
-    public func validateCVC(cvc: String) -> CardValidationResult {
+    public static func validateCVC(cvc: String) -> CardValidationResult {
         if cvc.length() > expectedCVCLength() || Int(cvc) == nil {
             return CardValidationResult.InvalidCVC
         } else if cvc.length() < expectedCVCLength() {

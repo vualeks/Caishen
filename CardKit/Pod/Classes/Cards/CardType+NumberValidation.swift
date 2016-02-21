@@ -10,7 +10,11 @@ import Foundation
 
 public extension CardType {
     
-    private func numberIsNumeric(number: CardNumber) -> CardValidationResult {
+    public static func expectedCardNumberLength() -> Int {
+        return cardNumberGrouping().reduce(0, combine: {$0 + $1})
+    }
+    
+    private static func numberIsNumeric(number: CardNumber) -> CardValidationResult {
         for c in number.stringValue().characters {
             if !["0","1","2","3","4","5","6","7","8","9"].contains(c) {
                 return CardValidationResult.NumberIsNotNumeric
@@ -20,7 +24,7 @@ public extension CardType {
         return CardValidationResult.Valid
     }
     
-    public func numberIsValidLuhn(number: CardNumber) -> CardValidationResult {
+    public static func numberIsValidLuhn(number: CardNumber) -> CardValidationResult {
         var odd = true
         var sum = 0
         let digits = NSMutableArray(capacity: number.stringValue().length())
@@ -57,7 +61,7 @@ public extension CardType {
      - parameter expectedLength: The expected length for the card number's card type.
      - returns: CardValidationResult.Valid if the lengths match, CardValidationResult.NumberDoesNotMatchType otherwise.
      */
-    private func testLength(actualLength: Int, assumingLength expectedLength: Int) -> CardValidationResult {
+    private static func testLength(actualLength: Int, assumingLength expectedLength: Int) -> CardValidationResult {
         if actualLength == expectedLength {
             return CardValidationResult.Valid
         } else if actualLength < expectedLength {
@@ -67,14 +71,14 @@ public extension CardType {
         }
     }
     
-    private func lengthMatchesType(length: Int) -> CardValidationResult {
+    private static func lengthMatchesType(length: Int) -> CardValidationResult {
         return self.testLength(length, assumingLength: expectedCardNumberLength())
     }
     
     /**
      Returns Valid, if the card validation succeeded or the card validation failed because of the Luhn test or insufficient card number length, both of which are not important for incomplete card numbers.
      */
-    public func checkCardNumberPartiallyValid(cardNumber: CardNumber) -> CardValidationResult {
+    public static func checkCardNumberPartiallyValid(cardNumber: CardNumber) -> CardValidationResult {
         let validationResult = validateCardNumber(cardNumber)
         let completeNumberButLuhnTestFailed = !validationResult.isSupersetOf(CardValidationResult.NumberIncomplete) && validationResult.isSupersetOf(CardValidationResult.LuhnTestFailed)
         
@@ -88,7 +92,7 @@ public extension CardType {
         }
     }
     
-    public func validateCardNumber(cardNumber: CardNumber) -> CardValidationResult {
+    public static func validateCardNumber(cardNumber: CardNumber) -> CardValidationResult {
         return lengthMatchesType(cardNumber.stringValue().length())
                 .union(numberIsNumeric(cardNumber))
                 .union(numberIsValidLuhn(cardNumber))

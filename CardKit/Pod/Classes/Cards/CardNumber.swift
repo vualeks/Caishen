@@ -20,6 +20,6 @@ public class CardNumber: NSObject {
     }
     
     public func validate(cardTypeRegister: CardTypeRegister) -> CardValidationResult {
-        return (cardTypeRegister.cardTypeForNumber(self) ?? VisaCardType()).validateCardNumber(self)
+        return (cardTypeRegister.cardTypeForNumber(self) ?? VisaCardType.self).validateCardNumber(self)
     }
 }

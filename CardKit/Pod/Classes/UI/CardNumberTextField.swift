@@ -17,7 +17,7 @@ public protocol CardNumberTextFieldDelegate {
 @IBDesignable
 public class CardNumberTextField: StylizedTextField {
     
-    private var cardType: CardType?
+    private var cardType: CardType.Type?
     private var cardNumberFormatter: CardNumberFormatter {
         get {
             return CardNumberFormatter(separator: self.cardNumberSeparator, cardTypeRegister: cardTypeRegister)
@@ -93,16 +93,16 @@ public class CardNumberTextField: StylizedTextField {
     }
     
     private func flashTextFieldInvalid() {
-        NSOperationQueue().addOperationWithBlock({
+        NSOperationQueue().addOperationWithBlock({ [unowned self] _ in
             SaveOldColor(textColor: self.textColor)
             dispatch_async(dispatch_get_main_queue(), {
-                UIView.animateWithDuration(0.5, animations: {
+                UIView.animateWithDuration(0.5, animations: { [unowned self] _ in
                     self.textColor = self.invalidInputColor
                 })
             })
             NSThread.sleepForTimeInterval(0.5)
             dispatch_async(dispatch_get_main_queue(), {
-                UIView.animateWithDuration(0.5, animations: {
+                UIView.animateWithDuration(0.5, animations: { [unowned self] _ in
                     self.textColor = SaveOldColor.oldTextColor
                 })
             })
