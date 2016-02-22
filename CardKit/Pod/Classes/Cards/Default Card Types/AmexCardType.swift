@@ -11,6 +11,7 @@ import UIKit
 public struct AmexCardType: CardType {
     
     private static var image: UIImage = UIImage(named: "Amex") ?? UIImage()
+    private static var cvcIm: UIImage = UIImage(named: "AmexCVC") ?? UIImage()
     
     public static func cardTypeName() -> String {
         return "Amex"
@@ -30,6 +31,14 @@ public struct AmexCardType: CardType {
     
     public static func overrideImageForCardType(image: UIImage) {
         self.image = image
+    }
+    
+    public static func cvcImage() -> UIImage {
+        return cvcIm
+    }
+    
+    public static func overrideCVCImage(image: UIImage) {
+        cvcIm = image
     }
     
     public static func cardDigitsIdentifyingCardType() -> Set<Int> {

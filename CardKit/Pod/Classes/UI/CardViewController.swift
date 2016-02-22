@@ -22,6 +22,7 @@ public class CardViewController: UIViewController, UITextFieldDelegate, CardNumb
     @IBOutlet public weak var yearTextField: UITextField!
     @IBOutlet public weak var cardInfoView: UIView?
     @IBInspectable public var textColor: UIColor?
+    @IBInspectable public var gradientWidth: CGFloat = 40
     public var unknownCardTypeImage: UIImage? = UIImage(named: "Unknown")
     public var cardTypeRegister: CardTypeRegister = CardTypeRegister.sharedCardTypeRegister
     public var cardNumber: CardNumber?
@@ -91,6 +92,15 @@ public class CardViewController: UIViewController, UITextFieldDelegate, CardNumb
         monthTextField?.delegate = self
         yearTextField?.delegate = self
         
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.frame = numberTextField.frame
+        gradientLayer.colors = [UIColor.whiteColor().CGColor, UIColor.clearColor().CGColor]
+        gradientLayer.startPoint = CGPoint(x: 0, y: 1)
+        gradientLayer.endPoint = CGPoint(x: 1, y: 1)
+        numberTextField.maskView = UIView(frame: numberTextField.frame)
+        numberTextField.maskView?.backgroundColor = UIColor.clearColor()
+        numberTextField.maskView?.layer.addSublayer(gradientLayer)
+        
         cvcTextField.addObserver(self, forKeyPath: "text", options: NSKeyValueObservingOptions.New, context: nil)
         
         [numberTextField,cvcTextField,monthTextField,yearTextField].forEach({
@@ -122,7 +132,7 @@ public class CardViewController: UIViewController, UITextFieldDelegate, CardNumb
         }
         cardInfoView?.frame = view.frame
         cardInfoView?.frame.origin = view.frame.origin
-        moveSecondaryViewOut()
+        moveCardDetailViewOut()
         
         //cardInfoView?.autoresizesSubviews = false
     }
@@ -146,7 +156,7 @@ public class CardViewController: UIViewController, UITextFieldDelegate, CardNumb
      Assign all outlets in your Storyboard. If all outlets have been assigned, a CardViewController will not opt for the Nib.
      */
     public func getNibBundle() -> NSBundle {
-        return NSBundle(forClass: self.dynamicType)
+        return NSBundle(forClass: CardViewController.self)
     }
     
     // MARK: - Validity checks
@@ -191,7 +201,7 @@ public class CardViewController: UIViewController, UITextFieldDelegate, CardNumb
     public func textFieldDidBeginEditing(textField: UITextField) {
         if textField == numberTextField {
             UIView.animateWithDuration(1.0, animations: { [unowned self] _ in
-                self.moveSecondaryViewOut()
+                self.moveCardDetailViewOut()
                 self.moveNumberFieldRight()
             })
         }
@@ -240,11 +250,11 @@ public class CardViewController: UIViewController, UITextFieldDelegate, CardNumb
         }
     }
     
+    
     public func cardNumberTextField(cardNumberTextField: CardNumberTextField, didEnterValidCardNumber cardNumber: CardNumber) {
-        
         UIView.animateWithDuration(1.0, animations: { [unowned self] _ in
             self.moveNumberFieldLeft()
-            self.moveSecondaryViewIn()
+            self.moveCardDetailViewIn()
         })
         
         self.cardNumber = cardNumber
@@ -254,21 +264,33 @@ public class CardViewController: UIViewController, UITextFieldDelegate, CardNumb
     
     // MARK: - View animations
     
+    /**
+     Translates the card number text field outside the screen.
+     */
     public func moveNumberFieldLeft() {
         if let rect = numberTextField.rectForLastGroup() {
             numberTextField.transform = CGAffineTransformTranslate(self.numberTextField.transform, -rect.origin.x, 0)
         }
     }
     
+    /**
+     Moves the card number text field to its original position.
+     */
     public func moveNumberFieldRight() {
         numberTextField.transform = CGAffineTransformIdentity
     }
     
-    public func moveSecondaryViewIn() {
+    /**
+     Shows the card detail view with CVC, month and year text field.
+     */
+    public func moveCardDetailViewIn() {
         cardInfoView?.transform = CGAffineTransformIdentity
     }
     
-    public func moveSecondaryViewOut() {
+    /**
+     Hides the card detail view with CVC, month and year text field by moving it outside the view.
+     */
+    public func moveCardDetailViewOut() {
         cardInfoView?.transform = CGAffineTransformMakeTranslation(view.bounds.width, 0)
     }
     
@@ -278,6 +300,11 @@ public class CardViewController: UIViewController, UITextFieldDelegate, CardNumb
         view.superview?.clipsToBounds = true
         view.frame.size.width = view.superview?.frame.width ?? view.frame.width
         cardInfoView?.frame.size.width = view.superview?.frame.width ?? cardInfoView!.frame.width
+        
+        // If moving to a larger screen size and not showing the detail view, make sure that it is outside the view.
+        if let transform = cardInfoView?.transform where !CGAffineTransformIsIdentity(transform) {
+            moveCardDetailViewOut()
+        }
     }
     
     public override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {

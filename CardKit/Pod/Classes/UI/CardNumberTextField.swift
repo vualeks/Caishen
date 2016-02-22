@@ -10,22 +10,28 @@ import UIKit
 
 @objc
 public protocol CardNumberTextFieldDelegate {
+    /**
+     Called by `cardNumberTextField` when the user changed the text in the card number text field..
+     
+     - parameter cardNumberTextField: The CardNumberTextField that was used by the user to change a card number.
+     - parameter text: The text that is currently entered in `self`
+     */
     optional func cardNumberTextField(cardNumberTextField: CardNumberTextField, didChangeText text: String)
+    
+    /**
+     Called by `cardNumberTextField` when the user entered a valid card number.
+     
+     - parameter cardNumberTextField: The CardNumberTextField that was used by the user to enter a card number.
+     - parameter cardNumber: The card number the user entered.
+     */
     optional func cardNumberTextField(cardNumberTextField: CardNumberTextField, didEnterValidCardNumber cardNumber: CardNumber)
 }
 
 @IBDesignable
 public class CardNumberTextField: StylizedTextField {
     
-    private var cardType: CardType.Type?
-    private var cardNumberFormatter: CardNumberFormatter {
-        get {
-            return CardNumberFormatter(separator: self.cardNumberSeparator, cardTypeRegister: cardTypeRegister)
-        }
-    }
     public private(set) var parsedCardNumber: CardNumber?
-    public var cardNumberTextFieldDelegate: CardNumberTextFieldDelegate?
-    public var cardTypeRegister: CardTypeRegister = CardTypeRegister.sharedCardTypeRegister
+    @IBOutlet public var cardNumberTextFieldDelegate: CardNumberTextFieldDelegate?
     @IBInspectable public var invalidInputColor: UIColor = UIColor.redColor()
     @IBInspectable public var cardNumberSeparator: String = "-" {
         didSet {
@@ -47,38 +53,12 @@ public class CardNumberTextField: StylizedTextField {
         }
         }
     }
-    
-    private func rectForTextRange(range: NSRange, inTextField textField: UITextField) -> CGRect? {
-        guard let rangeStart = textField.positionFromPosition(textField.beginningOfDocument, offset: range.location) else {
-            return nil
+    private var cardTypeRegister: CardTypeRegister = CardTypeRegister.sharedCardTypeRegister
+    private var cardType: CardType.Type?
+    private var cardNumberFormatter: CardNumberFormatter {
+        get {
+            return CardNumberFormatter(separator: self.cardNumberSeparator, cardTypeRegister: cardTypeRegister)
         }
-        guard let rangeEnd = textField.positionFromPosition(rangeStart, offset: range.length) else {
-            return nil
-        }
-        guard let textRange = textField.textRangeFromPosition(rangeStart, toPosition: rangeEnd) else {
-            return nil
-        }
-        
-        return textField.firstRectForRange(textRange)
-    }
-    
-    public func rectForLastGroup() -> CGRect? {
-        guard let lastGroupLength = text?.componentsSeparatedByString(cardNumberFormatter.separator).last?.length() else {
-            return nil
-        }
-        guard let textLength = text?.length() else {
-            return nil
-        }
-        
-        return rectForTextRange(NSMakeRange(textLength - lastGroupLength, lastGroupLength), inTextField: self)
-    }
-    
-    private func userDidEnterValidCardNumber(number: CardNumber) {
-        self.cardType = cardTypeRegister.cardTypeForNumber(number)
-    }
-    
-    private func userEnteredPartiallyValidCardNumber(number: CardNumber) {
-        self.cardType = cardTypeRegister.cardTypeForNumber(number)
     }
     
     private struct SaveOldColor {
@@ -152,5 +132,41 @@ public class CardNumberTextField: StylizedTextField {
         }
         
         return newTextIsNumeric
+    }
+    
+    private func rectForTextRange(range: NSRange, inTextField textField: UITextField) -> CGRect? {
+        guard let rangeStart = textField.positionFromPosition(textField.beginningOfDocument, offset: range.location) else {
+            return nil
+        }
+        guard let rangeEnd = textField.positionFromPosition(rangeStart, offset: range.length) else {
+            return nil
+        }
+        guard let textRange = textField.textRangeFromPosition(rangeStart, toPosition: rangeEnd) else {
+            return nil
+        }
+        
+        return textField.firstRectForRange(textRange)
+    }
+    
+    /**
+     - returns: The CGRect in `self` that contains the last group of the card number.
+     */
+    public func rectForLastGroup() -> CGRect? {
+        guard let lastGroupLength = text?.componentsSeparatedByString(cardNumberFormatter.separator).last?.length() else {
+            return nil
+        }
+        guard let textLength = text?.length() else {
+            return nil
+        }
+        
+        return rectForTextRange(NSMakeRange(textLength - lastGroupLength, lastGroupLength), inTextField: self)
+    }
+    
+    private func userDidEnterValidCardNumber(number: CardNumber) {
+        self.cardType = cardTypeRegister.cardTypeForNumber(number)
+    }
+    
+    private func userEnteredPartiallyValidCardNumber(number: CardNumber) {
+        self.cardType = cardTypeRegister.cardTypeForNumber(number)
     }
 }
