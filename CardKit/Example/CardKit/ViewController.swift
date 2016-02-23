@@ -7,12 +7,15 @@
 //
 
 import UIKit
+import CardKit
 
 class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        
+        view.addSubview(CardNumberTextField(frame: CGRect(x: 0, y: 0, width: 300, height: 30)))
     }
 
     override func didReceiveMemoryWarning() {
