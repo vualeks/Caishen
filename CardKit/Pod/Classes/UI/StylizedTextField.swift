@@ -23,7 +23,6 @@ public class StylizedTextField: UITextField, UITextFieldDelegate {
             }
         }
     }
-    
     @IBInspectable
     public var cornerRadius: CGFloat = 0 {
         didSet {
@@ -32,13 +31,13 @@ public class StylizedTextField: UITextField, UITextFieldDelegate {
             }
         }
     }
-    
     @IBInspectable
     public var borderColor: UIColor = UIColor.blackColor() {
         didSet {
             self.layer.borderColor = self.borderColor.CGColor
         }
     }
+    public var deleteBackwardCallback: ((UITextField) -> Void)?
     
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -50,6 +49,14 @@ public class StylizedTextField: UITextField, UITextFieldDelegate {
         super.init(frame: frame)
         
         self.delegate = self
+    }
+    
+    public override func deleteBackward() {
+        super.deleteBackward()
+        
+        if (text ?? "").isEmpty {
+            deleteBackwardCallback?(self)
+        }
     }
     
     public func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {

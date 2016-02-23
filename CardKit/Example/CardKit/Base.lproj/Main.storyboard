@@ -20,11 +20,16 @@
                         <subviews>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="1234567812345678" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Dwr-kY-ZoC" customClass="CardNumberTextField" customModule="CardKit">
                                 <rect key="frame" x="20" y="285" width="560" height="30"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="textColor" red="0.0" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                <textInputTraits key="textInputTraits" keyboardAppearance="alert"/>
                             </textField>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="FxU-RH-ia0" customClass="CardNumberTextField" customModule="CardKit">
-                                <rect key="frame" x="20" y="323" width="560" height="30"/>
+                                <rect key="frame" x="20" y="323" width="172" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="172" id="jfs-Iw-X97"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
@@ -32,10 +37,9 @@
                         <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="Dwr-kY-ZoC" firstAttribute="trailing" secondItem="kh9-bI-dsS" secondAttribute="trailingMargin" id="2Il-Y4-XVa"/>
+                            <constraint firstItem="FxU-RH-ia0" firstAttribute="top" secondItem="Dwr-kY-ZoC" secondAttribute="bottom" constant="8" id="E5c-G4-Tuy"/>
                             <constraint firstItem="Dwr-kY-ZoC" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" id="Jgn-vq-BVj"/>
-                            <constraint firstItem="FxU-RH-ia0" firstAttribute="leading" secondItem="Dwr-kY-ZoC" secondAttribute="leading" id="MH4-5K-eDU"/>
-                            <constraint firstItem="FxU-RH-ia0" firstAttribute="top" secondItem="Dwr-kY-ZoC" secondAttribute="bottom" constant="8" symbolic="YES" id="XUe-Ts-nQy"/>
-                            <constraint firstItem="FxU-RH-ia0" firstAttribute="trailing" secondItem="Dwr-kY-ZoC" secondAttribute="trailing" id="t1i-lM-ejQ"/>
+                            <constraint firstAttribute="leadingMargin" secondItem="FxU-RH-ia0" secondAttribute="leading" id="Rex-3R-YfI"/>
                             <constraint firstItem="Dwr-kY-ZoC" firstAttribute="centerY" secondItem="kh9-bI-dsS" secondAttribute="centerY" id="vSV-l4-MgX"/>
                         </constraints>
                     </view>

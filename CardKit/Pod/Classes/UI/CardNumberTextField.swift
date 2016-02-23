@@ -13,30 +13,58 @@ public enum CardViewLoaderError: ErrorType {
     case SuperViewIsCardView
 }
 
-@IBDesignable
 public class CardNumberTextField: UITextField, UITextFieldDelegate, CardNumberInputTextFieldDelegate {
     
     // MARK: - Public variables
     @IBOutlet public weak var cardImageView: UIImageView!
-    @IBOutlet public weak var numberTextField: CardNumberInputTextField!
-    @IBOutlet public weak var cvcTextField: UITextField!
-    @IBOutlet public weak var monthTextField: UITextField!
-    @IBOutlet public weak var yearTextField: UITextField!
+    @IBOutlet public weak var cardNumberInputTextField: CardNumberInputTextField!
+    @IBOutlet public weak var cvcTextField: StylizedTextField!
+    @IBOutlet public weak var monthTextField: StylizedTextField!
+    @IBOutlet public weak var yearTextField: StylizedTextField!
     @IBOutlet public weak var cardInfoView: UIView?
+    
+    public override func deleteBackward() {
+        super.deleteBackward()
+        
+        if (text ?? "").isEmpty {
+            resignFirstResponder()
+        }
+    }
+    
     override public var textColor: UIColor? {
         didSet {
-        [numberTextField, cvcTextField, monthTextField, yearTextField].forEach({$0?.textColor = textColor})
+        let textFieldArray: [UITextField?] = [cardNumberInputTextField, cvcTextField, monthTextField, yearTextField]
+        textFieldArray.forEach({$0?.textColor = textColor})
         }
     }
     public override var backgroundColor: UIColor? {
         didSet {
-        numberTextField?.backgroundColor = backgroundColor
+        cardNumberInputTextField?.backgroundColor = backgroundColor
         cardImageView?.backgroundColor = backgroundColor
         }
     }
     public override var font: UIFont? {
         didSet {
-        [numberTextField, cvcTextField, monthTextField, yearTextField].forEach({$0?.font = font})
+        let textFieldArray: [UITextField?] = [cardNumberInputTextField, cvcTextField, monthTextField, yearTextField]
+        textFieldArray.forEach({$0?.font = font})
+        }
+    }
+    public override var keyboardType: UIKeyboardType {
+        didSet {
+        let textFieldArray: [UITextField?] = [cardNumberInputTextField, cvcTextField, monthTextField, yearTextField]
+        textFieldArray.forEach({$0?.keyboardType = keyboardType})
+        }
+    }
+    public override var secureTextEntry: Bool {
+        didSet {
+        let textFieldArray: [UITextField?] = [cardNumberInputTextField, cvcTextField, monthTextField, yearTextField]
+        textFieldArray.forEach({$0?.secureTextEntry = secureTextEntry})
+        }
+    }
+    public override var keyboardAppearance: UIKeyboardAppearance {
+        didSet {
+        let textFieldArray: [UITextField?] = [cardNumberInputTextField, cvcTextField, monthTextField, yearTextField]
+        textFieldArray.forEach({$0?.keyboardAppearance = keyboardAppearance})
         }
     }
     public var unknownCardTypeImage: UIImage? = UIImage(named: "Unknown")
@@ -45,7 +73,7 @@ public class CardNumberTextField: UITextField, UITextFieldDelegate, CardNumberIn
     public var cardCVC: CardCVC?
     public override var placeholder: String? {
         didSet {
-        numberTextField.placeholder = placeholder
+        cardNumberInputTextField.placeholder = placeholder
         super.placeholder = nil
         }
     }
@@ -80,47 +108,39 @@ public class CardNumberTextField: UITextField, UITextFieldDelegate, CardNumberIn
     private var monthString: String?
     private var yearString: String?
     
-    // MARK: - Initializers
+    // MARK: - Initializers & view setup
     
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        
-        //numberTextField.layer.mask = gradientMask
         setupView()
     }
     
     public override init(frame: CGRect) {
         super.init(frame: frame)
-        
         setupView()
     }
     
     private func setupTextFieldAttributes() {
-        numberTextField.placeholder = placeholder
-        numberTextField?.cardNumberInputTextFieldDelegate = self
-        numberTextField.addTarget(self, action: Selector("textFieldDidBeginEditing:"), forControlEvents: UIControlEvents.EditingDidBegin)
+        cardNumberInputTextField.placeholder = placeholder
+        cardNumberInputTextField?.cardNumberInputTextFieldDelegate = self
+        cardNumberInputTextField.addTarget(self, action: Selector("textFieldDidBeginEditing:"), forControlEvents: UIControlEvents.EditingDidBegin)
         cvcTextField?.delegate = self
         monthTextField?.delegate = self
         yearTextField?.delegate = self
         clipsToBounds = true
         
-        
         cvcTextField.addObserver(self, forKeyPath: "text", options: NSKeyValueObservingOptions.New, context: nil)
-        
-        [numberTextField,cvcTextField,monthTextField,yearTextField].forEach({
+        [cardNumberInputTextField,cvcTextField,monthTextField,yearTextField].forEach({
             $0.keyboardType = .NumberPad
-        })
-        
-        [numberTextField, cvcTextField, monthTextField, yearTextField].forEach({
             $0.addTarget(self, action: Selector("textFieldDidChange:"), forControlEvents: UIControlEvents.EditingChanged)
-        })
-        
-        
-        [numberTextField, cvcTextField, monthTextField, yearTextField].forEach({
             $0.textColor = textColor
             $0.font = font
+            $0.keyboardAppearance = keyboardAppearance
+            $0.secureTextEntry = secureTextEntry
         })
-        
+        cvcTextField.deleteBackwardCallback = {_ -> Void in self.yearTextField?.becomeFirstResponder()}
+        monthTextField.deleteBackwardCallback = {_ -> Void in self.cardNumberInputTextField?.becomeFirstResponder()}
+        yearTextField.deleteBackwardCallback = {_ -> Void in self.monthTextField?.becomeFirstResponder()}
         super.textColor = UIColor.clearColor()
         super.placeholder = nil
     }
@@ -137,16 +157,7 @@ public class CardNumberTextField: UITextField, UITextFieldDelegate, CardNumberIn
         
         cardImageView.image = unknownCardTypeImage
         cardImageView.backgroundColor = backgroundColor ?? UIColor.whiteColor()
-        
         setupTextFieldAttributes()
-    }
-    
-    public override func becomeFirstResponder() -> Bool {
-        return false
-    }
-    
-    public override func prepareForInterfaceBuilder() {
-        setupView()
     }
     
     public override func willMoveToSuperview(newSuperview: UIView?) {
@@ -230,11 +241,11 @@ public class CardNumberTextField: UITextField, UITextFieldDelegate, CardNumberIn
     // MARK: - Text field delegate
     
     public func textFieldDidBeginEditing(textField: UITextField) {
-        if textField == numberTextField {
+        if textField == cardNumberInputTextField {
             UIView.animateWithDuration(1.0, animations: { [unowned self] _ in
                 self.moveCardDetailViewOut()
                 self.moveNumberFieldRight()
-            })
+                })
         }
     }
     
@@ -260,6 +271,8 @@ public class CardNumberTextField: UITextField, UITextFieldDelegate, CardNumberIn
     }
     
     public final func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
+        // For text fields other than the card number text field (which implements input validation on its own), validate the input
+        
         let newValue = NSString(string: textField.text ?? "").stringByReplacingCharactersInRange(range, withString: string)
         switch textField {
         case cvcTextField:
@@ -276,6 +289,8 @@ public class CardNumberTextField: UITextField, UITextFieldDelegate, CardNumberIn
     // MARK: - CardNumberTextFieldDelegate
     
     public func cardNumberInputTextField(cardNumberTextField: CardNumberInputTextField, didChangeText text: String) {
+        // Check for a detected card number type
+        
         if let cardNumber = cardNumberTextField.parsedCardNumber {
             cardImageView.image = cardTypeRegister.cardTypeForNumber(cardNumber)?.cardTypeImage() ?? unknownCardTypeImage
         }
@@ -286,7 +301,7 @@ public class CardNumberTextField: UITextField, UITextFieldDelegate, CardNumberIn
         UIView.animateWithDuration(1.0, animations: { [unowned self] _ in
             self.moveNumberFieldLeft()
             self.moveCardDetailViewIn()
-        })
+            })
         
         self.cardNumber = cardNumber
         
@@ -299,8 +314,8 @@ public class CardNumberTextField: UITextField, UITextFieldDelegate, CardNumberIn
      Translates the card number text field outside the screen.
      */
     public func moveNumberFieldLeft() {
-        if let rect = numberTextField.rectForLastGroup() {
-            numberTextField.transform = CGAffineTransformTranslate(self.numberTextField.transform, -rect.origin.x, 0)
+        if let rect = cardNumberInputTextField.rectForLastGroup() {
+            cardNumberInputTextField.transform = CGAffineTransformTranslate(self.cardNumberInputTextField.transform, -rect.origin.x, 0)
         }
     }
     
@@ -308,7 +323,7 @@ public class CardNumberTextField: UITextField, UITextFieldDelegate, CardNumberIn
      Moves the card number text field to its original position.
      */
     public func moveNumberFieldRight() {
-        numberTextField.transform = CGAffineTransformIdentity
+        cardNumberInputTextField.transform = CGAffineTransformIdentity
     }
     
     /**
@@ -340,9 +355,14 @@ public class CardNumberTextField: UITextField, UITextFieldDelegate, CardNumberIn
         // Detect touches in card number text field as long as the detail view is on top of it
         touches.forEach({
             let point = $0.locationInView(self)
-            if numberTextField.pointInside(point, withEvent: event) {
-                numberTextField.becomeFirstResponder()
+            if cardNumberInputTextField.pointInside(point, withEvent: event) {
+                cardNumberInputTextField.becomeFirstResponder()
             }
         })
+    }
+    
+    public override func becomeFirstResponder() -> Bool {
+        // Return false, since this text view is only for background style purposes
+        return false
     }
 }
