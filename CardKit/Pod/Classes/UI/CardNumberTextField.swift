@@ -67,6 +67,8 @@ public class CardNumberTextField: UITextField, UITextFieldDelegate, CardNumberIn
         textFieldArray.forEach({$0?.keyboardAppearance = keyboardAppearance})
         }
     }
+    @IBInspectable
+    public var cardNumberSeparator = " - "
     public var unknownCardTypeImage: UIImage? = UIImage(named: "Unknown")
     public var cardTypeRegister: CardTypeRegister = CardTypeRegister.sharedCardTypeRegister
     public var cardNumber: CardNumber?
@@ -121,6 +123,7 @@ public class CardNumberTextField: UITextField, UITextFieldDelegate, CardNumberIn
     }
     
     private func setupTextFieldAttributes() {
+        cardNumberInputTextField.cardNumberSeparator = cardNumberSeparator
         cardNumberInputTextField.placeholder = placeholder
         cardNumberInputTextField?.cardNumberInputTextFieldDelegate = self
         cardNumberInputTextField.addTarget(self, action: Selector("textFieldDidBeginEditing:"), forControlEvents: UIControlEvents.EditingDidBegin)
@@ -157,6 +160,11 @@ public class CardNumberTextField: UITextField, UITextFieldDelegate, CardNumberIn
         
         cardImageView.image = unknownCardTypeImage
         cardImageView.backgroundColor = backgroundColor ?? UIColor.whiteColor()
+        cardImageView.layer.cornerRadius = 5.0
+        cardImageView.layer.shadowOpacity = 0.5
+        cardImageView.layer.shadowOffset = CGSize(width: 0, height: 0)
+        cardImageView.layer.shadowRadius = 10
+        cardImageView.layer.shadowColor = UIColor.clearColor().CGColor
         setupTextFieldAttributes()
     }
     
@@ -183,9 +191,6 @@ public class CardNumberTextField: UITextField, UITextFieldDelegate, CardNumberIn
     
     /**
      You can override this function to provide your own Nib. If you do so, please override 'getNibBundle' as well to provide the right NSBundle to load the nib file. The Nibs you provide are expected to be structured in a specific way.
-     
-     **Alternatively:**
-     Assign all outlets in your Storyboard. If all outlets have been assigned, a CardViewController will not opt for the Nib.
      */
     public func getNibName() -> String {
         return "CardView"
@@ -193,9 +198,6 @@ public class CardNumberTextField: UITextField, UITextFieldDelegate, CardNumberIn
     
     /**
      You can override this function to provide the NSBundle for your own Nib. If you do so, please override 'getNibName' as well to provide the right Nib to load the nib file. The Nibs you provide are expected to be structured in a specific way.
-     
-     **Alternatively:**
-     Assign all outlets in your Storyboard. If all outlets have been assigned, a CardViewController will not opt for the Nib.
      */
     public func getNibBundle() -> NSBundle {
         return NSBundle(forClass: CardNumberTextField.self)

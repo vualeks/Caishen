@@ -53,6 +53,12 @@ public class CardNumberInputTextField: StylizedTextField {
         }
         }
     }
+    public override var textColor: UIColor? {
+        didSet {
+        // Allow storing the new text color on text field flash.
+        SaveOldColor.onceToken = 0
+        }
+    }
     private var cardTypeRegister: CardTypeRegister = CardTypeRegister.sharedCardTypeRegister
     private var cardType: CardType.Type?
     private var cardNumberFormatter: CardNumberFormatter {
@@ -61,6 +67,15 @@ public class CardNumberInputTextField: StylizedTextField {
         }
     }
     
+    /**
+     Private struct for storing the text color when flashing the text field.
+     Using asynchronous operations to flash the text field would result in the text color being overwritten:
+     - user types in invalid number
+        -> Original text color is stored
+        -> Text color is set to red for 0.5 seconds
+     - after less than 0.5 seconds, the user types in invalid card number again
+        -> The 
+     */
     private struct SaveOldColor {
         static var onceToken: dispatch_once_t = 0
         static var oldTextColor: UIColor?

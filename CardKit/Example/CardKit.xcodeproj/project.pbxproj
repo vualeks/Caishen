@@ -12,6 +12,8 @@
 		08A3BADE1C62C412001B81D6 /* XCTAssertValidation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A3BADA1C62C3CE001B81D6 /* XCTAssertValidation.swift */; };
 		08A3BAE41C62DFE4001B81D6 /* CardExpiryValidatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A3BAE31C62DFE4001B81D6 /* CardExpiryValidatorTests.swift */; };
 		08A3BAE81C63D5FC001B81D6 /* CardNumberValidatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A3BAE71C63D5FC001B81D6 /* CardNumberValidatorTests.swift */; };
+		08AC4A551C7E5891007D9DA0 /* CustomTextField.xib in Resources */ = {isa = PBXBuildFile; fileRef = 08AC4A541C7E5891007D9DA0 /* CustomTextField.xib */; };
+		08AC4A571C7E59AF007D9DA0 /* CustomCardNumberTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08AC4A561C7E59AF007D9DA0 /* CustomCardNumberTextField.swift */; };
 		607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD51AFB9204008FA782 /* AppDelegate.swift */; };
 		607FACD81AFB9204008FA782 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD71AFB9204008FA782 /* ViewController.swift */; };
 		607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 607FACD91AFB9204008FA782 /* Main.storyboard */; };
@@ -39,6 +41,8 @@
 		08A3BADA1C62C3CE001B81D6 /* XCTAssertValidation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XCTAssertValidation.swift; sourceTree = "<group>"; };
 		08A3BAE31C62DFE4001B81D6 /* CardExpiryValidatorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardExpiryValidatorTests.swift; sourceTree = "<group>"; };
 		08A3BAE71C63D5FC001B81D6 /* CardNumberValidatorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardNumberValidatorTests.swift; sourceTree = "<group>"; };
+		08AC4A541C7E5891007D9DA0 /* CustomTextField.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CustomTextField.xib; sourceTree = "<group>"; };
+		08AC4A561C7E59AF007D9DA0 /* CustomCardNumberTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomCardNumberTextField.swift; sourceTree = "<group>"; };
 		0C5E7B6138055B0324AACC31 /* Pods_CardKit_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CardKit_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		100120E7CF7EA66261A5090B /* CardKit.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = CardKit.podspec; path = ../CardKit.podspec; sourceTree = "<group>"; };
 		5C3C127D599F7AAE7EA401C8 /* Pods-CardKit_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CardKit_Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-CardKit_Tests/Pods-CardKit_Tests.release.xcconfig"; sourceTree = "<group>"; };
@@ -136,8 +140,10 @@
 			isa = PBXGroup;
 			children = (
 				607FACD51AFB9204008FA782 /* AppDelegate.swift */,
+				08AC4A561C7E59AF007D9DA0 /* CustomCardNumberTextField.swift */,
 				607FACD71AFB9204008FA782 /* ViewController.swift */,
 				607FACD91AFB9204008FA782 /* Main.storyboard */,
+				08AC4A541C7E5891007D9DA0 /* CustomTextField.xib */,
 				607FACDC1AFB9204008FA782 /* Images.xcassets */,
 				607FACDE1AFB9204008FA782 /* LaunchScreen.xib */,
 				607FACD31AFB9204008FA782 /* Supporting Files */,
@@ -269,6 +275,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				08AC4A551C7E5891007D9DA0 /* CustomTextField.xib in Resources */,
 				607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */,
 				607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */,
 				607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */,
@@ -384,6 +391,7 @@
 			files = (
 				607FACD81AFB9204008FA782 /* ViewController.swift in Sources */,
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
+				08AC4A571C7E59AF007D9DA0 /* CustomCardNumberTextField.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
