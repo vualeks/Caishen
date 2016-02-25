@@ -15,7 +15,6 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-        view.addSubview(CardNumberTextField(frame: CGRect(x: 0, y: 0, width: 300, height: 30)))
     }
 
     override func didReceiveMemoryWarning() {
