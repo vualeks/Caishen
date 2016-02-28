@@ -10,8 +10,8 @@ import UIKit
 
 public struct DinersClubCardType: CardType {
     
-    private static var image: UIImage = UIImage(named: "DinersClub") ?? UIImage()
-    private static var cvcIm: UIImage = UIImage(named: "CVC") ?? UIImage()
+    public static var cardTypeImage: UIImage? = UIImage(named: "DinersClub") ?? UIImage()
+    public static var cvcImage: UIImage? = UIImage(named: "CVC") ?? UIImage()
     
     public static func cardTypeName() -> String {
         return "Diners Club"
@@ -23,22 +23,6 @@ public struct DinersClubCardType: CardType {
     
     public static func cardNumberGrouping() -> [Int] {
         return [4,6,4]
-    }
-    
-    public static func cardTypeImage() -> UIImage {
-        return image
-    }
-    
-    public static func overrideImageForCardType(image: UIImage) {
-        self.image = image
-    }
-    
-    public static func cvcImage() -> UIImage {
-        return cvcIm
-    }
-    
-    public static func overrideCVCImage(image: UIImage) {
-        cvcIm = image
     }
     
     public static func cardDigitsIdentifyingCardType() -> Set<Int> {

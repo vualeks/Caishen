@@ -11,7 +11,7 @@ import Foundation
 /**
  A card represents a physical bank card with all its associated attributes.
 */
-public class Card {
+public class Card: NSObject {
     public let bankCardNumber: CardNumber
     public let cardVerificationCode: CardCVC
     public let expiryDate: CardExpiry

@@ -10,8 +10,8 @@ import UIKit
 
 public struct JCBCardType: CardType {
     
-    private static var image: UIImage = UIImage(named: "JCB") ?? UIImage()
-    private static var cvcIm: UIImage = UIImage(named: "CVC") ?? UIImage()
+    public static var cardTypeImage: UIImage? = UIImage(named: "JCB") ?? UIImage()
+    public static var cvcImage: UIImage? = UIImage(named: "CVC") ?? UIImage()
     
     public static func cardTypeName() -> String {
         return "JCB"
@@ -23,22 +23,6 @@ public struct JCBCardType: CardType {
     
     public static func cardNumberGrouping() -> [Int] {
         return [4,4,4,4]
-    }
-    
-    public static func cardTypeImage() -> UIImage {
-        return image
-    }
-    
-    public static func overrideImageForCardType(image: UIImage) {
-        self.image = image
-    }
-    
-    public static func cvcImage() -> UIImage {
-        return cvcIm
-    }
-    
-    public static func overrideCVCImage(image: UIImage) {
-        cvcIm = image
     }
     
     public static func cardDigitsIdentifyingCardType() -> Set<Int> {

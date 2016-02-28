@@ -35,17 +35,28 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="npI-Jr-7wA">
+                                <rect key="frame" x="546" y="28" width="34" height="30"/>
+                                <state key="normal" title="Save"/>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="Dwr-kY-ZoC" firstAttribute="trailing" secondItem="kh9-bI-dsS" secondAttribute="trailingMargin" id="2Il-Y4-XVa"/>
                             <constraint firstItem="FxU-RH-ia0" firstAttribute="trailing" secondItem="Dwr-kY-ZoC" secondAttribute="trailing" id="9Dq-il-n2W"/>
+                            <constraint firstItem="npI-Jr-7wA" firstAttribute="trailing" secondItem="Dwr-kY-ZoC" secondAttribute="trailing" id="CPo-eI-0BH"/>
                             <constraint firstItem="Dwr-kY-ZoC" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" id="Jgn-vq-BVj"/>
                             <constraint firstItem="FxU-RH-ia0" firstAttribute="leading" secondItem="Dwr-kY-ZoC" secondAttribute="leading" id="dUz-oP-nvz"/>
                             <constraint firstItem="FxU-RH-ia0" firstAttribute="top" secondItem="Dwr-kY-ZoC" secondAttribute="bottom" constant="8" symbolic="YES" id="kch-wg-Iwn"/>
+                            <constraint firstItem="npI-Jr-7wA" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" constant="8" symbolic="YES" id="lMR-EM-KUd"/>
                             <constraint firstItem="Dwr-kY-ZoC" firstAttribute="centerY" secondItem="kh9-bI-dsS" secondAttribute="centerY" id="vSV-l4-MgX"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="cardNumberTextField0" destination="Dwr-kY-ZoC" id="7E9-G1-IGN"/>
+                        <outlet property="cardNumberTextField1" destination="FxU-RH-ia0" id="4Vb-kS-AiZ"/>
+                        <outlet property="saveButton" destination="npI-Jr-7wA" id="QAy-GD-NW8"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>

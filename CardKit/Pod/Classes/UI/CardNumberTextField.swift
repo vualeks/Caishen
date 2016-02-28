@@ -8,11 +8,6 @@
 
 import UIKit
 
-public enum CardViewLoaderError: ErrorType {
-    case LoadingFailed(nibName: String)
-    case SuperViewIsCardView
-}
-
 /**
  This kind of text field serves as a container for subviews, which allow a user to enter card information.
  
@@ -61,6 +56,8 @@ public class CardNumberTextField: UITextField, UITextFieldDelegate, CardNumberIn
      The view which is slided in from the right after a valid card number has been entered.
      */
     @IBOutlet public weak var cardInfoView: UIView?
+    
+    public var cardNumberTextFieldDelegate: CardNumberTextFieldDelegate?
     
     override public final var textColor: UIColor? {
         didSet {
@@ -114,6 +111,14 @@ public class CardNumberTextField: UITextField, UITextFieldDelegate, CardNumberIn
         }
     }
     
+    public var card: Card? {
+        get {
+            guard let cardNumber = cardNumber, let cardCVC = cardCVC, let cardExpiry = cardExpiry else {
+                return nil
+            }
+            return Card(bankCardNumber: cardNumber, cardVerificationCode: cardCVC, expiryDate: cardExpiry)
+        }
+    }
     /**
      The image that is displayed if the currently entered card number does not match any card types
      */
@@ -194,7 +199,12 @@ public class CardNumberTextField: UITextField, UITextFieldDelegate, CardNumberIn
     /**
      The entered card number or nil, if no valid card number has been entered yet.
      */
-    private var cardNumber: CardNumber?
+    private var cardNumber: CardNumber? {
+        if cardNumberInputTextField?.parsedCardNumber?.validate(cardTypeRegister) == .Valid {
+            return cardNumberInputTextField?.parsedCardNumber
+        }
+        return nil
+    }
     
     /**
      The entered card validation code or nil, if no valid cvc has been entered yet.
@@ -224,7 +234,6 @@ public class CardNumberTextField: UITextField, UITextFieldDelegate, CardNumberIn
         cardNumberInputTextField?.cardNumberSeparator = cardNumberSeparator
         cardNumberInputTextField?.placeholder = placeholder
         cardNumberInputTextField?.cardNumberInputTextFieldDelegate = self
-        cardNumberInputTextField?.addTarget(self, action: Selector("textFieldDidBeginEditing:"), forControlEvents: UIControlEvents.EditingDidBegin)
         cvcTextField?.delegate = self
         monthTextField?.delegate = self
         yearTextField?.delegate = self
@@ -234,6 +243,7 @@ public class CardNumberTextField: UITextField, UITextFieldDelegate, CardNumberIn
         [cardNumberInputTextField,cvcTextField,monthTextField,yearTextField].forEach({
             $0?.keyboardType = .NumberPad
             $0?.addTarget(self, action: Selector("textFieldDidChange:"), forControlEvents: UIControlEvents.EditingChanged)
+            $0?.addTarget(self, action: Selector("textFieldDidBeginEditing:"), forControlEvents: UIControlEvents.EditingDidBegin)
             $0?.textColor = textColor
             $0?.font = font
             $0?.keyboardAppearance = keyboardAppearance
@@ -358,6 +368,12 @@ public class CardNumberTextField: UITextField, UITextFieldDelegate, CardNumberIn
                 self.moveNumberFieldRight()
                 })
         }
+        
+        if textField == cvcTextField {
+            cardImageView?.image = cardType?.cvcImage
+        } else {
+            cardImageView?.image = cardType?.cardTypeImage ?? unknownCardTypeImage
+        }
     }
     
     public final func textFieldDidChange(textField: UITextField) {
@@ -365,20 +381,28 @@ public class CardNumberTextField: UITextField, UITextFieldDelegate, CardNumberIn
         case let val where val == cvcTextField:
             if isCVCValid(textField.text ?? "", partiallyValid: false) {
                 cardCVC = CardCVC(string: textField.text!)
+            } else {
+                cardCVC = nil
             }
         case let val where val == monthTextField:
             if isMonthValid(textField.text ?? "", partiallyValid: false) {
                 monthString = textField.text!
                 yearTextField?.becomeFirstResponder()
+            } else {
+                monthString = nil
             }
         case let val where val == yearTextField:
             if isYearValid(textField.text ?? "", partiallyValid: false) {
                 yearString = textField.text!
                 cvcTextField?.becomeFirstResponder()
+            } else {
+                yearString = nil
             }
         default:
             break
         }
+        
+        notifyDelegate()
     }
     
     public final func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
@@ -399,21 +423,29 @@ public class CardNumberTextField: UITextField, UITextFieldDelegate, CardNumberIn
     
     // MARK: - CardNumberInputTextFieldDelegate
     
-    public func cardNumberInputTextField(cardNumberTextField: CardNumberInputTextField, didChangeText text: String) {
-        // Check for a detected card number type
-        
-        if let cardNumber = cardNumberTextField.parsedCardNumber {
-            cardImageView?.image = cardTypeRegister.cardTypeForNumber(cardNumber)?.cardTypeImage() ?? unknownCardTypeImage
+    private func notifyDelegate() {
+        if let card = card {
+            cardNumberTextFieldDelegate?.cardNumberTextField(self, didEnterCardInformation: card, withValidationResult: CardValidator(cardTypeRegister: cardTypeRegister).validateCard(card))
+        } else {
+            cardNumberTextFieldDelegate?.cardNumberTextField(self, didEnterCardInformation: nil, withValidationResult: nil)
         }
+    }
+    
+    public func cardNumberInputTextField(cardNumberTextField: CardNumberInputTextField, didChangeText text: String) {
+        if let cardNumber = cardNumberTextField.parsedCardNumber {
+            cardImageView?.image = cardTypeRegister.cardTypeForNumber(cardNumber)?.cardTypeImage ?? unknownCardTypeImage
+        }
+        
+        notifyDelegate()
     }
     
     public func cardNumberInputTextField(cardNumberTextField: CardNumberInputTextField, didEnterValidCardNumber cardNumber: CardNumber) {
         UIView.animateWithDuration(1.0, animations: { [unowned self] _ in
             self.moveNumberFieldLeft()
             self.moveCardDetailViewIn()
-            })
+        })
         
-        self.cardNumber = cardNumber
+        notifyDelegate()
         
         monthTextField?.becomeFirstResponder()
     }

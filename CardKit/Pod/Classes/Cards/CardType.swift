@@ -14,6 +14,16 @@ import Foundation
 public protocol CardType {
     
     /**
+     The image which is displayed in the CardNumberTextField, when the entered card number matches this card type.
+     */
+    static var cardTypeImage: UIImage? { get set }
+    
+    /**
+     The image which is displayed in the CardNumberTextField, when the user is entering the CVC for this card type.
+     */
+    static var cvcImage: UIImage? { get set }
+    
+    /**
      - returns: The card type name (e.g.: Visa, MasterCard, ...)
      */
     static func cardTypeName() -> String
@@ -30,30 +40,6 @@ public protocol CardType {
      - returns: The grouping of digits in the card number.
      */
     static func cardNumberGrouping() -> [Int]
-    
-    /**
-     - returns: The card type image, that is displayed in a card number text field's image view to indicate the detected card type for the user.
-     */
-    static func cardTypeImage() -> UIImage
-    
-    /**
-     Use this function to override the default image for a card type.
-     
-     - parameter image: The image used to indicate the card type for the user.
-     */
-    static func overrideImageForCardType(image: UIImage)
-    
-    /**
-     - returns: The card validation code image, that is displayed in a card number text field's image view to show the number the user has to enter.
-     */
-    static func cvcImage() -> UIImage
-    
-    /**
-     Use this function to override the default image for a card validation code.
-     
-     - parameter image: The image used to indicate the cvc for the user.
-     */
-    static func overrideCVCImage(image: UIImage)
     
     /**
      Card types are typically identified by their first n digits. In compliance to ISO/IEC 7812, the first digit is the *Major industry identifier*, which is equal to:
