@@ -20,6 +20,7 @@ class ViewController: UIViewController, CardNumberTextFieldDelegate {
         
         saveButton?.enabled = false
         
+        // Assign self as the delegate for both card number text fields.
         [cardNumberTextField0, cardNumberTextField1].forEach({$0.cardNumberTextFieldDelegate = self})
     }
 
@@ -28,8 +29,9 @@ class ViewController: UIViewController, CardNumberTextFieldDelegate {
         // Dispose of any resources that can be recreated.
     }
     
+    // This method of `CardNumberTextFieldDelegate` will set the saveButton enabled or disabled, based on whether valid card information has been entered.
     func cardNumberTextField(cardNumberTextField: CardNumberTextField, didEnterCardInformation information: Card?, withValidationResult validationResult: CardValidationResult?) {
-        if information == nil {
+        if validationResult != .Valid {
             saveButton?.enabled = false
         } else {
             saveButton?.enabled = true

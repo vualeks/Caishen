@@ -41,9 +41,6 @@
                         </userDefinedRuntimeAttribute>
                     </userDefinedRuntimeAttributes>
                 </imageView>
-                <button opaque="NO" alpha="0.0" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="contactAdd" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YQU-u1-yfJ">
-                    <rect key="frame" x="570" y="289" width="22" height="22"/>
-                </button>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8iN-aK-Jz9">
                     <rect key="frame" x="89" y="0.0" width="511" height="600"/>
                     <subviews>
@@ -100,7 +97,6 @@
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstItem="T6o-6e-fLS" firstAttribute="bottom" secondItem="puU-AL-gPV" secondAttribute="bottom" constant="3" id="1V7-sy-z02"/>
-                <constraint firstItem="YQU-u1-yfJ" firstAttribute="centerY" secondItem="T6o-6e-fLS" secondAttribute="centerY" id="2Ub-la-T9W"/>
                 <constraint firstItem="T6o-6e-fLS" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="2hP-5w-uAi"/>
                 <constraint firstAttribute="trailing" secondItem="8iN-aK-Jz9" secondAttribute="trailing" id="Dm5-lS-7gW"/>
                 <constraint firstAttribute="bottom" secondItem="T6o-6e-fLS" secondAttribute="bottom" id="EXF-wl-GHl"/>
@@ -108,7 +104,6 @@
                 <constraint firstItem="T6o-6e-fLS" firstAttribute="trailing" secondItem="iN0-l3-epB" secondAttribute="trailingMargin" id="cma-zJ-pDA"/>
                 <constraint firstItem="puU-AL-gPV" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="fP2-Mh-h6I"/>
                 <constraint firstItem="8iN-aK-Jz9" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" priority="750" constant="89" id="hOK-B4-zWu"/>
-                <constraint firstItem="YQU-u1-yfJ" firstAttribute="trailing" secondItem="T6o-6e-fLS" secondAttribute="trailing" id="iVL-cL-yeJ"/>
                 <constraint firstItem="8iN-aK-Jz9" firstAttribute="bottom" secondItem="T6o-6e-fLS" secondAttribute="bottom" id="jeW-Hm-63K"/>
                 <constraint firstItem="T6o-6e-fLS" firstAttribute="top" secondItem="puU-AL-gPV" secondAttribute="top" constant="-3" id="kbb-nn-KKP"/>
                 <constraint firstItem="T6o-6e-fLS" firstAttribute="leading" secondItem="puU-AL-gPV" secondAttribute="trailing" id="wk0-uM-9Ur"/>

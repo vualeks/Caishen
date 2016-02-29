@@ -11,6 +11,9 @@ import UIKit
 @IBDesignable
 public class StylizedTextField: UITextField, UITextFieldDelegate {
     
+    /**
+     Changes to this parameter draw the border of `self` in the given width.
+     */
     @IBInspectable
     public var borderWidth: CGFloat = 0 {
         didSet {
@@ -23,6 +26,10 @@ public class StylizedTextField: UITextField, UITextFieldDelegate {
             }
         }
     }
+    
+    /**
+     If `borderWidth` has been set, changes to this parameter round the corners of `self` in the given corner radius.
+     */
     @IBInspectable
     public var cornerRadius: CGFloat = 0 {
         didSet {
@@ -31,12 +38,20 @@ public class StylizedTextField: UITextField, UITextFieldDelegate {
             }
         }
     }
+    
+    /**
+     If `borderWidth` has been set, changes to this parameter change the color of the border of `self`.
+     */
     @IBInspectable
     public var borderColor: UIColor = UIColor.blackColor() {
         didSet {
             self.layer.borderColor = self.borderColor.CGColor
         }
     }
+    
+    /**
+     A method which will be called, when the delete key has been pressed for an empty text field.
+     */
     public var deleteBackwardCallback: ((UITextField) -> Void)?
     
     public required init?(coder aDecoder: NSCoder) {

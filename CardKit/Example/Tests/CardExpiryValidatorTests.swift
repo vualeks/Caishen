@@ -44,7 +44,8 @@ class CardExpiryValidatorTests: XCTestCase {
                                 CardExpiry(string: "02 2016"), // 7
                                 CardExpiry(string: "Feb 2016"), // 8
                                 CardExpiry(string: "Feb/2016"), // 9
-                                CardExpiry(string: "022016")] // 10
+                                CardExpiry(string: "022016"), // 10
+                                CardExpiry(string: "02.2016")] // 11
         
         let shouldNotBeNil = [  CardExpiry(string: "02-2006"),
                                 CardExpiry(string: "02-06"),

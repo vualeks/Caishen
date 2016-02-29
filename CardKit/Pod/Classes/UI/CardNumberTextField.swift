@@ -12,9 +12,9 @@ import UIKit
  This kind of text field serves as a container for subviews, which allow a user to enter card information.
  
  The typical structure of a `CardNumberTextField`'s subviews is as follows:
-    - _: UIView (in most cases with a transparent background in order to not hide the CardNumberTextField)
-        - cardImageView: UIImageView
-        - CardNumberInputTextField (for entering a card number)
+ - _: UIView (in most cases with a transparent background in order to not hide the CardNumberTextField)
+    - cardImageView: UIImageView
+    - CardNumberInputTextField (for entering a card number)
         - cardInfoView: UIView (container for other views to enter additional information after entering a valid card number) with subviews ordered from left to right:
             - monthTextField: StylizedTextField
             - yearTextField: StylizedTextField
@@ -111,6 +111,9 @@ public class CardNumberTextField: UITextField, UITextFieldDelegate, CardNumberIn
         }
     }
     
+    /**
+     The currently entered card, or nil, if some of the card information is missing.
+     */
     public var card: Card? {
         get {
             guard let cardNumber = cardNumber, let cardCVC = cardCVC, let cardExpiry = cardExpiry else {
@@ -204,6 +207,17 @@ public class CardNumberTextField: UITextField, UITextFieldDelegate, CardNumberIn
             return cardNumberInputTextField?.parsedCardNumber
         }
         return nil
+    }
+    
+    /**
+     Notifies `cardNumberTextFieldDelegate` about changes to the entered card information.
+     */
+    private func notifyDelegate() {
+        if let card = card {
+            cardNumberTextFieldDelegate?.cardNumberTextField(self, didEnterCardInformation: card, withValidationResult: CardValidator(cardTypeRegister: cardTypeRegister).validateCard(card))
+        } else {
+            cardNumberTextFieldDelegate?.cardNumberTextField(self, didEnterCardInformation: nil, withValidationResult: nil)
+        }
     }
     
     /**
@@ -423,14 +437,6 @@ public class CardNumberTextField: UITextField, UITextFieldDelegate, CardNumberIn
     
     // MARK: - CardNumberInputTextFieldDelegate
     
-    private func notifyDelegate() {
-        if let card = card {
-            cardNumberTextFieldDelegate?.cardNumberTextField(self, didEnterCardInformation: card, withValidationResult: CardValidator(cardTypeRegister: cardTypeRegister).validateCard(card))
-        } else {
-            cardNumberTextFieldDelegate?.cardNumberTextField(self, didEnterCardInformation: nil, withValidationResult: nil)
-        }
-    }
-    
     public func cardNumberInputTextField(cardNumberTextField: CardNumberInputTextField, didChangeText text: String) {
         if let cardNumber = cardNumberTextField.parsedCardNumber {
             cardImageView?.image = cardTypeRegister.cardTypeForNumber(cardNumber)?.cardTypeImage ?? unknownCardTypeImage
@@ -443,7 +449,7 @@ public class CardNumberTextField: UITextField, UITextFieldDelegate, CardNumberIn
         UIView.animateWithDuration(1.0, animations: { [unowned self] _ in
             self.moveNumberFieldLeft()
             self.moveCardDetailViewIn()
-        })
+            })
         
         notifyDelegate()
         
@@ -495,9 +501,12 @@ public class CardNumberTextField: UITextField, UITextFieldDelegate, CardNumberIn
     
     public override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
         // Detect touches in card number text field as long as the detail view is on top of it
-        touches.forEach({
-            let point = $0.locationInView(self)
-            if (cardNumberInputTextField?.pointInside(point, withEvent: event) ?? false) && [monthTextField,yearTextField,cvcTextField].reduce(true, combine: {$0 && !($1?.pointInside(point, withEvent: event) ?? false)}) {
+        touches.forEach({ touch -> () in
+            let point = touch.locationInView(self)
+            if (cardNumberInputTextField?.pointInside(point, withEvent: event) ?? false) && [monthTextField,yearTextField,cvcTextField].reduce(true, combine: { (currentValue: Bool, textField: UITextField?) -> Bool in
+                let pointInTextField = touch.locationInView(textField)
+                return currentValue && !(textField?.pointInside(pointInTextField, withEvent: event) ?? false)
+            }) {
                 cardNumberInputTextField?.becomeFirstResponder()
             }
         })
