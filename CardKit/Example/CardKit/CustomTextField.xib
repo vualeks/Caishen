@@ -21,6 +21,11 @@
             <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="WXl-2K-lbz" customClass="CardNumberInputTextField" customModule="CardKit">
+                    <rect key="frame" x="8" y="0.0" width="584" height="600"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <textInputTraits key="textInputTraits"/>
+                </textField>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="plq-0X-1Ro">
                     <rect key="frame" x="80" y="0.0" width="520" height="600"/>
                     <subviews>
@@ -75,18 +80,13 @@
                     </constraints>
                     <variation key="default">
                         <mask key="constraints">
+                            <exclude reference="8SC-IL-Nyw"/>
                             <exclude reference="OHd-gc-7QQ"/>
                             <exclude reference="QGh-r0-uC9"/>
-                            <exclude reference="8SC-IL-Nyw"/>
                             <exclude reference="wEH-rp-8sY"/>
                         </mask>
                     </variation>
                 </view>
-                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="WXl-2K-lbz" customClass="CardNumberInputTextField" customModule="CardKit">
-                    <rect key="frame" x="8" y="0.0" width="584" height="600"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                    <textInputTraits key="textInputTraits"/>
-                </textField>
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             <constraints>
