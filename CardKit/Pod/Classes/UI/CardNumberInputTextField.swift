@@ -21,7 +21,7 @@ public class CardNumberInputTextField: StylizedTextField {
      
      - note: This card number may be incomplete and invalid while the user is entering a card number.
      */
-    public private(set) var parsedCardNumber: CardNumber?
+    public private(set) var parsedCardNumber: Number?
     
     /**
      */
@@ -37,22 +37,21 @@ public class CardNumberInputTextField: StylizedTextField {
      */
     @IBInspectable public var cardNumberSeparator: String = "-" {
         didSet {
-        placeholder = cardNumberFormatter.formattedCardNumber(self.placeholder ?? "1234123412341234")
+            placeholder = cardNumberFormatter.formattedCardNumber(self.placeholder ?? "1234123412341234")
         }
     }
     override public var placeholder: String? {
         didSet {
-        guard let placeholder = placeholder else {
-            return
-        }
-        let isUnformatted = (placeholder == self.cardNumberFormatter.unformattedCardNumber(placeholder))
+            guard let placeholder = placeholder else {
+                return
+            }
+
+            let isUnformatted = (placeholder == self.cardNumberFormatter.unformattedCardNumber(placeholder))
         
-        // Format the placeholder, if not already done
-        if isUnformatted && cardNumberSeparator != "" {
-            self.placeholder = cardNumberFormatter.formattedCardNumber(placeholder)
-        } else {
-            return
-        }
+            // Format the placeholder, if not already done
+            if isUnformatted && cardNumberSeparator != "" {
+                self.placeholder = cardNumberFormatter.formattedCardNumber(placeholder)
+            }
         }
     }
     
@@ -64,15 +63,13 @@ public class CardNumberInputTextField: StylizedTextField {
     /**
      The currently detected card type for the entered card number. May be nil, if no card type has been detected.
      */
-    private var cardType: CardType.Type?
+    private var cardType: CardType?
     
     /**
      A card number formatter used to format the input
      */
     private var cardNumberFormatter: CardNumberFormatter {
-        get {
-            return CardNumberFormatter(separator: self.cardNumberSeparator, cardTypeRegister: cardTypeRegister)
-        }
+        return CardNumberFormatter(separator: self.cardNumberSeparator, cardTypeRegister: cardTypeRegister)
     }
     
     /**
@@ -105,32 +102,36 @@ public class CardNumberInputTextField: StylizedTextField {
         let newTextIsNumeric = UInt(newText) != nil
         
         // Create a card number with the newly formed string.
-        parsedCardNumber = CardNumber(string: newText)
+        parsedCardNumber = Number(rawValue: newText)
         
         if let parsedCardNumber = parsedCardNumber {
             let partialValidation = cardTypeRegister.cardTypeForNumber(parsedCardNumber)?.checkCardNumberPartiallyValid(parsedCardNumber)
-            let completeValidation = cardTypeRegister.cardTypeForNumber(parsedCardNumber)?.validateCardNumber(parsedCardNumber)
+            let completeValidation = cardTypeRegister.cardTypeForNumber(parsedCardNumber)?.validateNumber(parsedCardNumber)
+
+            let editingChanged = {
+                self.sendActionsForControlEvents(.EditingChanged)
+            }
             
             // Based on the validity of the input, allow changing the input or forbid (resulting in the text color changing shortly)
-            if completeValidation == nil && partialValidation == nil && newText.length() <= 6 {
+            if completeValidation == nil && partialValidation == nil && newText.characters.count <= 6 {
                 // Case 1: No card type has been detected so far and less or equal than 6 digits have been entered (the amount of digits in a IIN for identification of the card issuer)
                 cardType = cardTypeRegister.cardTypeForNumber(parsedCardNumber)
                 cardNumberFormatter.replaceRangeFormatted(range, inTextField: textField, withString: string)
-                cardNumberInputTextFieldDelegate?.cardNumberInputTextField?(self, didChangeText: newText)
-                
+                editingChanged()
+
                 return false
             } else if completeValidation == CardValidationResult.Valid {
                 // Case 2: A card type has been detected and the card number was entered completely
                 cardType = cardTypeRegister.cardTypeForNumber(parsedCardNumber)
                 cardNumberFormatter.replaceRangeFormatted(range, inTextField: textField, withString: string)
-                cardNumberInputTextFieldDelegate?.cardNumberInputTextField?(self, didEnterValidCardNumber: CardNumber(string: self.cardNumberFormatter.unformattedCardNumber(newText)))
-                
+                cardNumberInputTextFieldDelegate?.cardNumberInputTextFieldDidComplete(self)
+
                 return false
             } else if partialValidation == CardValidationResult.Valid {
                 // Case 3: A card type has been detected, but the card number is only partially valid
                 cardType = cardTypeRegister.cardTypeForNumber(parsedCardNumber)
                 cardNumberFormatter.replaceRangeFormatted(range, inTextField: textField, withString: string)
-                cardNumberInputTextFieldDelegate?.cardNumberInputTextField?(self, didChangeText: newText)
+                editingChanged()
                 
                 return false
             } else {
@@ -171,10 +172,10 @@ public class CardNumberInputTextField: StylizedTextField {
      - returns: The CGRect in `self` that contains the last group of the card number.
      */
     public func rectForLastGroup() -> CGRect? {
-        guard let lastGroupLength = text?.componentsSeparatedByString(cardNumberFormatter.separator).last?.length() else {
+        guard let lastGroupLength = text?.componentsSeparatedByString(cardNumberFormatter.separator).last?.characters.count else {
             return nil
         }
-        guard let textLength = text?.length() else {
+        guard let textLength = text?.characters.count else {
             return nil
         }
         
@@ -186,7 +187,7 @@ public class CardNumberInputTextField: StylizedTextField {
      */
     private func flashTextFieldInvalid() {
         NSOperationQueue().addOperationWithBlock({ [unowned self] _ in
-            SaveOldColor(textColor: self.textColor)
+            let _ = SaveOldColor(textColor: self.textColor)
             dispatch_async(dispatch_get_main_queue(), {
                 UIView.animateWithDuration(0.5, animations: { [unowned self] _ in
                     self.textColor = self.invalidInputColor

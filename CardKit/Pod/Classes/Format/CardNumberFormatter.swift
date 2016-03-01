@@ -47,9 +47,9 @@ public class CardNumberFormatter: NSObject {
     public func formattedCardNumber(cardNumberString: String) -> String {
         let regex: NSRegularExpression
         
-        let cardType = cardTypeRegister.cardTypeForNumber(CardNumber(string: cardNumberString))
+        let cardType = cardTypeRegister.cardTypeForNumber(Number(rawValue: cardNumberString))
         do {
-            let groups = cardType?.cardNumberGrouping() ?? [4,4,4,4]
+            let groups = cardType?.numberGrouping ?? [4,4,4,4]
             var pattern = ""
             var first = true
             for group in groups {
@@ -76,7 +76,7 @@ public class CardNumberFormatter: NSObject {
         guard let selectedRange = textField.selectedTextRange else {
             return nil
         }
-        let addedCharacters = text.length() - (textField.text ?? "").length()
+        let addedCharacters = text.characters.count - (textField.text ?? "").characters.count
         
         let position = textField.offsetFromPosition(textField.beginningOfDocument, toPosition: selectedRange.start) + addedCharacters
         
@@ -87,31 +87,31 @@ public class CardNumberFormatter: NSObject {
         var componentContainingCursor = 0
         var stringParsingIndex = 0
         for i in 0..<components.count {
-            stringParsingIndex += components[i].length()
+            stringParsingIndex += components[i].characters.count
             if position <= stringParsingIndex {
                 componentContainingCursor = i
                 break
             }
-            stringParsingIndex += self.separator.length()
+            stringParsingIndex += self.separator.characters.count
         }
         
-        return position - componentContainingCursor * self.separator.length()
+        return position - componentContainingCursor * self.separator.characters.count
     }
     
     private func indexInUnformattedString(index: Int, formattedString: String) -> Int {
         var componentWithIndex = 0
         var charCount = 0
         for component in formattedString.componentsSeparatedByString(self.separator) {
-            charCount += component.length()
+            charCount += component.characters.count
             if charCount >= index {
                 break
             } else {
                 componentWithIndex += 1
-                charCount += self.separator.length()
+                charCount += self.separator.characters.count
             }
         }
         
-        return index - componentWithIndex * self.separator.length()
+        return index - componentWithIndex * self.separator.characters.count
     }
     
     private func indexInFormattedString(index: Int, unformattedString: String) -> Int {
@@ -121,11 +121,11 @@ public class CardNumberFormatter: NSObject {
         let groups = formattedString.componentsSeparatedByString(self.separator)
         
         for i in 0..<groups.count {
-            let groupChars = groups[i].length()
+            let groupChars = groups[i].characters.count
             
             charIdx += groupChars
             if charIdx >= index {
-                return min(index + i * self.separator.length(), formattedString.length())
+                return min(index + i * self.separator.characters.count, formattedString.characters.count)
             }
         }
         
@@ -133,7 +133,6 @@ public class CardNumberFormatter: NSObject {
     }
     
     public func replaceRangeFormatted(range: NSRange, inTextField textField: UITextField, withString string: String) {
-        
         let newValueUnformatted = self.unformattedCardNumber(NSString(string: textField.text ?? "").stringByReplacingCharactersInRange(range, withString: string))
         let oldValueUnformatted = self.unformattedCardNumber(textField.text ?? "")
         
@@ -144,7 +143,7 @@ public class CardNumberFormatter: NSObject {
         if let start = textField.selectedTextRange?.start {
             let oldCursorPosition = textField.offsetFromPosition(textField.beginningOfDocument, toPosition: start)
             let oldCursorPositionUnformatted = self.indexInUnformattedString(oldCursorPosition, formattedString: oldValue)
-            let newCursorPositionUnformatted = oldCursorPositionUnformatted + (newValueUnformatted.length() - oldValueUnformatted.length())
+            let newCursorPositionUnformatted = oldCursorPositionUnformatted + (newValueUnformatted.characters.count - oldValueUnformatted.characters.count)
             let newCursorPositionFormatted = self.indexInFormattedString(newCursorPositionUnformatted, unformattedString: newValueUnformatted)
             
             position = textField.positionFromPosition(textField.beginningOfDocument, offset: newCursorPositionFormatted)
@@ -163,7 +162,7 @@ public class CardNumberFormatter: NSObject {
      - returns: An array of all matches found in string for `regex`.
      */
     private func splitString(string: String, withRegex regex: NSRegularExpression) -> [String] {
-        let matches = regex.matchesInString(string, options: NSMatchingOptions(), range: NSMakeRange(0, string.length()))
+        let matches = regex.matchesInString(string, options: NSMatchingOptions(), range: NSMakeRange(0, string.characters.count))
         var result = [String]()
         
         matches.forEach {

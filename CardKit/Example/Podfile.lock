@@ -1,11 +1,9 @@
 PODS:
-  - CardIO (5.3.1)
   - CardKit (0.1.0):
     - IQKeyboardManager
   - IQKeyboardManager (4.0.0)
 
 DEPENDENCIES:
-  - CardIO
   - CardKit (from `../`)
 
 EXTERNAL SOURCES:
@@ -13,7 +11,6 @@ EXTERNAL SOURCES:
     :path: ../
 
 SPEC CHECKSUMS:
-  CardIO: a299efcd0348c3b256a1da53f22951319c3855a2
   CardKit: 4eeb91e5e786644ff14482c7685421031ef5fb4e
   IQKeyboardManager: b91928f7927ba55a5829b4dcf4b7a6736ac9fc22
 

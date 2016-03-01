@@ -28,9 +28,9 @@ class CardNumberFormatterTests: XCTestCase {
     func testCorrectSeparator() {
         self.formatter.separator = "-"
         
-        let testNumber = CardNumber(string: "4123123412341234")
+        let testNumber = Number(rawValue: "4123123412341234")
         
-        let formattedTestNumber = self.formatter.formattedCardNumber(testNumber.stringValue())
+        let formattedTestNumber = self.formatter.formattedCardNumber(testNumber.description)
         
         XCTAssertEqual(formattedTestNumber, "4123-1234-1234-1234")
     }

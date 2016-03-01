@@ -25,38 +25,6 @@ public struct CardValidationResult: OptionSetType {
         self.rawValue = rawValue
     }
     
-    public func stringValue() -> String {
-        if self == CardValidationResult.Valid {
-            return "Valid"
-        } else {
-            var resultString = "{\n"
-            if self.isSupersetOf(CardValidationResult.NumberDoesNotMatchType) {
-                resultString += "\tNumber does not match type\n"
-            }
-            if self.isSupersetOf(CardValidationResult.CVCIncomplete) {
-                resultString += "\tCVC is too short\n"
-            }
-            if self.isSupersetOf(CardValidationResult.InvalidCVC) {
-                resultString += "\tCVC is invalid\n"
-            }
-            if self.isSupersetOf(CardValidationResult.CardExpired) {
-                resultString += "\tCard has expired\n"
-            }
-            if self.isSupersetOf(CardValidationResult.NumberIsNotNumeric) {
-                resultString += "\tCard number is not numeric\n"
-            }
-            if self.isSupersetOf(CardValidationResult.LuhnTestFailed) {
-                resultString += "\tLuhn test failed for card number\n"
-            }
-            if self.isSupersetOf(CardValidationResult.NumberIncomplete) {
-                resultString += "\tCard number seems to be incomplete\n"
-            }
-            resultString += "}"
-            
-            return resultString
-        }
-    }
-    
     // MARK: - Default declarations
     public static let Valid                   = CardValidationResult(rawValue: 0)
     
@@ -96,4 +64,48 @@ public struct CardValidationResult: OptionSetType {
      - note: This result might be returned for an incompleted card number.
      */
     public static let LuhnTestFailed          = CardValidationResult(rawValue: 1 << 6)
+
+    /// Indicates that the type of card could not be inferred.
+    public static let UnknownType             = CardValidationResult(rawValue: 1 << 7)
+
+}
+
+extension CardValidationResult: CustomStringConvertible {
+
+    public var description: String {
+        if self == .Valid {
+            return "Valid"
+        } else {
+            var resultString = "{\n"
+            if isSupersetOf(.NumberDoesNotMatchType) {
+                resultString += "\tNumber does not match type\n"
+            }
+            if isSupersetOf(.CVCIncomplete) {
+                resultString += "\tCVC is too short\n"
+            }
+            if isSupersetOf(.InvalidCVC) {
+                resultString += "\tCVC is invalid\n"
+            }
+            if isSupersetOf(.CardExpired) {
+                resultString += "\tCard has expired\n"
+            }
+            if isSupersetOf(.NumberIsNotNumeric) {
+                resultString += "\tCard number is not numeric\n"
+            }
+            if isSupersetOf(.LuhnTestFailed) {
+                resultString += "\tLuhn test failed for card number\n"
+            }
+            if isSupersetOf(.NumberIncomplete) {
+                resultString += "\tCard number seems to be incomplete\n"
+            }
+            if isSupersetOf(.UnknownType) {
+                resultString += "\tCard type could not be inferred\n"
+            }
+
+            resultString += "}"
+
+            return resultString
+        }
+    }
+
 }
