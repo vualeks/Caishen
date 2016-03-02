@@ -532,4 +532,9 @@ public class CardNumberTextField: UITextField, UITextFieldDelegate, CardNumberIn
         // Return false, since this text view is only for background style purposes
         return false
     }
+    
+    public override var keyCommands: [UIKeyCommand]? {
+        // When backspace is pressed on any given subview, call deleteBackward on the current first responder
+        return [UIKeyCommand(input: "\u{8}", modifierFlags: UIKeyModifierFlags(), action: Selector("deleteBackward"))]
+    }
 }

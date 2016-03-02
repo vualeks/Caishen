@@ -97,12 +97,18 @@ public class CardNumberInputTextField: StylizedTextField {
     // MARK: - UITextFieldDelegate
     
     public override func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
-        let textFieldText = NSString(string: textField.text ?? "")
-        let newText = cardNumberFormatter.unformattedCardNumber(textFieldText.stringByReplacingCharactersInRange(range, withString: string))
-        let newTextIsNumeric = UInt(newText) != nil
+        // Current text in text field, formatted and unformatted:
+        let textFieldTextFormatted = NSString(string: textField.text ?? "")
+        let textFieldTextUnformatted = cardNumberFormatter.unformattedCardNumber(textFieldTextFormatted as String)
+        // Text in text field after applying changes, formatted and unformatted:
+        let newTextFormatted = textFieldTextFormatted.stringByReplacingCharactersInRange(range, withString: string)
+        let newTextUnformatted = cardNumberFormatter.unformattedCardNumber(newTextFormatted)
+        
+        let newTextIsNumeric = UInt(newTextUnformatted) != nil
         
         // Create a card number with the newly formed string.
-        parsedCardNumber = Number(rawValue: newText)
+        let previouslyParsedCardNumber = Number(rawValue: textFieldTextUnformatted)
+        parsedCardNumber = Number(rawValue: newTextUnformatted)
         
         if let parsedCardNumber = parsedCardNumber {
             let partialValidation = cardTypeRegister.cardTypeForNumber(parsedCardNumber)?.checkCardNumberPartiallyValid(parsedCardNumber)
@@ -112,8 +118,19 @@ public class CardNumberInputTextField: StylizedTextField {
                 self.sendActionsForControlEvents(.EditingChanged)
             }
             
+            // If the card number was valid before and a user entered even more text, ignore this and continue with the month text field
+            if let previousCompleteValidation = cardTypeRegister.cardTypeForNumber(previouslyParsedCardNumber)?.validateNumber(previouslyParsedCardNumber) where newTextFormatted.characters.count > textFieldTextFormatted.length {
+                
+                if previousCompleteValidation == .Valid {
+                    self.parsedCardNumber = previouslyParsedCardNumber
+                    cardType = cardTypeRegister.cardTypeForNumber(previouslyParsedCardNumber)
+                    cardNumberInputTextFieldDelegate?.cardNumberInputTextFieldDidComplete(self)
+                    return false
+                }
+            }
+            
             // Based on the validity of the input, allow changing the input or forbid (resulting in the text color changing shortly)
-            if completeValidation == nil && partialValidation == nil && newText.characters.count <= 6 {
+            if completeValidation == nil && partialValidation == nil && newTextUnformatted.characters.count <= 6 {
                 // Case 1: No card type has been detected so far and less or equal than 6 digits have been entered (the amount of digits in a IIN for identification of the card issuer)
                 cardType = cardTypeRegister.cardTypeForNumber(parsedCardNumber)
                 cardNumberFormatter.replaceRangeFormatted(range, inTextField: textField, withString: string)

@@ -66,14 +66,6 @@ public class StylizedTextField: UITextField, UITextFieldDelegate {
         self.delegate = self
     }
     
-    public override func becomeFirstResponder() -> Bool {
-        if text == nil {
-            text = ""
-        }
-        
-        return super.becomeFirstResponder()
-    }
-    
     public override func deleteBackward() {
         super.deleteBackward()
         
