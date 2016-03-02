@@ -10,8 +10,8 @@ import UIKit
 
 public struct DiscoverCardType: CardType {
     
-    public static var cardTypeImage: UIImage? = UIImage(named: "Discover") ?? UIImage()
-    public static var cvcImage: UIImage? = UIImage(named: "CVC") ?? UIImage()
+    public static var cardTypeImage: UIImage? = UIImage(named: "Discover") ?? UIImage(named: "Discover", inBundle: NSBundle(forClass: CardTypeRegister.self), compatibleWithTraitCollection: nil)
+    public static var cvcImage: UIImage? = UIImage(named: "CVC") ?? UIImage(named: "CVC", inBundle: NSBundle(forClass: CardTypeRegister.self), compatibleWithTraitCollection: nil)
     
     public static func cardTypeName() -> String {
         return "Discover"

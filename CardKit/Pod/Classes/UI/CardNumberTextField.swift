@@ -125,7 +125,7 @@ public class CardNumberTextField: UITextField, UITextFieldDelegate, CardNumberIn
     /**
      The image that is displayed if the currently entered card number does not match any card types
      */
-    public var unknownCardTypeImage: UIImage? = UIImage(named: "Unknown")
+    public var unknownCardTypeImage: UIImage? = UIImage(named: "Unknown") ?? UIImage(named: "Unknown", inBundle: NSBundle(forClass: CardNumberTextField.self), compatibleWithTraitCollection: nil)
     
     /**
      This card type register contains a list of all valid card types. You can provide separate card type registers for different card number text fields.

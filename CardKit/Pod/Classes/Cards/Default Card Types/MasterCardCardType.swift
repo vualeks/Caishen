@@ -8,8 +8,8 @@
 
 public struct MasterCardCardType: CardType {
     
-    public static var cardTypeImage: UIImage? = UIImage(named: "MasterCard") ?? UIImage()
-    public static var cvcImage: UIImage? = UIImage(named: "CVC") ?? UIImage()
+    public static var cardTypeImage: UIImage? = UIImage(named: "MasterCard") ?? UIImage(named: "MasterCard", inBundle: NSBundle(forClass: CardTypeRegister.self), compatibleWithTraitCollection: nil)
+    public static var cvcImage: UIImage? = UIImage(named: "CVC") ?? UIImage(named: "CVC", inBundle: NSBundle(forClass: CardTypeRegister.self), compatibleWithTraitCollection: nil)
     
     public static func cardTypeName() -> String {
         return "MasterCard"
