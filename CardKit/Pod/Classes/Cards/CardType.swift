@@ -16,22 +16,22 @@ public protocol CardType {
     /**
      The image which is displayed in the CardNumberTextField, when the entered card number matches this card type.
      */
-    static var cardTypeImage: UIImage? { get set }
+    var cardTypeImage: UIImage? { get }
     
     /**
      The image which is displayed in the CardNumberTextField, when the user is entering the CVC for this card type.
      */
-    static var cvcImage: UIImage? { get set }
+    var cvcImage: UIImage? { get }
     
     /**
      - returns: The card type name (e.g.: Visa, MasterCard, ...)
      */
-    static func cardTypeName() -> String
+    var name: String { get }
     
     /**
      - returns: The number of digits expected in the Card Validation Code.
      */
-    static func expectedCVCLength() -> Int
+    var CVCLength: Int { get }
     
     /**
      The card number grouping is used to format the card number when typing in the card number text field.
@@ -39,7 +39,7 @@ public protocol CardType {
      0000-0000-0000-0000.
      - returns: The grouping of digits in the card number.
      */
-    static func cardNumberGrouping() -> [Int]
+    var numberGrouping: [Int] { get }
     
     /**
      Card types are typically identified by their first n digits. In compliance to ISO/IEC 7812, the first digit is the *Major industry identifier*, which is equal to:
@@ -56,5 +56,129 @@ public protocol CardType {
      
      - returns: A set of numbers which, when being found in the first digits of the card number, indicate the card issuer.
      */
-    static func cardDigitsIdentifyingCardType() -> Set<Int>
+    var identifyingDigits: Set<Int> { get }
+
+    func validateCVC(cvc: CVC) -> CardValidationResult
+
+    func validateNumber(number: Number) -> CardValidationResult
+
+    func isEqualTo(cardType: CardType) -> Bool
+}
+
+extension CardType {
+
+    public func isEqualTo(cardType: CardType) -> Bool {
+        return cardType.name == self.name
+    }
+
+    public var cvcImage: UIImage? {
+        return UIImage(named: "CVC") ?? UIImage(named: "CVC", inBundle: NSBundle(forClass: CardNumberTextField.self), compatibleWithTraitCollection: nil)
+    }
+
+    public var numberGrouping: [Int] {
+        return [4, 4, 4, 4]
+    }
+
+    public func validateCVC(cvc: CVC) -> CardValidationResult {
+        guard let _ = cvc.toInt() else {
+            return .InvalidCVC
+        }
+
+        if cvc.length > CVCLength {
+            return .InvalidCVC
+        } else if cvc.length < CVCLength {
+            return .CVCIncomplete
+        }
+
+        return .Valid
+    }
+
+    public func validateNumber(cardNumber: Number) -> CardValidationResult {
+        return lengthMatchesType(cardNumber.length)
+            .union(numberIsNumeric(cardNumber))
+            .union(numberIsValidLuhn(cardNumber))
+    }
+
+    public func expectedCardNumberLength() -> Int {
+        return numberGrouping.reduce(0, combine: {$0 + $1})
+    }
+
+    public func numberIsValidLuhn(number: Number) -> CardValidationResult {
+        var odd = true
+        var sum = 0
+        let digits = NSMutableArray(capacity: number.length)
+        for i in 0..<number.length {
+            // If the number is not long enough, fail the Luhn test
+            guard let digit = number.description[i,i+1] else {
+                return CardValidationResult.LuhnTestFailed
+            }
+            digits.addObject(NSString(string: digit))
+        }
+        for obj in digits.reverseObjectEnumerator() {
+            let digitString = obj as! NSString
+            var digit = digitString.integerValue
+            odd = !odd
+            if odd {
+                digit = digit * 2
+            }
+            if digit > 9 {3
+                digit = digit - 9
+            }
+            sum += digit
+        }
+
+        if sum % 10 == 0 {
+            return CardValidationResult.Valid
+        } else {
+            return CardValidationResult.LuhnTestFailed
+        }
+    }
+
+    /**
+     Returns Valid, if the card validation succeeded or the card validation failed because of the Luhn test or insufficient card number length, both of which are not important for incomplete card numbers.
+     */
+    public func checkCardNumberPartiallyValid(cardNumber: Number) -> CardValidationResult {
+        let validationResult = validateNumber(cardNumber)
+        let completeNumberButLuhnTestFailed = !validationResult.isSupersetOf(CardValidationResult.NumberIncomplete) && validationResult.isSupersetOf(CardValidationResult.LuhnTestFailed)
+
+        if completeNumberButLuhnTestFailed {
+            return validationResult
+        } else {
+            return
+                self.validateNumber(cardNumber)
+                    .subtract(.NumberIncomplete)
+                    .subtract(.LuhnTestFailed)
+        }
+    }
+
+    /**
+     Helper method for `lengthMatchesType` to check the actual length of a card number against the expected length.
+     - parameter actualLength: The length of a card number that is to be validated.
+     - parameter expectedLength: The expected length for the card number's card type.
+     - returns: CardValidationResult.Valid if the lengths match, CardValidationResult.NumberDoesNotMatchType otherwise.
+     */
+    private func testLength(actualLength: Int, assumingLength expectedLength: Int) -> CardValidationResult {
+        if actualLength == expectedLength {
+            return .Valid
+        } else if actualLength < expectedLength {
+            return .NumberIncomplete
+        } else {
+            return .NumberDoesNotMatchType
+        }
+    }
+
+    private func lengthMatchesType(length: Int) -> CardValidationResult {
+        return testLength(length, assumingLength: expectedCardNumberLength())
+    }
+
+    private func numberIsNumeric(number: Number) -> CardValidationResult {
+        for c in number.description.characters {
+            if !["0","1","2","3","4","5","6","7","8","9"].contains(c) {
+                return CardValidationResult.NumberIsNotNumeric
+            }
+        }
+
+        return CardValidationResult.Valid
+    }
+
 }

@@ -16,46 +16,40 @@ class CardExpiryValidatorTests: XCTestCase {
     override func setUp() {
         super.setUp()
         
-        self.validator = CardExpiryDateValidator()
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-    }
-    
-    override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-        super.tearDown()
+        validator = CardExpiryDateValidator()
     }
 
     func testDateBeforeNow() {
-        let lastYear = CardExpiry(month: 01, year: 2015)
-        let future = CardExpiry(month: 12, year: 2115)
+        let lastYear = Expiry(month: 01, year: 2015)
+        let future = Expiry(month: 12, year: 2115)
         
         XCTAssertValid(validator.validateExpiry(future))
         XCTAssertCardExpired(validator.validateExpiry(lastYear))
     }
     
     func testInvalidExpiryCreation() {
-        let shouldBeNil = [     CardExpiry(month: "Feb", year: "2016"), // 0
-                                CardExpiry(string: "02/01/2016"), // 1
-                                CardExpiry(string: "2016"), // 2
-                                CardExpiry(month: "13", year: "2016"), // 3
-                                CardExpiry(month: "13", year: "16"), // 4
-                                CardExpiry(string: "13/2016"), // 5
-                                CardExpiry(string: "13/16"), // 6
-                                CardExpiry(string: "02 2016"), // 7
-                                CardExpiry(string: "Feb 2016"), // 8
-                                CardExpiry(string: "Feb/2016"), // 9
-                                CardExpiry(string: "022016"), // 10
-                                CardExpiry(string: "02.2016")] // 11
+        let shouldBeNil = [     Expiry(month: "Feb", year: "2016"), // 0
+                                Expiry(string: "02/01/2016"), // 1
+                                Expiry(string: "2016"), // 2
+                                Expiry(month: "13", year: "2016"), // 3
+                                Expiry(month: "13", year: "16"), // 4
+                                Expiry(string: "13/2016"), // 5
+                                Expiry(string: "13/16"), // 6
+                                Expiry(string: "02 2016"), // 7
+                                Expiry(string: "Feb 2016"), // 8
+                                Expiry(string: "Feb/2016"), // 9
+                                Expiry(string: "022016"), // 10
+                                Expiry(string: "02.2016")] // 11
         
-        let shouldNotBeNil = [  CardExpiry(string: "02-2006"),
-                                CardExpiry(string: "02-06"),
-                                CardExpiry(string: "02/06"),
-                                CardExpiry(string: "02/2006")]
+        let shouldNotBeNil = [  Expiry(string: "02-2006"),
+                                Expiry(string: "02-06"),
+                                Expiry(string: "02/06"),
+                                Expiry(string: "02/2006")]
         
-        let shouldNotBeNilAndValid = [  CardExpiry(string: "02-2096"),
-                                        CardExpiry(string: "02-96"),
-                                        CardExpiry(string: "02/96"),
-                                        CardExpiry(string: "02/2096")]
+        let shouldNotBeNilAndValid = [  Expiry(string: "02-2096"),
+                                        Expiry(string: "02-96"),
+                                        Expiry(string: "02/96"),
+                                        Expiry(string: "02/2096")]
         
         for i in 0..<shouldBeNil.count {
             let obj = shouldBeNil[i]
@@ -78,13 +72,6 @@ class CardExpiryValidatorTests: XCTestCase {
             if let obj = obj {
                 XCTAssertCardNotExpired(validator.validateExpiry(obj))
             }
-        }
-    }
-
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measureBlock {
-            // Put the code you want to measure the time of here.
         }
     }
 

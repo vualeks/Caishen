@@ -8,11 +8,16 @@
 
 import UIKit
 
-public class CardExpiryDateValidator: NSObject {
+public class CardExpiryDateValidator {
+
+    public init() {
+        
+    }
+
     /**
      Validates the card's expiry date.
     */
-    public func validateExpiry(expiry: CardExpiry) -> CardValidationResult {
+    public func validateExpiry(expiry: Expiry) -> CardValidationResult {
         return self.checkBeforeCurrentDate(expiry)
     }
     
@@ -21,7 +26,7 @@ public class CardExpiryDateValidator: NSObject {
      - parameter expiry: The card's expiry information.
      - returns: `CardValidationResult.CardExpired`, if the card has already expired. Valid otherwise.
     */
-    private func checkBeforeCurrentDate(expiry: CardExpiry) -> CardValidationResult {
+    private func checkBeforeCurrentDate(expiry: Expiry) -> CardValidationResult {
         let currentDate = NSDate()
         
         guard let expiryDate = expiry.expiryDate() else {

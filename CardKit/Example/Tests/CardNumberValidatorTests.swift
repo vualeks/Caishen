@@ -67,32 +67,32 @@ class CardNumberValidatorTests: XCTestCase {
     func testValidCards() {
         print("Validate Visa")
         self.validVisaNumbers.forEach({
-            XCTAssertEqual(CardTypeRegister.sharedCardTypeRegister.cardTypeForNumber(CardNumber(string: $0))?.cardTypeName(), VisaCardType.cardTypeName())
-            XCTAssertValid(VisaCardType.validateCardNumber(CardNumber(string: $0)))
+            XCTAssertEqual(CardTypeRegister.sharedCardTypeRegister.cardTypeForNumber(Number(rawValue: $0))?.name, Visa().name)
+            XCTAssertValid(Visa().validateNumber(Number(rawValue: $0)))
         })
         
         print("Validate Amex")
         self.validAmexNumbers.forEach({
-            XCTAssertEqual(CardTypeRegister.sharedCardTypeRegister.cardTypeForNumber(CardNumber(string: $0))?.cardTypeName(), AmexCardType.cardTypeName())
-            XCTAssertValid(AmexCardType.validateCardNumber(CardNumber(string: $0)))
+            XCTAssertEqual(CardTypeRegister.sharedCardTypeRegister.cardTypeForNumber(Number(rawValue: $0))?.name, AmericanExpress().name)
+            XCTAssertValid(AmericanExpress().validateNumber(Number(rawValue: $0)))
         })
         
         print("Validate Diners Club")
         self.validDinersClubNumbers.forEach({
-            XCTAssertEqual(CardTypeRegister.sharedCardTypeRegister.cardTypeForNumber(CardNumber(string: $0))?.cardTypeName(), DinersClubCardType.cardTypeName())
-            XCTAssertValid(DinersClubCardType.validateCardNumber(CardNumber(string: $0)))
+            XCTAssertEqual(CardTypeRegister.sharedCardTypeRegister.cardTypeForNumber(Number(rawValue: $0))?.name, DinersClub().name)
+            XCTAssertValid(DinersClub().validateNumber(Number(rawValue: $0)))
         })
         
         print("Validate Discover")
         self.validDiscoverNumbers.forEach({
-            XCTAssertEqual(CardTypeRegister.sharedCardTypeRegister.cardTypeForNumber(CardNumber(string: $0))?.cardTypeName(), DiscoverCardType.cardTypeName())
-            XCTAssertValid(DiscoverCardType.validateCardNumber(CardNumber(string: $0)))
+            XCTAssertEqual(CardTypeRegister.sharedCardTypeRegister.cardTypeForNumber(Number(rawValue: $0))?.name, Discover().name)
+            XCTAssertValid(Discover().validateNumber(Number(rawValue: $0)))
         })
         
         print("Validate JCB")
         self.validJCBNumbers.forEach({
-            XCTAssertEqual(CardTypeRegister.sharedCardTypeRegister.cardTypeForNumber(CardNumber(string: $0))?.cardTypeName(), JCBCardType.cardTypeName(), "Card number was interpreted as wrong kind: \($0)")
-            XCTAssertValid(JCBCardType.validateCardNumber(CardNumber(string: $0)))
+            XCTAssertEqual(CardTypeRegister.sharedCardTypeRegister.cardTypeForNumber(Number(rawValue: $0))?.name, JCB().name, "Card number was interpreted as wrong kind: \($0)")
+            XCTAssertValid(JCB().validateNumber(Number(rawValue: $0)))
         })
     }
 
@@ -111,19 +111,19 @@ class CardNumberValidatorTests: XCTestCase {
         let tooLongJCB = "35301113333000000"
         let tooLongMasterCard = "55555555555544444"
         
-        XCTAssertIncompleteNumber(VisaCardType.validateCardNumber(CardNumber(string: tooShortVisa)))
-        XCTAssertIncompleteNumber(AmexCardType.validateCardNumber(CardNumber(string: tooShortAmex)))
-        XCTAssertIncompleteNumber(DinersClubCardType.validateCardNumber(CardNumber(string: tooShortDiners)))
-        XCTAssertIncompleteNumber(DiscoverCardType.validateCardNumber(CardNumber(string: tooShortDiscover)))
-        XCTAssertIncompleteNumber(JCBCardType.validateCardNumber(CardNumber(string: tooShortJCB)))
-        XCTAssertIncompleteNumber(MasterCardCardType.validateCardNumber(CardNumber(string: tooShortMasterCard)))
+        XCTAssertIncompleteNumber(Visa().validateNumber(Number(rawValue: tooShortVisa)))
+        XCTAssertIncompleteNumber(AmericanExpress().validateNumber(Number(rawValue: tooShortAmex)))
+        XCTAssertIncompleteNumber(DinersClub().validateNumber(Number(rawValue: tooShortDiners)))
+        XCTAssertIncompleteNumber(Discover().validateNumber(Number(rawValue: tooShortDiscover)))
+        XCTAssertIncompleteNumber(JCB().validateNumber(Number(rawValue: tooShortJCB)))
+        XCTAssertIncompleteNumber(MasterCard().validateNumber(Number(rawValue: tooShortMasterCard)))
         
-        XCTAssertInvalidNumberForType(VisaCardType.validateCardNumber(CardNumber(string: tooLongVisa)))
-        XCTAssertInvalidNumberForType(AmexCardType.validateCardNumber(CardNumber(string: tooLongAmex)))
-        XCTAssertInvalidNumberForType(DinersClubCardType.validateCardNumber(CardNumber(string: tooLongDiners)))
-        XCTAssertInvalidNumberForType(DiscoverCardType.validateCardNumber(CardNumber(string: tooLongDiscover)))
-        XCTAssertInvalidNumberForType(JCBCardType.validateCardNumber(CardNumber(string: tooLongJCB)))
-        XCTAssertInvalidNumberForType(MasterCardCardType.validateCardNumber(CardNumber(string: tooLongMasterCard)))
+        XCTAssertInvalidNumberForType(Visa().validateNumber(Number(rawValue: tooLongVisa)))
+        XCTAssertInvalidNumberForType(AmericanExpress().validateNumber(Number(rawValue: tooLongAmex)))
+        XCTAssertInvalidNumberForType(DinersClub().validateNumber(Number(rawValue: tooLongDiners)))
+        XCTAssertInvalidNumberForType(Discover().validateNumber(Number(rawValue: tooLongDiscover)))
+        XCTAssertInvalidNumberForType(JCB().validateNumber(Number(rawValue: tooLongJCB)))
+        XCTAssertInvalidNumberForType(MasterCard().validateNumber(Number(rawValue: tooLongMasterCard)))
     }
     
     /**
@@ -155,15 +155,8 @@ class CardNumberValidatorTests: XCTestCase {
         
         
         invalidLuhnTestVisa.forEach({
-            XCTAssertLuhnTestFailed(VisaCardType.validateCardNumber(CardNumber(string: $0)))
+            XCTAssertLuhnTestFailed(Visa().validateNumber(Number(rawValue: $0)))
         })
-    }
-
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measureBlock {
-            // Put the code you want to measure the time of here.
-        }
     }
 
 }

@@ -9,12 +9,6 @@
 import Foundation
 
 extension String {
-    /**
-     - returns: The number of characters in the string.
-    */
-    func length() -> Int {
-        return self.characters.count
-    }
 
     //http://stackoverflow.com/a/30404532/1565974
     func rangeFromNSRange(nsRange: NSRange) -> Range<String.Index>? {
@@ -40,7 +34,7 @@ extension String {
      - returns: Substring starting with the character at index `fromInclusiveley` and ending before the character at index `toExclusively`.
     */
     subscript(fromInclusively: Int, toExclusively: Int) -> String? {
-        if self.length() < toExclusively || fromInclusively >= toExclusively {
+        if characters.count < toExclusively || fromInclusively >= toExclusively {
             return nil
         }
         return self.substringWithRange((self.startIndex.advancedBy(fromInclusively)..<self.startIndex.advancedBy(toExclusively)))

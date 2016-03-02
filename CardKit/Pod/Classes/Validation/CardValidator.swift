@@ -18,11 +18,15 @@ public class CardValidator {
     }
     
     public func validateCard(card: Card) -> CardValidationResult {
-        let numberValidationResult = cardTypeRegister.cardTypeForNumber(card.bankCardNumber)?.validateCardNumber(card.bankCardNumber)
-        let cvcValidationResult = cardTypeRegister.cardTypeForNumber(card.bankCardNumber)?.validateCVC(card.cardVerificationCode.stringValue())
+        guard let cardType = cardTypeRegister.cardTypeForNumber(card.bankCardNumber) else {
+            return .UnknownType
+        }
+
+        let numberValidationResult = cardType.validateNumber(card.bankCardNumber)
+        let cvcValidationResult = cardType.validateCVC(card.cardVerificationCode)
         
-        return (numberValidationResult ?? .Valid)
-            .union(cvcValidationResult ?? .Valid)
-            .union(self.expiryValidator.validateExpiry(card.expiryDate))
+        return numberValidationResult
+            .union(cvcValidationResult)
+            .union(expiryValidator.validateExpiry(card.expiryDate))
     }
 }

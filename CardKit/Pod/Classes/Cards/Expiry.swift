@@ -18,18 +18,18 @@ private extension NSDate {
 /**
  A `NSDateFormatter` to extract the year of a given date.
  */
-public class CardExpiry {
-    private let month: UInt
-    private let year: UInt
-    
-    private static let maxYear: UInt = 2099
-    private static let minYear: UInt = 2000
-    
-    /** 
+public class Expiry {
+
+    /**
      Having a year like "16", the numberPrefix is used to complete the year.
      In this example: "16" -> "2016"
      */
     private static let numberPrefix: UInt = 2000
+    private static let maxYear: UInt = 2099
+    private static let minYear: UInt = 2000
+
+    private let month: UInt
+    private let year: UInt
     
     /**
      Creates a `CardExpiry` with the given string.
@@ -37,7 +37,7 @@ public class CardExpiry {
      */
     public convenience init?(string: String) {
         // Make sure that there is only one non-numeric separation character in the entire string
-        guard string.stringByTrimmingCharactersInSet(NSCharacterSet(charactersInString: "0123456789")).length() == 1 else {
+        guard string.stringByTrimmingCharactersInSet(NSCharacterSet(charactersInString: "0123456789")).characters.count == 1 else {
             return nil
         }
         
@@ -45,7 +45,7 @@ public class CardExpiry {
         var monthStr: String = ""
         var yearStr: String = ""
         
-        guard let match = regex.firstMatchInString(string, options: .ReportProgress, range: NSMakeRange(0, string.length())) else {
+        guard let match = regex.firstMatchInString(string, options: .ReportProgress, range: NSMakeRange(0, string.characters.count)) else {
             return nil
         }
         
@@ -79,12 +79,12 @@ public class CardExpiry {
      */
     public convenience init?(month: String, var year: String) {
         if let numericYear = UInt(year) where numericYear < 100 {
-            year = String(numericYear + CardExpiry.numberPrefix)
+            year = String(numericYear + Expiry.numberPrefix)
         }
         guard let monthVal = UInt(month) where monthVal > 0 && monthVal < 13 else {
             return nil
         }
-        guard let yearVal = UInt(year) where yearVal >= CardExpiry.minYear && yearVal <= CardExpiry.maxYear else {
+        guard let yearVal = UInt(year) where yearVal >= Expiry.minYear && yearVal <= Expiry.maxYear else {
             return nil
         }
         
