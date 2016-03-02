@@ -67,11 +67,11 @@ public class StylizedTextField: UITextField, UITextFieldDelegate {
     }
     
     public override func deleteBackward() {
-        super.deleteBackward()
-        
         if (text ?? "").isEmpty {
             deleteBackwardCallback?(self)
         }
+        
+        super.deleteBackward()
     }
     
     public func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {

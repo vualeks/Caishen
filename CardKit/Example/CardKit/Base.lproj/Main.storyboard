@@ -18,31 +18,31 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="1234567812345678" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Dwr-kY-ZoC" customClass="CardNumberTextField" customModule="CardKit">
-                                <rect key="frame" x="20" y="285" width="560" height="30"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="0000000000000000" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="FxU-RH-ia0" customClass="CustomCardNumberTextField" customModule="CardKit_Example">
-                                <rect key="frame" x="20" y="323" width="560" height="30"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="npI-Jr-7wA">
                                 <rect key="frame" x="546" y="28" width="34" height="30"/>
                                 <state key="normal" title="Save"/>
                             </button>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="1234567812345678" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Dwr-kY-ZoC" customClass="CardNumberTextField" customModule="CardKit">
+                                <rect key="frame" x="20" y="66" width="560" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="0000000000000000" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="FxU-RH-ia0" customClass="CustomCardNumberTextField" customModule="CardKit_Example">
+                                <rect key="frame" x="20" y="104" width="560" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
                         </subviews>
                         <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="Dwr-kY-ZoC" firstAttribute="trailing" secondItem="kh9-bI-dsS" secondAttribute="trailingMargin" id="2Il-Y4-XVa"/>
-                            <constraint firstItem="FxU-RH-ia0" firstAttribute="trailing" secondItem="Dwr-kY-ZoC" secondAttribute="trailing" id="9Dq-il-n2W"/>
-                            <constraint firstItem="npI-Jr-7wA" firstAttribute="trailing" secondItem="Dwr-kY-ZoC" secondAttribute="trailing" id="CPo-eI-0BH"/>
-                            <constraint firstItem="Dwr-kY-ZoC" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" id="Jgn-vq-BVj"/>
-                            <constraint firstItem="FxU-RH-ia0" firstAttribute="leading" secondItem="Dwr-kY-ZoC" secondAttribute="leading" id="dUz-oP-nvz"/>
-                            <constraint firstItem="FxU-RH-ia0" firstAttribute="top" secondItem="Dwr-kY-ZoC" secondAttribute="bottom" constant="8" symbolic="YES" id="kch-wg-Iwn"/>
+                            <constraint firstItem="npI-Jr-7wA" firstAttribute="trailing" secondItem="kh9-bI-dsS" secondAttribute="trailingMargin" id="1SU-cY-DQj"/>
+                            <constraint firstItem="Dwr-kY-ZoC" firstAttribute="top" secondItem="npI-Jr-7wA" secondAttribute="bottom" constant="8" symbolic="YES" id="44t-va-jDd"/>
+                            <constraint firstItem="Dwr-kY-ZoC" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" id="9eB-1O-sbB"/>
+                            <constraint firstItem="Dwr-kY-ZoC" firstAttribute="leading" secondItem="FxU-RH-ia0" secondAttribute="leading" id="HTd-Jj-2sT"/>
+                            <constraint firstItem="Dwr-kY-ZoC" firstAttribute="trailing" secondItem="FxU-RH-ia0" secondAttribute="trailing" id="HiF-7T-36z"/>
+                            <constraint firstItem="FxU-RH-ia0" firstAttribute="top" secondItem="Dwr-kY-ZoC" secondAttribute="bottom" constant="8" symbolic="YES" id="MXn-eW-r5y"/>
                             <constraint firstItem="npI-Jr-7wA" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" constant="8" symbolic="YES" id="lMR-EM-KUd"/>
-                            <constraint firstItem="Dwr-kY-ZoC" firstAttribute="centerY" secondItem="kh9-bI-dsS" secondAttribute="centerY" id="vSV-l4-MgX"/>
+                            <constraint firstItem="npI-Jr-7wA" firstAttribute="trailing" secondItem="Dwr-kY-ZoC" secondAttribute="trailing" id="z09-gC-kr5"/>
                         </constraints>
                     </view>
                     <connections>

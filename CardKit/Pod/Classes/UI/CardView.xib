@@ -45,7 +45,7 @@
                     <rect key="frame" x="89" y="0.0" width="511" height="600"/>
                     <subviews>
                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="MM" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="5cX-Z5-afy" customClass="StylizedTextField" customModule="CardKit" customModuleProvider="target">
-                            <rect key="frame" x="15" y="0.0" width="37" height="600"/>
+                            <rect key="frame" x="0.0" y="0.0" width="37" height="600"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="37" id="ncp-hx-z25"/>
@@ -54,38 +54,46 @@
                             <textInputTraits key="textInputTraits"/>
                         </textField>
                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="YY" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="CgE-Em-qHJ" customClass="StylizedTextField" customModule="CardKit" customModuleProvider="target">
-                            <rect key="frame" x="74" y="0.0" width="30" height="600"/>
+                            <rect key="frame" x="59" y="0.0" width="42" height="600"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="42" id="YKf-J2-WJy"/>
+                            </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="20"/>
                             <textInputTraits key="textInputTraits"/>
                         </textField>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="/" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DD8-kX-0ru">
-                            <rect key="frame" x="60" y="290" width="6" height="20"/>
+                            <rect key="frame" x="45" y="290" width="6" height="20"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="CVC" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="HOM-PC-B5m" customClass="StylizedTextField" customModule="CardKit" customModuleProvider="target">
-                            <rect key="frame" x="133" y="0.0" width="48" height="600"/>
+                            <rect key="frame" x="109" y="0.0" width="402" height="600"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="48" id="Qg6-cj-7bj"/>
                             </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="20"/>
                             <textInputTraits key="textInputTraits"/>
+                            <variation key="default">
+                                <mask key="constraints">
+                                    <exclude reference="Qg6-cj-7bj"/>
+                                </mask>
+                            </variation>
                         </textField>
                     </subviews>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstItem="5cX-Z5-afy" firstAttribute="top" secondItem="8iN-aK-Jz9" secondAttribute="top" id="2Zp-xN-g24"/>
                         <constraint firstAttribute="bottom" secondItem="HOM-PC-B5m" secondAttribute="bottom" id="D8T-2E-T05"/>
-                        <constraint firstItem="HOM-PC-B5m" firstAttribute="leading" secondItem="CgE-Em-qHJ" secondAttribute="trailing" constant="29" id="Fk1-3U-WZ1"/>
+                        <constraint firstItem="HOM-PC-B5m" firstAttribute="leading" secondItem="CgE-Em-qHJ" secondAttribute="trailing" constant="8" symbolic="YES" id="Fk1-3U-WZ1"/>
                         <constraint firstItem="5cX-Z5-afy" firstAttribute="bottom" secondItem="CgE-Em-qHJ" secondAttribute="bottom" id="K27-9l-pGM"/>
                         <constraint firstItem="CgE-Em-qHJ" firstAttribute="height" secondItem="8iN-aK-Jz9" secondAttribute="height" id="S9Q-tZ-J9h"/>
                         <constraint firstAttribute="bottom" secondItem="5cX-Z5-afy" secondAttribute="bottom" id="XM4-dt-rH1"/>
-                        <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="HOM-PC-B5m" secondAttribute="trailing" id="XUs-BX-dvc"/>
-                        <constraint firstItem="5cX-Z5-afy" firstAttribute="leading" secondItem="8iN-aK-Jz9" secondAttribute="leading" priority="750" constant="15" id="ZRt-wD-4om"/>
+                        <constraint firstAttribute="trailing" secondItem="HOM-PC-B5m" secondAttribute="trailing" id="XUs-BX-dvc"/>
+                        <constraint firstItem="5cX-Z5-afy" firstAttribute="leading" secondItem="8iN-aK-Jz9" secondAttribute="leading" priority="750" id="ZRt-wD-4om"/>
                         <constraint firstItem="5cX-Z5-afy" firstAttribute="centerY" secondItem="DD8-kX-0ru" secondAttribute="centerY" id="gPj-h0-kbB"/>
                         <constraint firstItem="CgE-Em-qHJ" firstAttribute="leading" secondItem="DD8-kX-0ru" secondAttribute="trailing" constant="8" id="mqG-6S-dv0"/>
                         <constraint firstItem="HOM-PC-B5m" firstAttribute="top" secondItem="8iN-aK-Jz9" secondAttribute="top" id="pKk-pg-dWg"/>
