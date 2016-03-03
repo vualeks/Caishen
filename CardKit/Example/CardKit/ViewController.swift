@@ -11,36 +11,31 @@ import CardKit
 
 class ViewController: UIViewController, CardNumberTextFieldDelegate, CardIOPaymentViewControllerDelegate {
     
-    @IBOutlet weak var saveButton: UIButton?
+    @IBOutlet weak var buyButton: UIButton?
     @IBOutlet weak var cardNumberTextField: CardNumberTextField!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        saveButton?.enabled = false
-        
-        // Assign self as the delegate for both card number text fields.
         cardNumberTextField.cardNumberTextFieldDelegate = self
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    
+    @IBAction func buy(sender: AnyObject) {
+        dismissViewControllerAnimated(true, completion: nil)
+    }
+    @IBAction func cancel(sender: UIButton) {
+        dismissViewControllerAnimated(true, completion: nil)
     }
     
     // MARK: - CardNumberTextField delegate methods
     
     // This method of `CardNumberTextFieldDelegate` will set the saveButton enabled or disabled, based on whether valid card information has been entered.
     func cardNumberTextField(cardNumberTextField: CardNumberTextField, didEnterCardInformation information: Card?, withValidationResult validationResult: CardValidationResult?) {
-        // Do Something
+        buyButton?.enabled = validationResult == .Valid
     }
     
     func cardNumberTextFieldShouldShowAccessoryImage(cardNumberTextField: CardNumberTextField) -> UIImage? {
-        return nil//UIImage(named: "camera")
-    }
-    
-    func cardNumberTextFieldShouldShowAccessoryTitle(cardNumberTextField: CardNumberTextField) -> String? {
-        return "CardIO"
+        return UIImage(named: "camera")
     }
     
     func cardNumberTextFieldShouldProvideAccessoryAction(cardNumberTextField: CardNumberTextField) -> (() -> ())? {

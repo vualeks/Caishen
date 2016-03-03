@@ -301,9 +301,10 @@ public class CardNumberTextField: UITextField, UITextFieldDelegate, CardNumberIn
         accessoryButton?.alpha = 1.0
         
         if let buttonImage = cardNumberTextFieldDelegate?.cardNumberTextFieldShouldShowAccessoryImage(self) {
-            let scaledImage = buttonImage.resizableImageWithCapInsets(UIEdgeInsetsZero, resizingMode: .Stretch)
+            let scaledImage = buttonImage.resizableImageWithCapInsets(UIEdgeInsetsZero, resizingMode: .Stretch).imageWithRenderingMode(.AlwaysTemplate)
             accessoryButton?.titleLabel?.text = nil
             accessoryButton?.setImage(scaledImage, forState: .Normal)
+            accessoryButton?.tintColor = cardNumberInputTextField?.textColor
         }
     }
     
@@ -353,11 +354,13 @@ public class CardNumberTextField: UITextField, UITextFieldDelegate, CardNumberIn
             
             if isYearValid(String(format: "%02i", arguments: [trimmedYear]), partiallyValid: true) {
                 yearTextField?.text = String(trimmedYear)
+                yearString = String(format: "%02i", arguments: [trimmedYear])
             }
         }
         
         if let month = month where isMonthValid(String(format: "%02i", arguments: [month]), partiallyValid: true) {
             monthTextField?.text = String(format: "%02i", arguments: [month])
+            monthString = String(format: "%02i", arguments: [month])
         }
         
         if let cardNumber = cardNumber, let cardNumberInputTextField = cardNumberInputTextField {
@@ -377,6 +380,7 @@ public class CardNumberTextField: UITextField, UITextFieldDelegate, CardNumberIn
         
         if let cvc = cvc where cardType?.validateCVC(CVC(rawValue: cvc)) == .Valid {
             cvcTextField?.text = cvc
+            cardCVC = CVC(rawValue: cvc)
         }
         
         notifyDelegate()

@@ -9,7 +9,7 @@
         <!--View Controller-->
         <scene sceneID="ufC-wZ-h7g">
             <objects>
-                <viewController id="vXZ-lx-hvc" customClass="ViewController" customModule="CardKit_Example" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="vXZ-lx-hvc" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="jyV-Pf-zRb"/>
                         <viewControllerLayoutGuide type="bottom" id="2fi-mo-0CV"/>
@@ -18,34 +18,154 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="npI-Jr-7wA">
-                                <rect key="frame" x="546" y="28" width="34" height="30"/>
-                                <state key="normal" title="Save"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="MacBook Air" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qSj-jg-p3c">
+                                <rect key="frame" x="20" y="28" width="560" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="U1H-9M-HB1"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="mba" translatesAutoresizingMaskIntoConstraints="NO" id="Krh-BO-auj">
+                                <rect key="frame" x="20" y="57" width="560" height="120"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="120" id="4ta-cZ-rft"/>
+                                </constraints>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XGf-R3-9Wl">
+                                <rect key="frame" x="247" y="541" width="106" height="39"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="106" id="8q3-FQ-ghf"/>
+                                    <constraint firstAttribute="height" constant="39" id="qGo-Uv-gR0"/>
+                                </constraints>
+                                <state key="normal" title="BUY NOW">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="5"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <segue destination="hsS-UZ-mFd" kind="presentation" animates="NO" modalPresentationStyle="overCurrentContext" modalTransitionStyle="crossDissolve" id="658-sv-r6G"/>
+                                </connections>
                             </button>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="0000 / 0000 / 0000 / 0000" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Dwr-kY-ZoC" customClass="CardNumberTextField" customModule="CardKit">
-                                <rect key="frame" x="20" y="66" width="560" height="30"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="fm4-5C-qEM">
+                                <rect key="frame" x="20" y="185" width="560" height="348"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <string key="text">The 11-inch MacBook Air lasts up to 9 hours between charges and the 13-inch model lasts up to an incredible 12 hours. So from your morning coffee till your evening commute, you can work unplugged. When it’s time to kick back and relax, you can get up to 10 hours of iTunes movie playback on the 11-inch model and up to 12 hours on the 13-inch model. And with up to 30 days of standby time, you can go away for weeks and pick up right where you left off.</string>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="npI-Jr-7wA" firstAttribute="trailing" secondItem="kh9-bI-dsS" secondAttribute="trailingMargin" id="1SU-cY-DQj"/>
-                            <constraint firstItem="Dwr-kY-ZoC" firstAttribute="top" secondItem="npI-Jr-7wA" secondAttribute="bottom" constant="8" symbolic="YES" id="44t-va-jDd"/>
-                            <constraint firstItem="Dwr-kY-ZoC" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" id="9eB-1O-sbB"/>
-                            <constraint firstItem="npI-Jr-7wA" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" constant="8" symbolic="YES" id="lMR-EM-KUd"/>
-                            <constraint firstItem="npI-Jr-7wA" firstAttribute="trailing" secondItem="Dwr-kY-ZoC" secondAttribute="trailing" id="z09-gC-kr5"/>
+                            <constraint firstItem="XGf-R3-9Wl" firstAttribute="top" secondItem="fm4-5C-qEM" secondAttribute="bottom" constant="8" symbolic="YES" id="0Ww-ew-wWk"/>
+                            <constraint firstAttribute="bottom" secondItem="XGf-R3-9Wl" secondAttribute="bottom" constant="20" symbolic="YES" id="1h6-tV-av6"/>
+                            <constraint firstItem="qSj-jg-p3c" firstAttribute="trailing" secondItem="Krh-BO-auj" secondAttribute="trailing" id="5AZ-06-Qgu"/>
+                            <constraint firstItem="XGf-R3-9Wl" firstAttribute="centerX" secondItem="fm4-5C-qEM" secondAttribute="centerX" id="8Gi-Pq-ZYk"/>
+                            <constraint firstItem="fm4-5C-qEM" firstAttribute="leading" secondItem="Krh-BO-auj" secondAttribute="leading" id="D2I-ws-ccp"/>
+                            <constraint firstItem="XGf-R3-9Wl" firstAttribute="centerX" secondItem="Krh-BO-auj" secondAttribute="centerX" id="FIb-uG-rKc"/>
+                            <constraint firstItem="qSj-jg-p3c" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" constant="8" symbolic="YES" id="Kdu-H7-If0"/>
+                            <constraint firstItem="fm4-5C-qEM" firstAttribute="top" secondItem="Krh-BO-auj" secondAttribute="bottom" constant="8" symbolic="YES" id="L8L-CJ-VqO"/>
+                            <constraint firstItem="Krh-BO-auj" firstAttribute="top" secondItem="qSj-jg-p3c" secondAttribute="bottom" constant="8" symbolic="YES" id="QHC-EL-MvX"/>
+                            <constraint firstItem="qSj-jg-p3c" firstAttribute="trailing" secondItem="kh9-bI-dsS" secondAttribute="trailingMargin" id="ULg-n7-09o"/>
+                            <constraint firstItem="qSj-jg-p3c" firstAttribute="leading" secondItem="Krh-BO-auj" secondAttribute="leading" id="jwR-rg-Rca"/>
+                            <constraint firstItem="qSj-jg-p3c" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" id="xKI-pS-lWE"/>
                         </constraints>
                     </view>
-                    <connections>
-                        <outlet property="cardNumberTextField" destination="Dwr-kY-ZoC" id="h5B-cP-1NW"/>
-                        <outlet property="saveButton" destination="npI-Jr-7wA" id="QAy-GD-NW8"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="245" y="259"/>
+            <point key="canvasLocation" x="251" y="270"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="dnl-HE-hyL">
+            <objects>
+                <viewController id="hsS-UZ-mFd" customClass="ViewController" customModule="CardKit_Example" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="oHI-K3-Xu3"/>
+                        <viewControllerLayoutGuide type="bottom" id="B9J-d7-Ph2"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="KfQ-Vz-Q2c">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ogN-FM-6lq">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="CDz-9F-L0o">
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <subviews>
+                                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="0000000000000000" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="xhV-mK-kcC" customClass="CardNumberTextField" customModule="CardKit">
+                                            <rect key="frame" x="170" y="291.5" width="260" height="17"/>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="260" id="MsE-Yo-sBn"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                            <textInputTraits key="textInputTraits"/>
+                                        </textField>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ipi-TI-Rgi">
+                                            <rect key="frame" x="25" y="28" width="48" height="30"/>
+                                            <state key="normal" title="Cancel">
+                                                <color key="titleColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            </state>
+                                            <connections>
+                                                <action selector="cancel:" destination="hsS-UZ-mFd" eventType="touchUpInside" id="k5X-bU-DIQ"/>
+                                            </connections>
+                                        </button>
+                                        <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iAI-hi-hV7">
+                                            <rect key="frame" x="544" y="28" width="31" height="30"/>
+                                            <state key="normal" title="BUY"/>
+                                            <connections>
+                                                <action selector="buy:" destination="hsS-UZ-mFd" eventType="touchUpInside" id="7n5-61-oP1"/>
+                                            </connections>
+                                        </button>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please enter your credit card information for Checkout" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XRC-Y1-VLm">
+                                            <rect key="frame" x="170" y="263.5" width="260" height="20"/>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="xhV-mK-kcC" firstAttribute="centerX" secondItem="CDz-9F-L0o" secondAttribute="centerX" id="0oX-04-ZYU"/>
+                                        <constraint firstItem="XRC-Y1-VLm" firstAttribute="trailing" secondItem="xhV-mK-kcC" secondAttribute="trailing" id="59g-rp-jq8"/>
+                                        <constraint firstItem="xhV-mK-kcC" firstAttribute="centerY" secondItem="CDz-9F-L0o" secondAttribute="centerY" id="CUf-H1-3Rs"/>
+                                        <constraint firstItem="Ipi-TI-Rgi" firstAttribute="leading" secondItem="CDz-9F-L0o" secondAttribute="leading" constant="25" id="ETN-pa-yPc"/>
+                                        <constraint firstItem="Ipi-TI-Rgi" firstAttribute="top" secondItem="CDz-9F-L0o" secondAttribute="top" constant="28" id="FTo-Yg-xJn"/>
+                                        <constraint firstItem="xhV-mK-kcC" firstAttribute="top" secondItem="XRC-Y1-VLm" secondAttribute="bottom" constant="8" symbolic="YES" id="Kwv-VD-nds"/>
+                                        <constraint firstAttribute="trailing" secondItem="iAI-hi-hV7" secondAttribute="trailing" constant="25" id="Xm5-Mj-CSq"/>
+                                        <constraint firstItem="iAI-hi-hV7" firstAttribute="baseline" secondItem="Ipi-TI-Rgi" secondAttribute="baseline" id="aXB-Hc-vKH"/>
+                                        <constraint firstItem="XRC-Y1-VLm" firstAttribute="leading" secondItem="xhV-mK-kcC" secondAttribute="leading" id="gqM-q8-LXh"/>
+                                    </constraints>
+                                </view>
+                                <blurEffect style="light"/>
+                            </visualEffectView>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="ogN-FM-6lq" firstAttribute="top" secondItem="KfQ-Vz-Q2c" secondAttribute="top" id="9HZ-S2-nFb"/>
+                            <constraint firstAttribute="trailing" secondItem="ogN-FM-6lq" secondAttribute="trailing" id="dcm-R5-kPz"/>
+                            <constraint firstItem="ogN-FM-6lq" firstAttribute="bottom" secondItem="B9J-d7-Ph2" secondAttribute="top" id="oar-YM-l7a"/>
+                            <constraint firstItem="ogN-FM-6lq" firstAttribute="leading" secondItem="KfQ-Vz-Q2c" secondAttribute="leading" id="qyW-TH-cGx"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="buyButton" destination="iAI-hi-hV7" id="iDO-bF-0FZ"/>
+                        <outlet property="cardNumberTextField" destination="xhV-mK-kcC" id="8L8-EK-bT0"/>
+                        <outlet property="view" destination="ogN-FM-6lq" id="wJc-0m-Y2W"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="J9l-iT-8Dt" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="953" y="270"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="mba" width="300" height="165"/>
+    </resources>
 </document>
