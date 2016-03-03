@@ -21,7 +21,7 @@ public class CardNumberInputTextField: StylizedTextField {
      
      - note: This card number may be incomplete and invalid while the user is entering a card number.
      */
-    public private(set) var parsedCardNumber: Number?
+    public internal(set) var parsedCardNumber: Number?
     
     /**
      */

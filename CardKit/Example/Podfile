@@ -3,6 +3,7 @@ use_frameworks!
 
 target 'CardKit_Example', :exclusive => true do
   pod 'CardKit', :path => '../'
+  pod 'CardIO'
 end
 
 target 'CardKit_Tests', :exclusive => true do

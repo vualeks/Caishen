@@ -3,11 +3,11 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10080"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CardNumberTextField" customModule="CardKit" customModuleProvider="target">
             <connections>
+                <outlet property="accessoryButton" destination="WR5-rr-22S" id="8Mg-jG-iB9"/>
                 <outlet property="cardImageView" destination="puU-AL-gPV" id="AIn-X0-fGf"/>
                 <outlet property="cardInfoView" destination="8iN-aK-Jz9" id="esE-ci-h9N"/>
                 <outlet property="cardNumberInputTextField" destination="T6o-6e-fLS" id="M29-kR-3Ua"/>
@@ -21,16 +21,33 @@
             <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="0000000000000000" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="T6o-6e-fLS" customClass="CardNumberInputTextField" customModule="CardKit" customModuleProvider="target">
-                    <rect key="frame" x="30" y="0.0" width="562" height="600"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                    <textInputTraits key="textInputTraits"/>
+                <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UFG-yT-gmg">
+                    <rect key="frame" x="31" y="2" width="567" height="596"/>
+                    <subviews>
+                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="0000000000000000" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="T6o-6e-fLS" customClass="CardNumberInputTextField" customModule="CardKit" customModuleProvider="target">
+                            <rect key="frame" x="0.0" y="0.0" width="547" height="596"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                            <textInputTraits key="textInputTraits"/>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="string" keyPath="cardNumberSeparator" value=" - "/>
+                            </userDefinedRuntimeAttributes>
+                        </textField>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstItem="T6o-6e-fLS" firstAttribute="top" secondItem="UFG-yT-gmg" secondAttribute="top" id="33E-7t-cqB"/>
+                        <constraint firstAttribute="bottom" secondItem="T6o-6e-fLS" secondAttribute="bottom" id="5A1-86-yL3"/>
+                        <constraint firstAttribute="trailing" secondItem="T6o-6e-fLS" secondAttribute="trailing" constant="20" id="Z8G-fK-uag"/>
+                        <constraint firstItem="T6o-6e-fLS" firstAttribute="leading" secondItem="UFG-yT-gmg" secondAttribute="leading" id="hAO-hn-H7p"/>
+                    </constraints>
                     <userDefinedRuntimeAttributes>
-                        <userDefinedRuntimeAttribute type="string" keyPath="cardNumberSeparator" value=" - "/>
+                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                            <integer key="value" value="5"/>
+                        </userDefinedRuntimeAttribute>
                     </userDefinedRuntimeAttributes>
-                </textField>
+                </view>
                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Unknown" translatesAutoresizingMaskIntoConstraints="NO" id="puU-AL-gPV">
-                    <rect key="frame" x="0.0" y="3" width="30" height="594"/>
+                    <rect key="frame" x="1" y="2" width="30" height="596"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="30" id="fmD-Za-Tve"/>
@@ -42,10 +59,10 @@
                     </userDefinedRuntimeAttributes>
                 </imageView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8iN-aK-Jz9">
-                    <rect key="frame" x="89" y="0.0" width="511" height="600"/>
+                    <rect key="frame" x="89" y="2" width="511" height="596"/>
                     <subviews>
                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="MM" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="5cX-Z5-afy" customClass="StylizedTextField" customModule="CardKit" customModuleProvider="target">
-                            <rect key="frame" x="0.0" y="0.0" width="37" height="600"/>
+                            <rect key="frame" x="0.0" y="0.0" width="37" height="596"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="37" id="ncp-hx-z25"/>
@@ -54,7 +71,7 @@
                             <textInputTraits key="textInputTraits"/>
                         </textField>
                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="YY" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="CgE-Em-qHJ" customClass="StylizedTextField" customModule="CardKit" customModuleProvider="target">
-                            <rect key="frame" x="59" y="0.0" width="42" height="600"/>
+                            <rect key="frame" x="59" y="0.0" width="42" height="596"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="42" id="YKf-J2-WJy"/>
@@ -63,14 +80,14 @@
                             <textInputTraits key="textInputTraits"/>
                         </textField>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="/" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DD8-kX-0ru">
-                            <rect key="frame" x="45" y="290" width="6" height="20"/>
+                            <rect key="frame" x="45" y="288" width="6" height="20"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="CVC" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="HOM-PC-B5m" customClass="StylizedTextField" customModule="CardKit" customModuleProvider="target">
-                            <rect key="frame" x="109" y="0.0" width="402" height="600"/>
+                            <rect key="frame" x="109" y="0.0" width="402" height="596"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="48" id="Qg6-cj-7bj"/>
@@ -101,21 +118,34 @@
                         <constraint firstItem="DD8-kX-0ru" firstAttribute="leading" secondItem="5cX-Z5-afy" secondAttribute="trailing" constant="8" id="yCR-Mr-RWe"/>
                     </constraints>
                 </view>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WR5-rr-22S">
+                    <rect key="frame" x="570" y="285" width="30" height="30"/>
+                    <state key="normal" title="⇤"/>
+                </button>
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstItem="T6o-6e-fLS" firstAttribute="bottom" secondItem="puU-AL-gPV" secondAttribute="bottom" constant="3" id="1V7-sy-z02"/>
-                <constraint firstItem="T6o-6e-fLS" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="2hP-5w-uAi"/>
+                <constraint firstItem="UFG-yT-gmg" firstAttribute="trailing" secondItem="8iN-aK-Jz9" secondAttribute="trailing" constant="-2" id="0dS-Hq-Vd0"/>
+                <constraint firstItem="UFG-yT-gmg" firstAttribute="centerY" secondItem="puU-AL-gPV" secondAttribute="centerY" id="16X-0R-PgK"/>
+                <constraint firstItem="UFG-yT-gmg" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="2" id="1Gi-Je-Nb6"/>
+                <constraint firstItem="T6o-6e-fLS" firstAttribute="leading" secondItem="puU-AL-gPV" secondAttribute="trailing" id="4Wr-tr-pZn"/>
+                <constraint firstAttribute="bottom" secondItem="puU-AL-gPV" secondAttribute="bottom" constant="2" id="9R4-rG-BJX"/>
                 <constraint firstAttribute="trailing" secondItem="8iN-aK-Jz9" secondAttribute="trailing" id="Dm5-lS-7gW"/>
-                <constraint firstAttribute="bottom" secondItem="T6o-6e-fLS" secondAttribute="bottom" id="EXF-wl-GHl"/>
-                <constraint firstItem="8iN-aK-Jz9" firstAttribute="top" secondItem="T6o-6e-fLS" secondAttribute="top" id="YX9-sz-o70"/>
-                <constraint firstItem="T6o-6e-fLS" firstAttribute="trailing" secondItem="iN0-l3-epB" secondAttribute="trailingMargin" id="cma-zJ-pDA"/>
-                <constraint firstItem="puU-AL-gPV" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="fP2-Mh-h6I"/>
+                <constraint firstItem="puU-AL-gPV" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="2" id="GwY-s4-Vif"/>
+                <constraint firstItem="UFG-yT-gmg" firstAttribute="top" secondItem="8iN-aK-Jz9" secondAttribute="top" id="Lwy-PU-ajG"/>
+                <constraint firstAttribute="bottom" secondItem="UFG-yT-gmg" secondAttribute="bottom" constant="2" id="W1C-Dy-7pX"/>
+                <constraint firstItem="puU-AL-gPV" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="1" id="fP2-Mh-h6I"/>
                 <constraint firstItem="8iN-aK-Jz9" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" priority="750" constant="89" id="hOK-B4-zWu"/>
-                <constraint firstItem="8iN-aK-Jz9" firstAttribute="bottom" secondItem="T6o-6e-fLS" secondAttribute="bottom" id="jeW-Hm-63K"/>
-                <constraint firstItem="T6o-6e-fLS" firstAttribute="top" secondItem="puU-AL-gPV" secondAttribute="top" constant="-3" id="kbb-nn-KKP"/>
-                <constraint firstItem="T6o-6e-fLS" firstAttribute="leading" secondItem="puU-AL-gPV" secondAttribute="trailing" id="wk0-uM-9Ur"/>
+                <constraint firstItem="UFG-yT-gmg" firstAttribute="leading" secondItem="puU-AL-gPV" secondAttribute="trailing" id="mBS-KC-Ice"/>
+                <constraint firstItem="UFG-yT-gmg" firstAttribute="bottom" secondItem="8iN-aK-Jz9" secondAttribute="bottom" id="s9S-g6-74H"/>
+                <constraint firstAttribute="trailing" secondItem="WR5-rr-22S" secondAttribute="trailing" id="ulq-Ys-dgQ"/>
+                <constraint firstItem="WR5-rr-22S" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="zos-dk-ccb"/>
             </constraints>
+            <variation key="default">
+                <mask key="constraints">
+                    <exclude reference="4Wr-tr-pZn"/>
+                </mask>
+            </variation>
         </view>
     </objects>
     <resources>

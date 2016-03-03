@@ -17,4 +17,8 @@ public protocol CardNumberTextFieldDelegate {
      - parameter validationResult: The result for the card validation of `information` or nil, if one or more of the CardNumberTextField's text fields are empty or incomplete.
      */
     func cardNumberTextField(cardNumberTextField: CardNumberTextField, didEnterCardInformation information: Card?, withValidationResult validationResult: CardValidationResult?)
+    
+    func cardNumberTextFieldShouldShowAccessoryImage(cardNumberTextField: CardNumberTextField) -> UIImage?
+    
+    func cardNumberTextFieldShouldProvideAccessoryAction(cardNumberTextField: CardNumberTextField) -> (() -> ())?
 }

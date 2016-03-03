@@ -1,7 +1,9 @@
 PODS:
+  - CardIO (5.3.1)
   - CardKit (0.1.0)
 
 DEPENDENCIES:
+  - CardIO
   - CardKit (from `../`)
 
 EXTERNAL SOURCES:
@@ -9,6 +11,7 @@ EXTERNAL SOURCES:
     :path: ../
 
 SPEC CHECKSUMS:
+  CardIO: a299efcd0348c3b256a1da53f22951319c3855a2
   CardKit: 7df6edc47c4e468e47e33ad2b7612042461d28cd
 
 COCOAPODS: 0.39.0

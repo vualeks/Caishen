@@ -66,7 +66,7 @@ public class StylizedTextField: UITextField, UITextFieldDelegate {
         self.delegate = self
     }
     
-    public override func deleteBackward() {
+    internal func customDeleteBackward() {
         if (text ?? "").isEmpty {
             deleteBackwardCallback?(self)
         }

@@ -9,11 +9,10 @@
 import UIKit
 import CardKit
 
-class ViewController: UIViewController, CardNumberTextFieldDelegate {
+class ViewController: UIViewController, CardNumberTextFieldDelegate, CardIOPaymentViewControllerDelegate {
     
     @IBOutlet weak var saveButton: UIButton?
-    @IBOutlet weak var cardNumberTextField0: CardNumberTextField!
-    @IBOutlet weak var cardNumberTextField1: CardNumberTextField!
+    @IBOutlet weak var cardNumberTextField: CardNumberTextField!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,7 +20,7 @@ class ViewController: UIViewController, CardNumberTextFieldDelegate {
         saveButton?.enabled = false
         
         // Assign self as the delegate for both card number text fields.
-        [cardNumberTextField0, cardNumberTextField1].forEach({$0.cardNumberTextFieldDelegate = self})
+        cardNumberTextField.cardNumberTextFieldDelegate = self
     }
 
     override func didReceiveMemoryWarning() {
@@ -36,6 +35,29 @@ class ViewController: UIViewController, CardNumberTextFieldDelegate {
         } else {
             saveButton?.enabled = true
         }
+    }
+    
+    func cardNumberTextFieldShouldShowAccessoryImage(cardNumberTextField: CardNumberTextField) -> UIImage? {
+        return UIImage()
+    }
+    
+    func cardNumberTextFieldShouldShowAccessoryTitle(cardNumberTextField: CardNumberTextField) -> String? {
+        return "CardIO"
+    }
+    
+    func cardNumberTextFieldShouldProvideAccessoryAction(cardNumberTextField: CardNumberTextField) -> (() -> ())? {
+        return { [weak self] _ in
+            let cardIOViewController = CardIOPaymentViewController(paymentDelegate: self)
+            self?.presentViewController(cardIOViewController, animated: true, completion: nil)
+        }
+    }
+    
+    func userDidCancelPaymentViewController(paymentViewController: CardIOPaymentViewController!) {
+        paymentViewController.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    func userDidProvideCreditCardInfo(cardInfo: CardIOCreditCardInfo!, inPaymentViewController paymentViewController: CardIOPaymentViewController!) {
+        cardNumberTextField.prefillCardInformation(cardInfo.cardNumber, month: Int(cardInfo.expiryMonth), year: Int(cardInfo.expiryYear), cvc: cardInfo.cvv)
     }
 
 }

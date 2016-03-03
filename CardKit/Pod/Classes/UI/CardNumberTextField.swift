@@ -33,6 +33,11 @@ public class CardNumberTextField: UITextField, UITextFieldDelegate, CardNumberIn
     @IBOutlet public weak var cardImageView: UIImageView?
     
     /**
+     A but which is shown only when the delegate's 
+     */
+    @IBOutlet public weak var accessoryButton: UIButton?
+    
+    /**
      The formatted text field which is used to enter the card number.
      */
     @IBOutlet public weak var cardNumberInputTextField: CardNumberInputTextField?
@@ -57,7 +62,11 @@ public class CardNumberTextField: UITextField, UITextFieldDelegate, CardNumberIn
      */
     @IBOutlet public weak var cardInfoView: UIView?
     
-    public var cardNumberTextFieldDelegate: CardNumberTextFieldDelegate?
+    public var cardNumberTextFieldDelegate: CardNumberTextFieldDelegate? {
+        didSet {
+        setupAccessoryButton()
+        }
+    }
     
     override public final var textColor: UIColor? {
         didSet {
@@ -262,7 +271,7 @@ public class CardNumberTextField: UITextField, UITextFieldDelegate, CardNumberIn
         yearTextField?.delegate = self
         clipsToBounds = true
         
-        cvcTextField?.addObserver(self, forKeyPath: "text", options: NSKeyValueObservingOptions.New, context: nil)
+        setupAccessoryButton()
         [cardNumberInputTextField,cvcTextField,monthTextField,yearTextField].forEach({
             $0?.keyboardType = .NumberPad
             $0?.addTarget(self, action: Selector("textFieldDidChange:"), forControlEvents: UIControlEvents.EditingChanged)
@@ -277,6 +286,23 @@ public class CardNumberTextField: UITextField, UITextFieldDelegate, CardNumberIn
         yearTextField?.deleteBackwardCallback = {_ -> Void in self.monthTextField?.becomeFirstResponder()}
         super.textColor = UIColor.clearColor()
         super.placeholder = nil
+    }
+    
+    internal func buttonReceivedAction() {
+        cardNumberTextFieldDelegate?.cardNumberTextFieldShouldProvideAccessoryAction(self)?()
+    }
+    
+    private func setupAccessoryButton() {
+        guard let buttonImage = cardNumberTextFieldDelegate?.cardNumberTextFieldShouldShowAccessoryImage(self) else {
+            accessoryButton?.alpha = 0
+            return
+        }
+        accessoryButton?.alpha = 1.0
+        accessoryButton?.setImage(buttonImage, forState: .Normal)
+            
+        if let action = cardNumberTextFieldDelegate?.cardNumberTextFieldShouldProvideAccessoryAction(self) {
+            accessoryButton?.addTarget(self, action: Selector("buttonReceivedAction"), forControlEvents: .TouchUpInside)
+        }
     }
     
     /**
@@ -312,6 +338,44 @@ public class CardNumberTextField: UITextField, UITextFieldDelegate, CardNumberIn
     public override func didMoveToSuperview() {
         super.didMoveToSuperview()
         moveCardDetailViewOut()
+    }
+    
+    // MARK: - Prefill information
+    
+    public func prefillCardInformation(cardNumber: String?, month: Int?, year: Int?, cvc: String?) {
+        if let year = year {
+            var trimmedYear = year
+            if year > 100 {
+                trimmedYear = year % 100
+            }
+            
+            if isYearValid(String(format: "%02i", arguments: [trimmedYear]), partiallyValid: true) {
+                yearTextField?.text = String(trimmedYear)
+            }
+        }
+        
+        if let month = month where isMonthValid(String(format: "%02i", arguments: [month]), partiallyValid: true) {
+            monthTextField?.text = String(format: "%02i", arguments: [month])
+        }
+        
+        if let cardNumber = cardNumber, let cardNumberInputTextField = cardNumberInputTextField {
+            let validCharacters: Set<Character> = Set("0123456789".characters)
+            let unformattedCardNumber = String(cardNumber.characters.filter({validCharacters.contains($0)}))
+            
+            let cardNumber = Number(rawValue: unformattedCardNumber)
+            
+            if cardTypeRegister.cardTypeForNumber(cardNumber)?.checkCardNumberPartiallyValid(cardNumber) == .Valid {
+                let formatter = CardNumberFormatter(cardTypeRegister: cardTypeRegister)
+                formatter.separator = cardNumberInputTextField.cardNumberSeparator
+                cardNumberInputTextField.text = formatter.formattedCardNumber(unformattedCardNumber)
+                cardNumberInputTextField.parsedCardNumber = cardNumber
+                cardNumberTextFieldDidChangeText(cardNumberInputTextField)
+            }
+        }
+        
+        if let cvc = cvc where cardType?.validateCVC(CVC(rawValue: cvc)) == .Valid {
+            cvcTextField?.text = cvc
+        }
     }
     
     // MARK: - View customization
@@ -393,9 +457,9 @@ public class CardNumberTextField: UITextField, UITextFieldDelegate, CardNumberIn
     
     public func textFieldDidBeginEditing(textField: UITextField) {
         if textField == cardNumberInputTextField {
-            UIView.animateWithDuration(1.0, animations: { [unowned self] _ in
-                self.moveCardDetailViewOut()
-                self.moveNumberFieldRight()
+            UIView.animateWithDuration(1.0, animations: { [weak self] _ in
+                self?.moveCardDetailViewOut()
+                self?.moveNumberFieldRight()
                 })
         }
         
@@ -534,7 +598,12 @@ public class CardNumberTextField: UITextField, UITextFieldDelegate, CardNumberIn
     }
     
     public override var keyCommands: [UIKeyCommand]? {
+        // Do not customize delete backward on card number input, as this will no longer call delegate methods:
+        if cardNumberInputTextField?.isFirstResponder() ?? false {
+            return nil
+        }
+        
         // When backspace is pressed on any given subview, call deleteBackward on the current first responder
-        return [UIKeyCommand(input: "\u{8}", modifierFlags: UIKeyModifierFlags(), action: Selector("deleteBackward"))]
+        return [UIKeyCommand(input: "\u{8}", modifierFlags: UIKeyModifierFlags(), action: Selector("customDeleteBackward"))]
     }
 }
