@@ -28,13 +28,11 @@ class ViewController: UIViewController, CardNumberTextFieldDelegate, CardIOPayme
         // Dispose of any resources that can be recreated.
     }
     
+    // MARK: - CardNumberTextField delegate methods
+    
     // This method of `CardNumberTextFieldDelegate` will set the saveButton enabled or disabled, based on whether valid card information has been entered.
     func cardNumberTextField(cardNumberTextField: CardNumberTextField, didEnterCardInformation information: Card?, withValidationResult validationResult: CardValidationResult?) {
-        if validationResult != .Valid {
-            saveButton?.enabled = false
-        } else {
-            saveButton?.enabled = true
-        }
+        // Do Something
     }
     
     func cardNumberTextFieldShouldShowAccessoryImage(cardNumberTextField: CardNumberTextField) -> UIImage? {
@@ -52,12 +50,15 @@ class ViewController: UIViewController, CardNumberTextFieldDelegate, CardIOPayme
         }
     }
     
+    // MARK: - Card.io delegate methods
+    
     func userDidCancelPaymentViewController(paymentViewController: CardIOPaymentViewController!) {
         paymentViewController.dismissViewControllerAnimated(true, completion: nil)
     }
     
     func userDidProvideCreditCardInfo(cardInfo: CardIOCreditCardInfo!, inPaymentViewController paymentViewController: CardIOPaymentViewController!) {
         cardNumberTextField.prefillCardInformation(cardInfo.cardNumber, month: Int(cardInfo.expiryMonth), year: Int(cardInfo.expiryYear), cvc: cardInfo.cvv)
+        paymentViewController.dismissViewControllerAnimated(true, completion: nil)
     }
 
 }

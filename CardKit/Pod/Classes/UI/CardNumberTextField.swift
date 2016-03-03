@@ -376,6 +376,8 @@ public class CardNumberTextField: UITextField, UITextFieldDelegate, CardNumberIn
         if let cvc = cvc where cardType?.validateCVC(CVC(rawValue: cvc)) == .Valid {
             cvcTextField?.text = cvc
         }
+        
+        notifyDelegate()
     }
     
     // MARK: - View customization
