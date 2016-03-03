@@ -25,7 +25,7 @@
                     <rect key="frame" x="31" y="2" width="567" height="596"/>
                     <subviews>
                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="0000000000000000" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="T6o-6e-fLS" customClass="CardNumberInputTextField" customModule="CardKit" customModuleProvider="target">
-                            <rect key="frame" x="0.0" y="0.0" width="547" height="596"/>
+                            <rect key="frame" x="4" y="0.0" width="543" height="596"/>
                             <fontDescription key="fontDescription" type="system" pointSize="20"/>
                             <textInputTraits key="textInputTraits"/>
                             <userDefinedRuntimeAttributes>
@@ -38,7 +38,7 @@
                         <constraint firstItem="T6o-6e-fLS" firstAttribute="top" secondItem="UFG-yT-gmg" secondAttribute="top" id="33E-7t-cqB"/>
                         <constraint firstAttribute="bottom" secondItem="T6o-6e-fLS" secondAttribute="bottom" id="5A1-86-yL3"/>
                         <constraint firstAttribute="trailing" secondItem="T6o-6e-fLS" secondAttribute="trailing" constant="20" id="Z8G-fK-uag"/>
-                        <constraint firstItem="T6o-6e-fLS" firstAttribute="leading" secondItem="UFG-yT-gmg" secondAttribute="leading" id="hAO-hn-H7p"/>
+                        <constraint firstItem="T6o-6e-fLS" firstAttribute="leading" secondItem="UFG-yT-gmg" secondAttribute="leading" constant="4" id="hAO-hn-H7p"/>
                     </constraints>
                     <userDefinedRuntimeAttributes>
                         <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
