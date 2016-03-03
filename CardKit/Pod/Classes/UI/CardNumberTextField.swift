@@ -293,15 +293,17 @@ public class CardNumberTextField: UITextField, UITextFieldDelegate, CardNumberIn
     }
     
     private func setupAccessoryButton() {
-        guard let buttonImage = cardNumberTextFieldDelegate?.cardNumberTextFieldShouldShowAccessoryImage(self) else {
+        guard let action = cardNumberTextFieldDelegate?.cardNumberTextFieldShouldProvideAccessoryAction(self) else {
             accessoryButton?.alpha = 0
             return
         }
+        accessoryButton?.addTarget(self, action: Selector("buttonReceivedAction"), forControlEvents: .TouchUpInside)
         accessoryButton?.alpha = 1.0
-        accessoryButton?.setImage(buttonImage, forState: .Normal)
-            
-        if let action = cardNumberTextFieldDelegate?.cardNumberTextFieldShouldProvideAccessoryAction(self) {
-            accessoryButton?.addTarget(self, action: Selector("buttonReceivedAction"), forControlEvents: .TouchUpInside)
+        
+        if let buttonImage = cardNumberTextFieldDelegate?.cardNumberTextFieldShouldShowAccessoryImage(self) {
+            let scaledImage = buttonImage.resizableImageWithCapInsets(UIEdgeInsetsZero, resizingMode: .Stretch)
+            accessoryButton?.titleLabel?.text = nil
+            accessoryButton?.setImage(scaledImage, forState: .Normal)
         }
     }
     
