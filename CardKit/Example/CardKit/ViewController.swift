@@ -35,7 +35,7 @@ class ViewController: UIViewController, CardNumberTextFieldDelegate, CardIOPayme
     }
     
     func cardNumberTextFieldShouldShowAccessoryImage(cardNumberTextField: CardNumberTextField) -> UIImage? {
-        return nil //UIImage(named: "camera")
+        return UIImage(named: "camera")
     }
     
     func cardNumberTextFieldShouldProvideAccessoryAction(cardNumberTextField: CardNumberTextField) -> (() -> ())? {
