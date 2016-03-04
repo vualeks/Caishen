@@ -188,24 +188,31 @@ public class CardNumberTextField: UITextField, UITextFieldDelegate, CardNumberIn
      The card type for the entered card number or nil, if no card type has been detected with the given input.
      */
     public final var cardType: CardType? {
-        guard let number = cardNumber else {
+        guard let number = cardNumberInputTextField?.parsedCardNumber else {
             return nil
         }
         
         return cardTypeRegister.cardTypeForNumber(number)
     }
     
-    // MARK: - Private variables
+    // MARK: - Internal variables
     
     /**
-     The string that has been entered for the month of the expiry date or nil, if no valid month has been entered yet.
-     */
-    private var monthString: String?
+    The string that has been entered for the month of the expiry date or nil, if no valid month has been entered yet.
+    */
+    internal var monthString: String?
     
     /**
      The string that has been entered for the year of the expiry date or nil, if no valid year has been entered yet.
      */
-    private var yearString: String?
+    internal var yearString: String?
+    
+    /**
+     The entered card validation code or nil, if no valid cvc has been entered yet.
+     */
+    internal var cardCVC: CVC?
+    
+    // MARK: - Private variables
     
     /**
      The entered card number or nil, if no valid card number has been entered yet.
@@ -229,18 +236,13 @@ public class CardNumberTextField: UITextField, UITextFieldDelegate, CardNumberIn
     /**
      Notifies `cardNumberTextFieldDelegate` about changes to the entered card information.
      */
-    private func notifyDelegate() {
+    internal func notifyDelegate() {
         if let card = card {
             cardNumberTextFieldDelegate?.cardNumberTextField(self, didEnterCardInformation: card, withValidationResult: CardValidator(cardTypeRegister: cardTypeRegister).validateCard(card))
         } else {
             cardNumberTextFieldDelegate?.cardNumberTextField(self, didEnterCardInformation: nil, withValidationResult: nil)
         }
     }
-    
-    /**
-     The entered card validation code or nil, if no valid cvc has been entered yet.
-     */
-    private var cardCVC: CVC?
     
     // MARK: - Initializers & view setup
     
@@ -325,6 +327,16 @@ public class CardNumberTextField: UITextField, UITextFieldDelegate, CardNumberIn
         cardImageView?.backgroundColor = backgroundColor ?? UIColor.whiteColor()
         cardImageView?.layer.cornerRadius = 5.0
         setupTextFieldAttributes()
+        
+        let leftSwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: Selector("moveNumberFieldLeftAnimated"))
+        leftSwipeGestureRecognizer.direction = .Left
+        firstObjectInNib.addGestureRecognizer(leftSwipeGestureRecognizer)
+        
+        [firstObjectInNib, cardInfoView].forEach({
+            let rightSwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: Selector("moveNumberFieldRightAnimated"))
+            rightSwipeGestureRecognizer.direction = .Right
+            $0?.addGestureRecognizer(rightSwipeGestureRecognizer)
+        })
     }
     
     public override func willMoveToSuperview(newSuperview: UIView?) {
@@ -340,50 +352,7 @@ public class CardNumberTextField: UITextField, UITextFieldDelegate, CardNumberIn
     
     public override func didMoveToSuperview() {
         super.didMoveToSuperview()
-        moveCardDetailViewOut()
-    }
-    
-    // MARK: - Prefill information
-    
-    public func prefillCardInformation(cardNumber: String?, month: Int?, year: Int?, cvc: String?) {
-        if let year = year {
-            var trimmedYear = year
-            if year > 100 {
-                trimmedYear = year % 100
-            }
-            
-            if isYearValid(String(format: "%02i", arguments: [trimmedYear]), partiallyValid: true) {
-                yearTextField?.text = String(trimmedYear)
-                yearString = String(format: "%02i", arguments: [trimmedYear])
-            }
-        }
-        
-        if let month = month where isMonthValid(String(format: "%02i", arguments: [month]), partiallyValid: true) {
-            monthTextField?.text = String(format: "%02i", arguments: [month])
-            monthString = String(format: "%02i", arguments: [month])
-        }
-        
-        if let cardNumber = cardNumber, let cardNumberInputTextField = cardNumberInputTextField {
-            let validCharacters: Set<Character> = Set("0123456789".characters)
-            let unformattedCardNumber = String(cardNumber.characters.filter({validCharacters.contains($0)}))
-            
-            let cardNumber = Number(rawValue: unformattedCardNumber)
-            
-            if cardTypeRegister.cardTypeForNumber(cardNumber)?.checkCardNumberPartiallyValid(cardNumber) == .Valid {
-                let formatter = CardNumberFormatter(cardTypeRegister: cardTypeRegister)
-                formatter.separator = cardNumberInputTextField.cardNumberSeparator
-                cardNumberInputTextField.text = formatter.formattedCardNumber(unformattedCardNumber)
-                cardNumberInputTextField.parsedCardNumber = cardNumber
-                cardNumberTextFieldDidChangeText(cardNumberInputTextField)
-            }
-        }
-        
-        if let cvc = cvc where cardType?.validateCVC(CVC(rawValue: cvc)) == .Valid {
-            cvcTextField?.text = cvc
-            cardCVC = CVC(rawValue: cvc)
-        }
-        
-        notifyDelegate()
+        moveNumberFieldRight()
     }
     
     // MARK: - View customization
@@ -402,147 +371,9 @@ public class CardNumberTextField: UITextField, UITextFieldDelegate, CardNumberIn
         return NSBundle(forClass: CardNumberTextField.self)
     }
     
-    // MARK: - Validity checks
-    
-    /**
-     Checks the validity of the entered card validation code.
-     
-     - returns: True, if the card validation code is valid.
-     */
-    public func isCVCValid(cvcString: String, partiallyValid: Bool) -> Bool {
-        if cvcString.characters.count == 0 && partiallyValid {
-            return true
-        }
-
-        let cvc = CVC(rawValue: cvcString)
-        return (cardType?.validateCVC(cvc) == .Valid) ?? false || partiallyValid && (cardType?.validateCVC(cvc) == .CVCIncomplete) ?? false
-    }
-    
-    /**
-     Checks the validity of the entered month.
-     
-     - returns: True, if the month is valid.
-     */
-    public func isMonthValid(month: String, partiallyValid: Bool) -> Bool {
-        let length = month.characters.count
-        if partiallyValid && length == 0 {
-            return true
-        }
-        
-        guard let monthInt = UInt(month) else {
-            return false
-        }
-        
-        if length == 1 && !["0","1"].contains(month) {
-            return false
-        }
-        
-        return ((monthInt >= 1 && monthInt <= 12) ||
-            (partiallyValid && month == "0")) &&
-            (partiallyValid || length == 2)
-    }
-    
-    /**
-     Checks the validity of the entered year.
-     
-     - returns: True, if the year is valid.
-     */
-    public func isYearValid(year: String, partiallyValid: Bool) -> Bool {
-        if partiallyValid && year.characters.count == 0 {
-            return true
-        }
-        
-        guard let yearInt = UInt(year) else {
-            return false
-        }
-        
-        return yearInt >= 0 &&
-            yearInt < 100 &&
-            (partiallyValid || year.characters.count == 2)
-    }
-    
-    // MARK: - UITextFieldDelegate
-    
-    public func textFieldDidBeginEditing(textField: UITextField) {
-        if textField == cardNumberInputTextField {
-            UIView.animateWithDuration(1.0, animations: { [weak self] _ in
-                self?.moveCardDetailViewOut()
-                self?.moveNumberFieldRight()
-                })
-        }
-        
-        if textField == cvcTextField {
-            cardImageView?.image = cardType?.cvcImage
-        } else {
-            cardImageView?.image = cardType?.cardTypeImage ?? unknownCardTypeImage
-        }
-    }
-    
-    public final func textFieldDidChange(textField: UITextField) {
-        switch textField {
-        case let val where val == cvcTextField:
-            if isCVCValid(textField.text ?? "", partiallyValid: false) {
-                cardCVC = CVC(rawValue: textField.text!)
-            } else {
-                cardCVC = nil
-            }
-        case let val where val == monthTextField:
-            if isMonthValid(textField.text ?? "", partiallyValid: false) {
-                monthString = textField.text!
-                yearTextField?.becomeFirstResponder()
-            } else {
-                monthString = nil
-            }
-        case let val where val == yearTextField:
-            if isYearValid(textField.text ?? "", partiallyValid: false) {
-                yearString = textField.text!
-                cvcTextField?.becomeFirstResponder()
-            } else {
-                yearString = nil
-            }
-        default:
-            break
-        }
-        
-        notifyDelegate()
-    }
-    
-    public final func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
-        // For text fields other than the card number text field (which implements input validation on its own), validate the input
-        
-        var updatedRange = range
-        if text == CardNumberTextField.emptyTextFieldCharacter {
-            updatedRange.location -= 1
-        }
-        
-        let newValue = NSString(string: textField.text ?? "").stringByReplacingCharactersInRange(updatedRange, withString: string).stringByReplacingOccurrencesOfString(CardNumberTextField.emptyTextFieldCharacter, withString: "")
-        switch textField {
-        case let val where val == cvcTextField:
-            if isCVCValid(newValue, partiallyValid: true) {
-                textField.text = newValue
-                textFieldDidChange(textField)
-            }
-            return false
-        case let val where val == monthTextField:
-            if isMonthValid(newValue, partiallyValid: true) {
-                textField.text = newValue
-                textFieldDidChange(textField)
-            }
-            return false
-        case let val where val == yearTextField:
-            if isYearValid(newValue, partiallyValid: true) {
-                textField.text = newValue
-                textFieldDidChange(textField)
-            }
-            return false
-        default:
-            return true
-        }
-    }
-    
     // MARK: - CardNumberInputTextFieldDelegate
 
-    @objc private func cardNumberTextFieldDidChangeText(cardNumberTextField: CardNumberInputTextField) {
+    @objc internal func cardNumberTextFieldDidChangeText(cardNumberTextField: CardNumberInputTextField) {
         if let cardNumber = cardNumberTextField.parsedCardNumber {
             cardImageView?.image = cardTypeRegister.cardTypeForNumber(cardNumber)?.cardTypeImage ?? unknownCardTypeImage
         }
@@ -551,10 +382,7 @@ public class CardNumberTextField: UITextField, UITextFieldDelegate, CardNumberIn
     }
 
     public func cardNumberInputTextFieldDidComplete(cardNumberTextField: CardNumberInputTextField) {
-        UIView.animateWithDuration(1.0, animations: { [weak self] _ in
-            self?.moveNumberFieldLeft()
-            self?.moveCardDetailViewIn()
-        })
+        moveNumberFieldLeftAnimated()
 
         notifyDelegate()
         monthTextField?.becomeFirstResponder()
@@ -562,34 +390,45 @@ public class CardNumberTextField: UITextField, UITextFieldDelegate, CardNumberIn
     
     // MARK: - View animations
     
+    internal func moveNumberFieldLeftAnimated() {
+        UIView.animateWithDuration(1.0, animations: { [weak self] _ in
+            self?.moveNumberFieldLeft()
+            })
+    }
+    
+    internal func moveNumberFieldRightAnimated() {
+        UIView.animateWithDuration(1.0, animations: { [weak self] _ in
+            self?.moveNumberFieldRight()
+            })
+    }
+    
     /**
      Translates the card number text field outside the screen.
      */
     public func moveNumberFieldLeft() {
+        // Only when the card number has been set, the user can swipe to the details
+        if cardNumber == nil {
+            return
+        }
+        
+        cardNumberInputTextField?.becomeFirstResponder()
         if let rect = cardNumberInputTextField?.rectForLastGroup() {
             cardNumberInputTextField?.transform =
-                CGAffineTransformTranslate(self.cardNumberInputTextField!.transform, -rect.origin.x, 0)
+                CGAffineTransformMakeTranslation(-rect.origin.x, 0)
+        } else {
+            cardNumberInputTextField?.alpha = 0
         }
+        cardNumberInputTextField?.resignFirstResponder()
+        cardInfoView?.transform = CGAffineTransformIdentity
     }
     
     /**
      Moves the card number text field to its original position.
      */
     public func moveNumberFieldRight() {
+        [monthTextField, yearTextField, cvcTextField].forEach({$0?.resignFirstResponder()})
         cardNumberInputTextField?.transform = CGAffineTransformIdentity
-    }
-    
-    /**
-     Shows the card detail view with CVC, month and year text field.
-     */
-    public func moveCardDetailViewIn() {
-        cardInfoView?.transform = CGAffineTransformIdentity
-    }
-    
-    /**
-     Hides the card detail view with CVC, month and year text field by moving it outside the view.
-     */
-    public func moveCardDetailViewOut() {
+        cardNumberInputTextField?.alpha = 1
         cardInfoView?.transform = CGAffineTransformMakeTranslation(superview!.bounds.width, 0)
     }
     
@@ -600,7 +439,7 @@ public class CardNumberTextField: UITextField, UITextFieldDelegate, CardNumberIn
         
         // If moving to a larger screen size and not showing the detail view, make sure that it is outside the view.
         if let transform = cardInfoView?.transform where !CGAffineTransformIsIdentity(transform) {
-            moveCardDetailViewOut()
+            moveNumberFieldRight()
         }
     }
     
