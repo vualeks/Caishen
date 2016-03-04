@@ -293,7 +293,7 @@ public class CardNumberTextField: UITextField, UITextFieldDelegate, CardNumberIn
     }
     
     private func setupAccessoryButton() {
-        guard let action = cardNumberTextFieldDelegate?.cardNumberTextFieldShouldProvideAccessoryAction(self) else {
+        guard let _ = cardNumberTextFieldDelegate?.cardNumberTextFieldShouldProvideAccessoryAction(self) else {
             accessoryButton?.alpha = 0
             return
         }
@@ -510,14 +510,31 @@ public class CardNumberTextField: UITextField, UITextFieldDelegate, CardNumberIn
     public final func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
         // For text fields other than the card number text field (which implements input validation on its own), validate the input
         
-        let newValue = NSString(string: textField.text ?? "").stringByReplacingCharactersInRange(range, withString: string)
+        var updatedRange = range
+        if text == CardNumberTextField.emptyTextFieldCharacter {
+            updatedRange.location -= 1
+        }
+        
+        let newValue = NSString(string: textField.text ?? "").stringByReplacingCharactersInRange(updatedRange, withString: string).stringByReplacingOccurrencesOfString(CardNumberTextField.emptyTextFieldCharacter, withString: "")
         switch textField {
         case let val where val == cvcTextField:
-            return isCVCValid(newValue, partiallyValid: true)
+            if isCVCValid(newValue, partiallyValid: true) {
+                textField.text = newValue
+                textFieldDidChange(textField)
+            }
+            return false
         case let val where val == monthTextField:
-            return isMonthValid(newValue, partiallyValid: true)
+            if isMonthValid(newValue, partiallyValid: true) {
+                textField.text = newValue
+                textFieldDidChange(textField)
+            }
+            return false
         case let val where val == yearTextField:
-            return isYearValid(newValue, partiallyValid: true)
+            if isYearValid(newValue, partiallyValid: true) {
+                textField.text = newValue
+                textFieldDidChange(textField)
+            }
+            return false
         default:
             return true
         }
@@ -603,15 +620,5 @@ public class CardNumberTextField: UITextField, UITextFieldDelegate, CardNumberIn
     public override func becomeFirstResponder() -> Bool {
         // Return false, since this text view is only for background style purposes
         return false
-    }
-    
-    public override var keyCommands: [UIKeyCommand]? {
-        // Do not customize delete backward on card number input, as this will no longer call delegate methods:
-        if cardNumberInputTextField?.isFirstResponder() ?? false {
-            return nil
-        }
-        
-        // When backspace is pressed on any given subview, call deleteBackward on the current first responder
-        return [UIKeyCommand(input: "\u{8}", modifierFlags: UIKeyModifierFlags(), action: Selector("customDeleteBackward"))]
     }
 }

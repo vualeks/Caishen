@@ -54,6 +54,17 @@ public class StylizedTextField: UITextField, UITextFieldDelegate {
      */
     public var deleteBackwardCallback: ((UITextField) -> Void)?
     
+    public override var text: String? {
+        didSet {
+            if (text ?? "").isEmpty {
+                deleteBackwardCallback?(self)
+            } else if text == CardNumberTextField.emptyTextFieldCharacter {
+                drawPlaceholderInRect(textInputView.bounds)
+            }
+            setNeedsDisplay()
+        }
+    }
+    
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         
@@ -66,12 +77,15 @@ public class StylizedTextField: UITextField, UITextFieldDelegate {
         self.delegate = self
     }
     
-    internal func customDeleteBackward() {
-        if (text ?? "").isEmpty {
-            deleteBackwardCallback?(self)
+    public override func drawRect(rect: CGRect) {
+        super.drawRect(rect)
+        drawPlaceholderInRect(rect)
+    }
+    
+    public override func drawPlaceholderInRect(rect: CGRect) {
+        if [CardNumberTextField.emptyTextFieldCharacter, ""].contains(text ?? "") {
+            super.drawPlaceholderInRect(rect)
         }
-        
-        super.deleteBackward()
     }
     
     public func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
