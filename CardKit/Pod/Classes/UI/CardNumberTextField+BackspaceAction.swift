@@ -10,7 +10,7 @@ import UIKit
 
 public extension CardNumberTextField {
     internal static var emptyTextFieldCharacter: String {
-        return "\u{00a0}"
+        return "\u{202F}"
     }
     
     public func textFieldShouldBeginEditing(textField: UITextField) -> Bool {
