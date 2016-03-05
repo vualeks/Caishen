@@ -391,13 +391,13 @@ public class CardNumberTextField: UITextField, UITextFieldDelegate, CardNumberIn
     // MARK: - View animations
     
     internal func moveNumberFieldLeftAnimated() {
-        UIView.animateWithDuration(1.0, animations: { [weak self] _ in
+        UIView.animateWithDuration(0.3, animations: { [weak self] _ in
             self?.moveNumberFieldLeft()
             })
     }
     
     internal func moveNumberFieldRightAnimated() {
-        UIView.animateWithDuration(1.0, animations: { [weak self] _ in
+        UIView.animateWithDuration(0.3, animations: { [weak self] _ in
             self?.moveNumberFieldRight()
             })
     }

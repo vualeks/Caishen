@@ -48,7 +48,12 @@ public extension CardNumberTextField {
             cardCVC = CVC(rawValue: cvc)
         }
         
-        moveNumberFieldLeftAnimated()
+        NSOperationQueue().addOperationWithBlock({
+            NSThread.sleepForTimeInterval(0.5)
+            NSOperationQueue.mainQueue().addOperationWithBlock({ [weak self] _ in
+                self?.moveNumberFieldLeftAnimated()
+            })
+        })
         
         notifyDelegate()
     }

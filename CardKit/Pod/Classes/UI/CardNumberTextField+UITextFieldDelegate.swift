@@ -15,6 +15,10 @@ public extension CardNumberTextField {
             moveNumberFieldRightAnimated()
         }
         
+        if textField == monthTextField {
+            textField.textAlignment = .Right
+        }
+        
         if textField == cvcTextField {
             cardImageView?.image = cardType?.cvcImage ?? unknownCardTypeImage
         } else {

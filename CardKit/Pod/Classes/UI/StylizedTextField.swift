@@ -78,14 +78,15 @@ public class StylizedTextField: UITextField, UITextFieldDelegate {
     }
     
     public override func drawRect(rect: CGRect) {
-        super.drawRect(rect)
-        drawPlaceholderInRect(rect)
+        if text == "" || text == CardNumberTextField.emptyTextFieldCharacter {
+            super.drawPlaceholderInRect(rect)
+        } else {
+            super.drawRect(rect)
+        }
     }
     
     public override func drawPlaceholderInRect(rect: CGRect) {
-        if [CardNumberTextField.emptyTextFieldCharacter, ""].contains(text ?? "") {
-            super.drawPlaceholderInRect(rect)
-        }
+        
     }
     
     public func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
