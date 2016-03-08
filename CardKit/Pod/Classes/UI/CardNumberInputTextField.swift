@@ -129,30 +129,32 @@ public class CardNumberInputTextField: StylizedTextField {
                 }
             }
             
+            cardType = cardTypeRegister.cardTypeForNumber(parsedCardNumber)
+            
             // Based on the validity of the input, allow changing the input or forbid (resulting in the text color changing shortly)
             if completeValidation == nil && partialValidation == nil && newTextUnformatted.characters.count <= 6 {
                 // Case 1: No card type has been detected so far and less or equal than 6 digits have been entered (the amount of digits in a IIN for identification of the card issuer)
-                cardType = cardTypeRegister.cardTypeForNumber(parsedCardNumber)
                 cardNumberFormatter.replaceRangeFormatted(range, inTextField: textField, withString: string)
                 editingChanged()
 
                 return false
             } else if completeValidation == CardValidationResult.Valid {
                 // Case 2: A card type has been detected and the card number was entered completely
-                cardType = cardTypeRegister.cardTypeForNumber(parsedCardNumber)
                 cardNumberFormatter.replaceRangeFormatted(range, inTextField: textField, withString: string)
                 cardNumberInputTextFieldDelegate?.cardNumberInputTextFieldDidComplete(self)
 
                 return false
             } else if partialValidation == CardValidationResult.Valid {
                 // Case 3: A card type has been detected, but the card number is only partially valid
-                cardType = cardTypeRegister.cardTypeForNumber(parsedCardNumber)
                 cardNumberFormatter.replaceRangeFormatted(range, inTextField: textField, withString: string)
                 editingChanged()
                 
                 return false
             } else {
                 // Case 4: The user was about to change the card number so that it would become invalid
+                if newTextUnformatted.characters.count <= cardType?.expectedCardNumberLength() ?? 16 {
+                    cardNumberFormatter.replaceRangeFormatted(range, inTextField: textField, withString: string)
+                }
                 flashTextFieldInvalid()
                 
                 return false

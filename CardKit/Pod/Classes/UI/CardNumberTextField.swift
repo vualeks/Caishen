@@ -15,10 +15,10 @@ import UIKit
  - _: UIView (in most cases with a transparent background in order to not hide the CardNumberTextField)
     - cardImageView: UIImageView
     - CardNumberInputTextField (for entering a card number)
-        - cardInfoView: UIView (container for other views to enter additional information after entering a valid card number) with subviews ordered from left to right:
-            - monthTextField: StylizedTextField
-            - yearTextField: StylizedTextField
-            - cvcTextField: StylizedTextField
+    - cardInfoView: UIView (container for other views to enter additional information after entering a valid card number) with subviews ordered from left to right:
+        - monthTextField: StylizedTextField
+        - yearTextField: StylizedTextField
+        - cvcTextField: StylizedTextField
  
  In order to create a custom CardNumberTextField, you can create a subclass which overrides `getNibName()` and `getNibBundle()` in order to load a nib from a specific bundle, which follows this structure
  */
@@ -28,12 +28,12 @@ public class CardNumberTextField: UITextField, UITextFieldDelegate, CardNumberIn
     // MARK: - Public variables
     
     /**
-     The image view which is used to display the detected card type.
-     */
+    The image view which is used to display the detected card type.
+    */
     @IBOutlet public weak var cardImageView: UIImageView?
     
     /**
-     A but which is shown only when the delegate's 
+     A but which is shown only when the delegate's
      */
     @IBOutlet public weak var accessoryButton: UIButton?
     
@@ -64,44 +64,44 @@ public class CardNumberTextField: UITextField, UITextFieldDelegate, CardNumberIn
     
     public var cardNumberTextFieldDelegate: CardNumberTextFieldDelegate? {
         didSet {
-        setupAccessoryButton()
+            setupAccessoryButton()
         }
     }
     
     override public final var textColor: UIColor? {
         didSet {
-        let textFieldArray: [UITextField?] = [cardNumberInputTextField, cvcTextField, monthTextField, yearTextField]
-        textFieldArray.forEach({$0?.textColor = textColor})
+            let textFieldArray: [UITextField?] = [cardNumberInputTextField, cvcTextField, monthTextField, yearTextField]
+            textFieldArray.forEach({$0?.textColor = textColor})
         }
     }
     public override final var backgroundColor: UIColor? {
         didSet {
-        cardNumberInputTextField?.backgroundColor = backgroundColor
-        cardImageView?.backgroundColor = backgroundColor
+            cardNumberInputTextField?.backgroundColor = backgroundColor
+            cardImageView?.backgroundColor = backgroundColor
         }
     }
     public override final var font: UIFont? {
         didSet {
-        let textFieldArray: [UITextField?] = [cardNumberInputTextField, cvcTextField, monthTextField, yearTextField]
-        textFieldArray.forEach({$0?.font = font})
+            let textFieldArray: [UITextField?] = [cardNumberInputTextField, cvcTextField, monthTextField, yearTextField]
+            textFieldArray.forEach({$0?.font = font})
         }
     }
     public override final var keyboardType: UIKeyboardType {
         didSet {
-        let textFieldArray: [UITextField?] = [cardNumberInputTextField, cvcTextField, monthTextField, yearTextField]
-        textFieldArray.forEach({$0?.keyboardType = keyboardType})
+            let textFieldArray: [UITextField?] = [cardNumberInputTextField, cvcTextField, monthTextField, yearTextField]
+            textFieldArray.forEach({$0?.keyboardType = keyboardType})
         }
     }
     public override final var secureTextEntry: Bool {
         didSet {
-        let textFieldArray: [UITextField?] = [cardNumberInputTextField, cvcTextField, monthTextField, yearTextField]
-        textFieldArray.forEach({$0?.secureTextEntry = secureTextEntry})
+            let textFieldArray: [UITextField?] = [cardNumberInputTextField, cvcTextField, monthTextField, yearTextField]
+            textFieldArray.forEach({$0?.secureTextEntry = secureTextEntry})
         }
     }
     public override final var keyboardAppearance: UIKeyboardAppearance {
         didSet {
-        let textFieldArray: [UITextField?] = [cardNumberInputTextField, cvcTextField, monthTextField, yearTextField]
-        textFieldArray.forEach({$0?.keyboardAppearance = keyboardAppearance})
+            let textFieldArray: [UITextField?] = [cardNumberInputTextField, cvcTextField, monthTextField, yearTextField]
+            textFieldArray.forEach({$0?.keyboardAppearance = keyboardAppearance})
         }
     }
     
@@ -114,9 +114,9 @@ public class CardNumberTextField: UITextField, UITextFieldDelegate, CardNumberIn
     @IBInspectable
     public var invalidNumberColor: UIColor? {
         didSet {
-        if let invalidNumberColor = invalidNumberColor {
-            cardNumberInputTextField?.invalidInputColor = invalidNumberColor
-        }
+            if let invalidNumberColor = invalidNumberColor {
+                cardNumberInputTextField?.invalidInputColor = invalidNumberColor
+            }
         }
     }
     
@@ -156,8 +156,8 @@ public class CardNumberTextField: UITextField, UITextFieldDelegate, CardNumberIn
     #if !TARGET_INTERFACE_BUILDER
     public override var placeholder: String? {
         didSet {
-        cardNumberInputTextField?.placeholder = placeholder
-        super.placeholder = nil
+            cardNumberInputTextField?.placeholder = placeholder
+            super.placeholder = nil
         }
     }
     #endif
@@ -215,21 +215,21 @@ public class CardNumberTextField: UITextField, UITextFieldDelegate, CardNumberIn
     // MARK: - Private variables
     
     /**
-     The entered card number or nil, if no valid card number has been entered yet.
-     */
+    The entered card number or nil, if no valid card number has been entered yet.
+    */
     private var cardNumber: Number? {
         guard let number = cardNumberInputTextField?.parsedCardNumber else {
             return nil
         }
-
+        
         guard let cardType = cardTypeRegister.cardTypeForNumber(number) else {
             return nil
         }
-
+        
         guard cardType.validateNumber(number) == .Valid else {
             return nil
         }
-
+        
         return number
     }
     
@@ -358,8 +358,8 @@ public class CardNumberTextField: UITextField, UITextFieldDelegate, CardNumberIn
     // MARK: - View customization
     
     /**
-     You can override this function to provide your own Nib. If you do so, please override 'getNibBundle' as well to provide the right NSBundle to load the nib file.
-     */
+    You can override this function to provide your own Nib. If you do so, please override 'getNibBundle' as well to provide the right NSBundle to load the nib file.
+    */
     public func getNibName() -> String {
         return "CardView"
     }
@@ -372,7 +372,7 @@ public class CardNumberTextField: UITextField, UITextFieldDelegate, CardNumberIn
     }
     
     // MARK: - CardNumberInputTextFieldDelegate
-
+    
     @objc internal func cardNumberTextFieldDidChangeText(cardNumberTextField: CardNumberInputTextField) {
         if let cardNumber = cardNumberTextField.parsedCardNumber {
             cardImageView?.image = cardTypeRegister.cardTypeForNumber(cardNumber)?.cardTypeImage ?? unknownCardTypeImage
@@ -380,10 +380,10 @@ public class CardNumberTextField: UITextField, UITextFieldDelegate, CardNumberIn
         
         notifyDelegate()
     }
-
+    
     public func cardNumberInputTextFieldDidComplete(cardNumberTextField: CardNumberInputTextField) {
         moveNumberFieldLeftAnimated()
-
+        
         notifyDelegate()
         monthTextField?.becomeFirstResponder()
     }

@@ -52,6 +52,15 @@ public extension CardNumberTextField {
             break
         }
         
+        // if the date is invalid, set the text color for the date to `invalidNumberColor`
+        if let cardExpiry = cardExpiry where cardExpiry.expiryDate()?.timeIntervalSinceNow < 0 {
+            monthTextField?.textColor = invalidNumberColor ?? UIColor.redColor()
+            yearTextField?.textColor = invalidNumberColor ?? UIColor.redColor()
+        } else {
+            monthTextField?.textColor = cardNumberInputTextField?.textColor ?? UIColor.blackColor()
+            yearTextField?.textColor = cardNumberInputTextField?.textColor ?? UIColor.blackColor()
+        }
+        
         notifyDelegate()
     }
     
@@ -64,6 +73,14 @@ public extension CardNumberTextField {
         }
         
         let newValue = NSString(string: textField.text ?? "").stringByReplacingCharactersInRange(updatedRange, withString: string).stringByReplacingOccurrencesOfString(CardNumberTextField.emptyTextFieldCharacter, withString: "")
+        let removedLastCharacter: Bool = textField.text?.characters.count > 0 && textField.text != CardNumberTextField.emptyTextFieldCharacter && newValue.characters.count == 0
+        
+        if removedLastCharacter {
+            textField.text = CardNumberTextField.emptyTextFieldCharacter
+            textFieldDidChange(textField)
+            return false
+        }
+        
         switch textField {
         case let val where val == cvcTextField:
             if isCVCValid(newValue, partiallyValid: true) {
