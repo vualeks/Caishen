@@ -29,7 +29,7 @@ public class DetailInputTextField: StylizedTextField {
         let deletingLastCharacter = !(textField.text ?? "").isEmpty && textField.text != CardNumberTextField.emptyTextFieldCharacter && newText.isEmpty
         if deletingLastCharacter {
             textField.text = CardNumberTextField.emptyTextFieldCharacter
-            cardInfoTextFieldDelegate?.textField(self, didEnterInvalidInfo: newText)
+            cardInfoTextFieldDelegate?.textField(self, didEnterPartiallyValidInfo: newText)
             return false
         }
         
@@ -38,15 +38,19 @@ public class DetailInputTextField: StylizedTextField {
             cardInfoTextFieldDelegate?.textField(self, didEnterValidInfo: newText)
         } else if isInputValid(newText, partiallyValid: true) {
             textField.text = newText
-            cardInfoTextFieldDelegate?.textField(self, didEnterInvalidInfo: newText)
+            cardInfoTextFieldDelegate?.textField(self, didEnterPartiallyValidInfo: newText)
         }
         
         return false
     }
     
     public func prefillInformation(info: String) {
-        if isInputValid(info, partiallyValid: true) {
+        if isInputValid(info, partiallyValid: false) {
             text = info
+            cardInfoTextFieldDelegate?.textField(self, didEnterValidInfo: info)
+        } else if isInputValid(info, partiallyValid: true) {
+            text = info
+            cardInfoTextFieldDelegate?.textField(self, didEnterPartiallyValidInfo: info)
         }
     }
     

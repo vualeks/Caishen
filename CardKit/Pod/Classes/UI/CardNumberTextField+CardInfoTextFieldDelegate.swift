@@ -26,7 +26,7 @@ extension CardNumberTextField: CardInfoTextFieldDelegate {
         selectNextTextField(textField)
     }
     
-    public func textField(textField: UITextField, didEnterInvalidInfo: String) {
+    public func textField(textField: UITextField, didEnterPartiallyValidInfo: String) {
         switch textField {
         case let val where val == monthTextField:
             monthString = nil

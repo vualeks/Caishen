@@ -11,5 +11,5 @@ import UIKit
 public protocol CardInfoTextFieldDelegate {
     func textField(textField: UITextField, didEnterValidInfo: String)
     
-    func textField(textField: UITextField, didEnterInvalidInfo: String)
+    func textField(textField: UITextField, didEnterPartiallyValidInfo: String)
 }
