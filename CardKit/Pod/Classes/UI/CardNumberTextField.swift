@@ -1,9 +1,9 @@
 //
-//  CardView.swift
+//  CardNumberTextField.swift
 //  Pods
 //
 //  Created by Daniel Vancura on 2/12/16.
-//
+//  Copyright © 2016 Prolific Interactive. All rights reserved.
 //
 
 import UIKit
@@ -211,19 +211,6 @@ public class CardNumberTextField: UITextField, NumberInputTextFieldDelegate {
         return number
     }
     
-    // MARK: - Private variables
-    
-    /**
-     Notifies `cardNumberTextFieldDelegate` about changes to the entered card information.
-     */
-    internal func notifyDelegate() {
-        if let card = card {
-            cardNumberTextFieldDelegate?.cardNumberTextField(self, didEnterCardInformation: card, withValidationResult: CardValidator(cardTypeRegister: cardTypeRegister).validateCard(card))
-        } else {
-            cardNumberTextFieldDelegate?.cardNumberTextField(self, didEnterCardInformation: nil, withValidationResult: nil)
-        }
-    }
-    
     // MARK: - Initializers & view setup
     
     public required init?(coder aDecoder: NSCoder) {
@@ -371,6 +358,17 @@ public class CardNumberTextField: UITextField, NumberInputTextFieldDelegate {
     }
     
     // MARK: - CardNumberInputTextFieldDelegate
+    
+    /**
+     Notifies `cardNumberTextFieldDelegate` about changes to the entered card information.
+     */
+    internal func notifyDelegate() {
+        if let card = card {
+            cardNumberTextFieldDelegate?.cardNumberTextField(self, didEnterCardInformation: card, withValidationResult: CardValidator(cardTypeRegister: cardTypeRegister).validateCard(card))
+        } else {
+            cardNumberTextFieldDelegate?.cardNumberTextField(self, didEnterCardInformation: nil, withValidationResult: nil)
+        }
+    }
     
     @objc public func numberInputTextFieldDidChangeText(cardNumberTextField: NumberInputTextField) {
         if let cardNumber = cardNumberTextField.parsedCardNumber {

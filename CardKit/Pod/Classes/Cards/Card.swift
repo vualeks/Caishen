@@ -1,5 +1,5 @@
 //
-//  SPKCard.swift
+//  Card.swift
 //  SwiftPaymentKit
 //
 //  Created by Sagar Natekar on 11/25/15.

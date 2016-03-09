@@ -1,5 +1,5 @@
 //
-//  FormattedCardNumberTextField.swift
+//  NumberInputTextField.Swift
 //  Pods
 //
 //  Created by Daniel Vancura on 2/9/16.
@@ -175,7 +175,7 @@ public class NumberInputTextField: StylizedTextField {
     
     /**
      Computes the rect that contains the specified text range within the text field.
-     
+     - precondition: This function will only work, when `textField` is the first responder. If `textField` is not first responder, `textField.beginningOfDocument` will not be initialized and this function will return nil.
      - parameter range: The range of the text in the text field whose bounds should be detected.
      - parameter textField: The text field containing the text.
      - returns: A rect indicating the location and bounds of the text within the text field, or nil, if an invalid range has been entered.
@@ -195,6 +195,7 @@ public class NumberInputTextField: StylizedTextField {
     }
     
     /**
+     - precondition: This function will only work, when `self` is the first responder. If `self` is not first responder, `self.beginningOfDocument` will not be initialized and this function will return nil.
      - returns: The CGRect in `self` that contains the last group of the card number.
      */
     public func rectForLastGroup() -> CGRect? {

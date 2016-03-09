@@ -1,5 +1,5 @@
 //
-//  SPKCardExpiry.swift
+//  Expiry.swift
 //  SwiftPaymentKit
 //
 //  Created by Sagar Natekar on 11/24/15.
