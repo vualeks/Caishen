@@ -10,9 +10,9 @@
                 <outlet property="accessoryButton" destination="WR5-rr-22S" id="8Mg-jG-iB9"/>
                 <outlet property="cardImageView" destination="puU-AL-gPV" id="AIn-X0-fGf"/>
                 <outlet property="cardInfoView" destination="8iN-aK-Jz9" id="esE-ci-h9N"/>
-                <outlet property="cardNumberInputTextField" destination="T6o-6e-fLS" id="M29-kR-3Ua"/>
                 <outlet property="cvcTextField" destination="HOM-PC-B5m" id="dFv-Ti-Hef"/>
                 <outlet property="monthTextField" destination="5cX-Z5-afy" id="bXA-0j-EIb"/>
+                <outlet property="numberInputTextField" destination="T6o-6e-fLS" id="nXK-WK-fxm"/>
                 <outlet property="yearTextField" destination="CgE-Em-qHJ" id="3Mf-RK-Pnk"/>
             </connections>
         </placeholder>
@@ -24,7 +24,7 @@
                 <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UFG-yT-gmg">
                     <rect key="frame" x="31" y="2" width="530" height="596"/>
                     <subviews>
-                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="0000000000000000" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="T6o-6e-fLS" customClass="CardNumberInputTextField" customModule="CardKit" customModuleProvider="target">
+                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="0000000000000000" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="T6o-6e-fLS" customClass="NumberInputTextField" customModule="CardKit" customModuleProvider="target">
                             <rect key="frame" x="4" y="0.0" width="204" height="596"/>
                             <fontDescription key="fontDescription" type="system" pointSize="20"/>
                             <textInputTraits key="textInputTraits"/>
@@ -35,7 +35,7 @@
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8iN-aK-Jz9">
                             <rect key="frame" x="0.0" y="0.0" width="530" height="596"/>
                             <subviews>
-                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" placeholder="MM" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="5cX-Z5-afy" customClass="StylizedTextField" customModule="CardKit" customModuleProvider="target">
+                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" placeholder="MM" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="5cX-Z5-afy" customClass="MonthInputTextField" customModule="CardKit" customModuleProvider="target">
                                     <rect key="frame" x="229" y="0.0" width="37" height="596"/>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                     <constraints>
@@ -44,7 +44,7 @@
                                     <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                     <textInputTraits key="textInputTraits"/>
                                 </textField>
-                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="YY" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="CgE-Em-qHJ" customClass="StylizedTextField" customModule="CardKit" customModuleProvider="target">
+                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="YY" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="CgE-Em-qHJ" customClass="YearInputTextField" customModule="CardKit" customModuleProvider="target">
                                     <rect key="frame" x="272" y="0.0" width="37" height="596"/>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                     <constraints>
@@ -59,7 +59,7 @@
                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="CVC" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="HOM-PC-B5m" customClass="StylizedTextField" customModule="CardKit" customModuleProvider="target">
+                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="CVC" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="HOM-PC-B5m" customClass="CVCInputTextField" customModule="CardKit" customModuleProvider="target">
                                     <rect key="frame" x="480" y="0.0" width="50" height="596"/>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                     <constraints>

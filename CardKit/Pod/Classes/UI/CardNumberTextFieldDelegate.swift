@@ -18,7 +18,18 @@ public protocol CardNumberTextFieldDelegate {
      */
     func cardNumberTextField(cardNumberTextField: CardNumberTextField, didEnterCardInformation information: Card?, withValidationResult validationResult: CardValidationResult?)
     
+    /**
+     Callback for a CardNumberTextField, which is called to update the image for its accessory button.
+     - parameter cardNumberTextField: The card number text field requesting an image for its accessory button.
+     - returns: An image for the cardNumberTextField's accessory button.
+     */
     func cardNumberTextFieldShouldShowAccessoryImage(cardNumberTextField: CardNumberTextField) -> UIImage?
     
+    /**
+     Callback for a CardNumberTextField, which is used to check whether an accessory button should be provided.
+     You can provide an arbitrary function which will be assigned to the text field's accessory button or nil, if you do not need an accessory button.
+     - parameter cardNumberTextField: The text field requesting an action for its accessory button.
+     - returns: Any action that is performed when the accessory button is tapped or nil, if no accessory button should be displayed in the text field.
+     */
     func cardNumberTextFieldShouldProvideAccessoryAction(cardNumberTextField: CardNumberTextField) -> (() -> ())?
 }

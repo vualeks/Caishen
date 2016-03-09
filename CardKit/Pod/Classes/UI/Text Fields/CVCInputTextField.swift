@@ -1,0 +1,27 @@
+//
+//  CVCInputTextField.swift
+//  Pods
+//
+//  Created by Daniel Vancura on 3/8/16.
+//
+//
+
+import UIKit
+
+public class CVCInputTextField: DetailInputTextField {
+    
+    var cardType: CardType?
+    /**
+     Checks the validity of the entered card validation code.
+     
+     - returns: True, if the card validation code is valid.
+     */
+    internal override func isInputValid(cvcString: String, partiallyValid: Bool) -> Bool {
+        if cvcString.characters.count == 0 && partiallyValid {
+            return true
+        }
+        
+        let cvc = CVC(rawValue: cvcString)
+        return (cardType?.validateCVC(cvc) == .Valid) ?? false || partiallyValid && (cardType?.validateCVC(cvc) == .CVCIncomplete) ?? false
+    }
+}

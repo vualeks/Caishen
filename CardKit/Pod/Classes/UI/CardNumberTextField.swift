@@ -23,7 +23,7 @@ import UIKit
  In order to create a custom CardNumberTextField, you can create a subclass which overrides `getNibName()` and `getNibBundle()` in order to load a nib from a specific bundle, which follows this structure
  */
 @IBDesignable
-public class CardNumberTextField: UITextField, UITextFieldDelegate, CardNumberInputTextFieldDelegate {
+public class CardNumberTextField: UITextField, NumberInputTextFieldDelegate {
     
     // MARK: - Public variables
     
@@ -40,22 +40,22 @@ public class CardNumberTextField: UITextField, UITextFieldDelegate, CardNumberIn
     /**
      The formatted text field which is used to enter the card number.
      */
-    @IBOutlet public weak var cardNumberInputTextField: CardNumberInputTextField?
+    @IBOutlet public weak var numberInputTextField: NumberInputTextField?
     
     /**
      The text field which is used to enter the card validation code.
      */
-    @IBOutlet public weak var cvcTextField: StylizedTextField?
+    @IBOutlet public weak var cvcTextField: CVCInputTextField?
     
     /**
      The text field which is used to enter the month of the expiry date.
      */
-    @IBOutlet public weak var monthTextField: StylizedTextField?
+    @IBOutlet public weak var monthTextField: MonthInputTextField?
     
     /**
      The text field which is used to enter the year of the expiry date.
      */
-    @IBOutlet public weak var yearTextField: StylizedTextField?
+    @IBOutlet public weak var yearTextField: YearInputTextField?
     
     /**
      The view which is slided in from the right after a valid card number has been entered.
@@ -68,55 +68,30 @@ public class CardNumberTextField: UITextField, UITextFieldDelegate, CardNumberIn
         }
     }
     
-    override public final var textColor: UIColor? {
+    /**
+     The string value that is used to separate the different groups of a card number in the text field.
+     */
+    @IBInspectable public var cardNumberSeparator: String? = " - " {
         didSet {
-            let textFieldArray: [UITextField?] = [cardNumberInputTextField, cvcTextField, monthTextField, yearTextField]
-            textFieldArray.forEach({$0?.textColor = textColor})
-        }
-    }
-    public override final var backgroundColor: UIColor? {
-        didSet {
-            cardNumberInputTextField?.backgroundColor = backgroundColor
-            cardImageView?.backgroundColor = backgroundColor
-        }
-    }
-    public override final var font: UIFont? {
-        didSet {
-            let textFieldArray: [UITextField?] = [cardNumberInputTextField, cvcTextField, monthTextField, yearTextField]
-            textFieldArray.forEach({$0?.font = font})
-        }
-    }
-    public override final var keyboardType: UIKeyboardType {
-        didSet {
-            let textFieldArray: [UITextField?] = [cardNumberInputTextField, cvcTextField, monthTextField, yearTextField]
-            textFieldArray.forEach({$0?.keyboardType = keyboardType})
-        }
-    }
-    public override final var secureTextEntry: Bool {
-        didSet {
-            let textFieldArray: [UITextField?] = [cardNumberInputTextField, cvcTextField, monthTextField, yearTextField]
-            textFieldArray.forEach({$0?.secureTextEntry = secureTextEntry})
-        }
-    }
-    public override final var keyboardAppearance: UIKeyboardAppearance {
-        didSet {
-            let textFieldArray: [UITextField?] = [cardNumberInputTextField, cvcTextField, monthTextField, yearTextField]
-            textFieldArray.forEach({$0?.keyboardAppearance = keyboardAppearance})
+            numberInputTextField?.cardNumberSeparator = cardNumberSeparator ?? " - "
         }
     }
     
     /**
-     The string value that is used to separate the different groups of a card number in the text field.
+     The duration of the view animation when switching from number input to detail.
      */
-    @IBInspectable
-    public var cardNumberSeparator = " - "
+    @IBInspectable public var viewAnimationDuration: Double? = 0.3
     
-    @IBInspectable
-    public var invalidNumberColor: UIColor? {
+    /**
+     The text color for invalid input in a text field.
+     */
+    @IBInspectable public var invalidInputColor: UIColor? {
         didSet {
-            if let invalidNumberColor = invalidNumberColor {
-                cardNumberInputTextField?.invalidInputColor = invalidNumberColor
+            guard let invalidInputColor = invalidInputColor else {
+                return
             }
+            let textFields: [StylizedTextField?] = [numberInputTextField, monthTextField, yearTextField, cvcTextField]
+            textFields.forEach({$0?.invalidInputColor = invalidInputColor})
         }
     }
     
@@ -156,7 +131,7 @@ public class CardNumberTextField: UITextField, UITextFieldDelegate, CardNumberIn
     #if !TARGET_INTERFACE_BUILDER
     public override var placeholder: String? {
         didSet {
-            cardNumberInputTextField?.placeholder = placeholder
+            numberInputTextField?.placeholder = placeholder
             super.placeholder = nil
         }
     }
@@ -188,7 +163,7 @@ public class CardNumberTextField: UITextField, UITextFieldDelegate, CardNumberIn
      The card type for the entered card number or nil, if no card type has been detected with the given input.
      */
     public final var cardType: CardType? {
-        guard let number = cardNumberInputTextField?.parsedCardNumber else {
+        guard let number = numberInputTextField?.parsedCardNumber else {
             return nil
         }
         
@@ -198,8 +173,13 @@ public class CardNumberTextField: UITextField, UITextFieldDelegate, CardNumberIn
     // MARK: - Internal variables
     
     /**
-    The string that has been entered for the month of the expiry date or nil, if no valid month has been entered yet.
-    */
+     The text that is shown inside an empty text field to detect a backspace action inside an empty text field.
+     */
+    internal static var emptyTextFieldCharacter: String = "\u{202F}"
+    
+    /**
+     The string that has been entered for the month of the expiry date or nil, if no valid month has been entered yet.
+     */
     internal var monthString: String?
     
     /**
@@ -212,13 +192,11 @@ public class CardNumberTextField: UITextField, UITextFieldDelegate, CardNumberIn
      */
     internal var cardCVC: CVC?
     
-    // MARK: - Private variables
-    
     /**
-    The entered card number or nil, if no valid card number has been entered yet.
-    */
-    private var cardNumber: Number? {
-        guard let number = cardNumberInputTextField?.parsedCardNumber else {
+     The entered card number or nil, if no valid card number has been entered yet.
+     */
+    internal var cardNumber: Number? {
+        guard let number = numberInputTextField?.parsedCardNumber else {
             return nil
         }
         
@@ -232,6 +210,8 @@ public class CardNumberTextField: UITextField, UITextFieldDelegate, CardNumberIn
         
         return number
     }
+    
+    // MARK: - Private variables
     
     /**
      Notifies `cardNumberTextFieldDelegate` about changes to the entered card information.
@@ -261,33 +241,79 @@ public class CardNumberTextField: UITextField, UITextFieldDelegate, CardNumberIn
     }
     
     /**
+     Sets up the view by loading subviews from the given Nib in the specified bundle.
+     */
+    private func setupView() {
+        guard let nib = getNibBundle().loadNibNamed(getNibName(), owner: self, options: nil), let firstObjectInNib = nib.first as? UIView else {
+            fatalError("The nib is expected to contain a UIView as root element.")
+        }
+        
+        clipsToBounds = true
+        
+        firstObjectInNib.autoresizesSubviews = true
+        firstObjectInNib.translatesAutoresizingMaskIntoConstraints = true
+        firstObjectInNib.frame = bounds
+        addSubview(firstObjectInNib)
+        
+        cardImageView?.image = unknownCardTypeImage
+        cardImageView?.backgroundColor = backgroundColor ?? UIColor.whiteColor()
+        cardImageView?.layer.cornerRadius = 5.0
+        
+        let leftSwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: Selector("moveNumberFieldLeftAnimated"))
+        leftSwipeGestureRecognizer.direction = .Left
+        firstObjectInNib.addGestureRecognizer(leftSwipeGestureRecognizer)
+        
+        [firstObjectInNib, cardInfoView].forEach({
+            let rightSwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: Selector("moveNumberFieldRightAnimated"))
+            rightSwipeGestureRecognizer.direction = .Right
+            $0?.addGestureRecognizer(rightSwipeGestureRecognizer)
+        })
+        
+        setupTextFieldDelegates()
+        setupTextFieldAttributes()
+        setupTargetsForEditinBegin()
+        setupAccessoryButton()
+    }
+    
+    private func setupTextFieldDelegates() {
+        numberInputTextField?.numberInputTextFieldDelegate = self
+        monthTextField?.cardInfoTextFieldDelegate = self
+        yearTextField?.cardInfoTextFieldDelegate = self
+        cvcTextField?.cardInfoTextFieldDelegate = self
+    }
+    
+    /**
      Customizes text field attributes of subviews so that the appearance matches the appearance of `self`.
      */
     private func setupTextFieldAttributes() {
-        cardNumberInputTextField?.cardNumberSeparator = cardNumberSeparator
-        cardNumberInputTextField?.placeholder = placeholder
-        cardNumberInputTextField?.cardNumberInputTextFieldDelegate = self
-        cardNumberInputTextField?.addTarget(self, action: "cardNumberTextFieldDidChangeText:", forControlEvents: .EditingChanged)
-        cvcTextField?.delegate = self
-        monthTextField?.delegate = self
-        yearTextField?.delegate = self
-        clipsToBounds = true
+        numberInputTextField?.cardNumberSeparator = cardNumberSeparator ?? " - "
+        numberInputTextField?.placeholder = placeholder
         
-        setupAccessoryButton()
-        [cardNumberInputTextField,cvcTextField,monthTextField,yearTextField].forEach({
+        cvcTextField?.deleteBackwardCallback = {_ -> Void in self.yearTextField?.becomeFirstResponder()}
+        monthTextField?.deleteBackwardCallback = {_ -> Void in self.numberInputTextField?.becomeFirstResponder()}
+        yearTextField?.deleteBackwardCallback = {_ -> Void in self.monthTextField?.becomeFirstResponder()}
+        
+        let textFields: [UITextField?] = [numberInputTextField,cvcTextField,monthTextField,yearTextField]
+        textFields.forEach({
             $0?.keyboardType = .NumberPad
-            $0?.addTarget(self, action: Selector("textFieldDidChange:"), forControlEvents: UIControlEvents.EditingChanged)
-            $0?.addTarget(self, action: Selector("textFieldDidBeginEditing:"), forControlEvents: UIControlEvents.EditingDidBegin)
             $0?.textColor = textColor
             $0?.font = font
             $0?.keyboardAppearance = keyboardAppearance
             $0?.secureTextEntry = secureTextEntry
         })
-        cvcTextField?.deleteBackwardCallback = {_ -> Void in self.yearTextField?.becomeFirstResponder()}
-        monthTextField?.deleteBackwardCallback = {_ -> Void in self.cardNumberInputTextField?.becomeFirstResponder()}
-        yearTextField?.deleteBackwardCallback = {_ -> Void in self.monthTextField?.becomeFirstResponder()}
+        
         super.textColor = UIColor.clearColor()
         super.placeholder = nil
+    }
+    
+    private func setupTargetsForEditinBegin() {
+        // Show the full number text field, if editing began on it
+        numberInputTextField?.addTarget(self, action: Selector("moveNumberFieldRightAnimated"), forControlEvents: UIControlEvents.EditingDidBegin)
+        
+        // Show CVC image if the cvcTextField is selected, show card image otherwise
+        let nonCVCTextFields: [UITextField?] = [numberInputTextField, monthTextField, yearTextField]
+        nonCVCTextFields.forEach({$0?.addTarget(self, action: Selector("showCardImage"), forControlEvents: .EditingDidBegin)})
+        cvcTextField?.addTarget(self, action: Selector("showCVCImage"), forControlEvents: .EditingDidBegin)
     }
     
     internal func buttonReceivedAction() {
@@ -306,38 +332,11 @@ public class CardNumberTextField: UITextField, UITextFieldDelegate, CardNumberIn
             let scaledImage = buttonImage.resizableImageWithCapInsets(UIEdgeInsetsZero, resizingMode: .Stretch).imageWithRenderingMode(.AlwaysTemplate)
             accessoryButton?.titleLabel?.text = nil
             accessoryButton?.setImage(scaledImage, forState: .Normal)
-            accessoryButton?.tintColor = cardNumberInputTextField?.textColor
+            accessoryButton?.tintColor = numberInputTextField?.textColor
         }
     }
     
-    /**
-     Sets up the view by loading subviews from the given Nib in the specified bundle.
-     */
-    private func setupView() {
-        guard let nib = getNibBundle().loadNibNamed(getNibName(), owner: self, options: nil), let firstObjectInNib = nib.first as? UIView else {
-            fatalError("The nib is expected to contain two views:\n-   The first view with the 'cardImageView' located left of the 'numberTextField'\n-   The second view with 'cvcTextField', 'cvcTextField' and 'cvcTextField' (situated in that order from left to right).")
-        }
-        
-        firstObjectInNib.autoresizesSubviews = true
-        firstObjectInNib.translatesAutoresizingMaskIntoConstraints = true
-        firstObjectInNib.frame = bounds
-        addSubview(firstObjectInNib)
-        
-        cardImageView?.image = unknownCardTypeImage
-        cardImageView?.backgroundColor = backgroundColor ?? UIColor.whiteColor()
-        cardImageView?.layer.cornerRadius = 5.0
-        setupTextFieldAttributes()
-        
-        let leftSwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: Selector("moveNumberFieldLeftAnimated"))
-        leftSwipeGestureRecognizer.direction = .Left
-        firstObjectInNib.addGestureRecognizer(leftSwipeGestureRecognizer)
-        
-        [firstObjectInNib, cardInfoView].forEach({
-            let rightSwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: Selector("moveNumberFieldRightAnimated"))
-            rightSwipeGestureRecognizer.direction = .Right
-            $0?.addGestureRecognizer(rightSwipeGestureRecognizer)
-        })
-    }
+    // MARK: - View lifecycle
     
     public override func willMoveToSuperview(newSuperview: UIView?) {
         super.willMoveToSuperview(newSuperview)
@@ -373,63 +372,30 @@ public class CardNumberTextField: UITextField, UITextFieldDelegate, CardNumberIn
     
     // MARK: - CardNumberInputTextFieldDelegate
     
-    @objc internal func cardNumberTextFieldDidChangeText(cardNumberTextField: CardNumberInputTextField) {
+    @objc public func numberInputTextFieldDidChangeText(cardNumberTextField: NumberInputTextField) {
         if let cardNumber = cardNumberTextField.parsedCardNumber {
             cardImageView?.image = cardTypeRegister.cardTypeForNumber(cardNumber)?.cardTypeImage ?? unknownCardTypeImage
+            cvcTextField?.cardType = cardTypeRegister.cardTypeForNumber(cardNumber)
         }
         
         notifyDelegate()
     }
     
-    public func cardNumberInputTextFieldDidComplete(cardNumberTextField: CardNumberInputTextField) {
+    public func numberInputTextFieldDidComplete(cardNumberTextField: NumberInputTextField) {
         moveNumberFieldLeftAnimated()
         
         notifyDelegate()
         monthTextField?.becomeFirstResponder()
     }
     
-    // MARK: - View animations
+    // MARK: - Card image
     
-    internal func moveNumberFieldLeftAnimated() {
-        UIView.animateWithDuration(0.3, animations: { [weak self] _ in
-            self?.moveNumberFieldLeft()
-            })
+    internal func showCardImage() {
+        cardImageView?.image = cardType?.cardTypeImage ?? unknownCardTypeImage
     }
     
-    internal func moveNumberFieldRightAnimated() {
-        UIView.animateWithDuration(0.3, animations: { [weak self] _ in
-            self?.moveNumberFieldRight()
-            })
-    }
-    
-    /**
-     Translates the card number text field outside the screen.
-     */
-    public func moveNumberFieldLeft() {
-        // Only when the card number has been set, the user can swipe to the details
-        if cardNumber == nil {
-            return
-        }
-        
-        cardNumberInputTextField?.becomeFirstResponder()
-        if let rect = cardNumberInputTextField?.rectForLastGroup() {
-            cardNumberInputTextField?.transform =
-                CGAffineTransformMakeTranslation(-rect.origin.x, 0)
-        } else {
-            cardNumberInputTextField?.alpha = 0
-        }
-        cardNumberInputTextField?.resignFirstResponder()
-        cardInfoView?.transform = CGAffineTransformIdentity
-    }
-    
-    /**
-     Moves the card number text field to its original position.
-     */
-    public func moveNumberFieldRight() {
-        [monthTextField, yearTextField, cvcTextField].forEach({$0?.resignFirstResponder()})
-        cardNumberInputTextField?.transform = CGAffineTransformIdentity
-        cardNumberInputTextField?.alpha = 1
-        cardInfoView?.transform = CGAffineTransformMakeTranslation(superview!.bounds.width, 0)
+    internal func showCVCImage() {
+        cardImageView?.image = cardType?.cvcImage ?? Visa().cvcImage
     }
     
     // MARK: - UIView
@@ -447,11 +413,11 @@ public class CardNumberTextField: UITextField, UITextFieldDelegate, CardNumberIn
         // Detect touches in card number text field as long as the detail view is on top of it
         touches.forEach({ touch -> () in
             let point = touch.locationInView(self)
-            if (cardNumberInputTextField?.pointInside(point, withEvent: event) ?? false) && [monthTextField,yearTextField,cvcTextField].reduce(true, combine: { (currentValue: Bool, textField: UITextField?) -> Bool in
+            if (numberInputTextField?.pointInside(point, withEvent: event) ?? false) && [monthTextField,yearTextField,cvcTextField].reduce(true, combine: { (currentValue: Bool, textField: UITextField?) -> Bool in
                 let pointInTextField = touch.locationInView(textField)
                 return currentValue && !(textField?.pointInside(pointInTextField, withEvent: event) ?? false)
             }) {
-                cardNumberInputTextField?.becomeFirstResponder()
+                numberInputTextField?.becomeFirstResponder()
             }
         })
     }
