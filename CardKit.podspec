@@ -17,13 +17,13 @@ Pod::Spec.new do |s|
 #   * Write the description between the DESC delimiters below.
 #   * Finally, don't worry about the indent, CocoaPods strips it!  
   s.description      = <<-DESC
-                       DESC
+                       CardKit provides a text field to enter credit card (or other card) information and validates most of this information on its own.
 
-  s.homepage         = "https://github.com/<GITHUB_USERNAME>/CardKit"
+  s.homepage         = "https://bitbucket.com/prolificinteractive/swiftpaymentkit.git"
   # s.screenshots     = "www.example.com/screenshots_1", "www.example.com/screenshots_2"
   s.license          = 'MIT'
   s.author           = { "Daniel Vancura" => "daniel@prolificinteractive.com" }
-  s.source           = { :git => "https://github.com/<GITHUB_USERNAME>/CardKit.git", :tag => s.version.to_s }
+  s.source           = { :git => "git@bitbucket.org:prolificinteractive/swiftpaymentkit.git", :tag => s.version.to_s }
   # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
 
   s.platform     = :ios, '8.0'
