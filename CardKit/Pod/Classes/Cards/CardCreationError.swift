@@ -1,5 +1,5 @@
 //
-//  CardFactory.swift
+//  CardCreationError.swift
 //  Pods
 //
 //  Created by Daniel Vancura on 2/3/16.

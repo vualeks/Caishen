@@ -1,5 +1,5 @@
 //
-//  SPKCardNumber.swift
+//  CVC.swift
 //  SwiftPaymentKit
 //
 //  Created by Sagar Natekar on 11/23/15.

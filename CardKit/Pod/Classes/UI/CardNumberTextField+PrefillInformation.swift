@@ -3,7 +3,7 @@
 //  Pods
 //
 //  Created by Daniel Vancura on 3/4/16.
-//
+//  Copyright © 2016 Prolific Interactive. All rights reserved.
 //
 
 import UIKit
@@ -17,35 +17,19 @@ public extension CardNumberTextField {
                 trimmedYear = year % 100
             }
             
-            if isYearValid(String(format: "%02i", arguments: [trimmedYear]), partiallyValid: true) {
-                yearTextField?.text = String(trimmedYear)
-                yearString = String(format: "%02i", arguments: [trimmedYear])
-            }
+            yearTextField?.prefillInformation(String(format: "%02i", arguments: [trimmedYear]))
         }
         
-        if let month = month where isMonthValid(String(format: "%02i", arguments: [month]), partiallyValid: true) {
-            monthTextField?.text = String(format: "%02i", arguments: [month])
-            monthString = String(format: "%02i", arguments: [month])
+        if let month = month {
+            monthTextField?.prefillInformation(String(format: "%02i", arguments: [month]))
         }
         
-        if let cardNumber = cardNumber, let cardNumberInputTextField = cardNumberInputTextField {
-            let validCharacters: Set<Character> = Set("0123456789".characters)
-            let unformattedCardNumber = String(cardNumber.characters.filter({validCharacters.contains($0)}))
-            
-            let cardNumber = Number(rawValue: unformattedCardNumber)
-            
-            if cardTypeRegister.cardTypeForNumber(cardNumber)?.checkCardNumberPartiallyValid(cardNumber) == .Valid {
-                let formatter = CardNumberFormatter(cardTypeRegister: cardTypeRegister)
-                formatter.separator = cardNumberInputTextField.cardNumberSeparator
-                cardNumberInputTextField.text = formatter.formattedCardNumber(unformattedCardNumber)
-                cardNumberInputTextField.parsedCardNumber = cardNumber
-                cardNumberTextFieldDidChangeText(cardNumberInputTextField)
-            }
+        if let cardNumber = cardNumber, let numberInputTextField = numberInputTextField {
+            numberInputTextField.prefillInformation(cardNumber)
         }
         
-        if let cvc = cvc where cardType?.validateCVC(CVC(rawValue: cvc)) == .Valid {
-            cvcTextField?.text = cvc
-            cardCVC = CVC(rawValue: cvc)
+        if let cvc = cvc {
+            cvcTextField?.prefillInformation(cvc)
         }
         
         NSOperationQueue().addOperationWithBlock({

@@ -52,7 +52,7 @@
                                     <segue destination="hsS-UZ-mFd" kind="presentation" modalPresentationStyle="overCurrentContext" modalTransitionStyle="crossDissolve" id="658-sv-r6G"/>
                                 </connections>
                             </button>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="fm4-5C-qEM">
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="fm4-5C-qEM">
                                 <rect key="frame" x="20" y="185" width="560" height="348"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <string key="text">The 11-inch MacBook Air lasts up to 9 hours between charges and the 13-inch model lasts up to an incredible 12 hours. So from your morning coffee till your evening commute, you can work unplugged. When it’s time to kick back and relax, you can get up to 10 hours of iTunes movie playback on the 11-inch model and up to 12 hours on the 13-inch model. And with up to 30 days of standby time, you can go away for weeks and pick up right where you left off.</string>
@@ -84,7 +84,7 @@
         <!--View Controller-->
         <scene sceneID="dnl-HE-hyL">
             <objects>
-                <viewController modalPresentationStyle="overFullScreen" id="hsS-UZ-mFd" customClass="ViewController" customModule="CardKit_Example" sceneMemberID="viewController">
+                <viewController modalPresentationStyle="overFullScreen" id="hsS-UZ-mFd" customClass="ViewController" customModule="CardKit_Example" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="oHI-K3-Xu3"/>
                         <viewControllerLayoutGuide type="bottom" id="B9J-d7-Ph2"/>
