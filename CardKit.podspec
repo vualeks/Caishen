@@ -18,6 +18,7 @@ Pod::Spec.new do |s|
 #   * Finally, don't worry about the indent, CocoaPods strips it!  
   s.description      = <<-DESC
                        CardKit provides a text field to enter credit card (or other card) information and validates most of this information on its own.
+                       DESC
 
   s.homepage         = "https://bitbucket.com/prolificinteractive/swiftpaymentkit.git"
   # s.screenshots     = "www.example.com/screenshots_1", "www.example.com/screenshots_2"
