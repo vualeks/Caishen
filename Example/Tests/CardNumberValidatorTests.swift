@@ -1,13 +1,13 @@
 //
 //  CardNumberValidatorTests.swift
-//  CardKit
+//  Caishen
 //
 //  Created by Daniel Vancura on 2/4/16.
 //  Copyright © 2016 Prolific Interactive. All rights reserved.
 //
 
 import XCTest
-import CardKit
+import Caishen
 
 class CardNumberValidatorTests: XCTestCase {
     

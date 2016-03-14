@@ -1,6 +1,6 @@
 //
 //  CardValidationResult.swift
-//  CardKit
+//  Caishen
 //
 //  Created by Daniel Vancura on 2/2/16.
 //  Copyright © 2016 Prolific Interactive. All rights reserved.

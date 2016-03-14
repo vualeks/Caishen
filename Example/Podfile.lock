@@ -1,17 +1,17 @@
 PODS:
+  - Caishen (0.1.0)
   - CardIO (5.3.1)
-  - CardKit (0.1.0)
 
 DEPENDENCIES:
+  - Caishen (from `../`)
   - CardIO
-  - CardKit (from `../`)
 
 EXTERNAL SOURCES:
-  CardKit:
+  Caishen:
     :path: ../
 
 SPEC CHECKSUMS:
+  Caishen: 5ad0f52d2dee1dc24490171f85d7de50fe5b3bf8
   CardIO: a299efcd0348c3b256a1da53f22951319c3855a2
-  CardKit: cb987284349b79f8a4dc91e6b509ae760aff50be
 
 COCOAPODS: 0.39.0

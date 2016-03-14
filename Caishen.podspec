@@ -1,5 +1,5 @@
 #
-# Be sure to run `pod lib lint CardKit.podspec' to ensure this is a
+# Be sure to run `pod lib lint Caishen.podspec' to ensure this is a
 # valid spec before submitting.
 #
 # Any lines starting with a # are optional, but their use is encouraged
@@ -7,9 +7,9 @@
 #
 
 Pod::Spec.new do |s|
-  s.name             = "CardKit"
+  s.name             = "Caishen"
   s.version          = "0.1.0"
-  s.summary          = "A short description of CardKit."
+  s.summary          = "A short description of Caishen."
 
 # This description is used to generate tags and improve search results.
 #   * Think: What does it do? Why did you write it? What is the focus?
@@ -17,14 +17,14 @@ Pod::Spec.new do |s|
 #   * Write the description between the DESC delimiters below.
 #   * Finally, don't worry about the indent, CocoaPods strips it!  
   s.description      = <<-DESC
-                       CardKit provides a text field to enter credit card (or other card) information and validates most of this information on its own.
+                       Caishen provides a text field to enter credit card (or other card) information and validates most of this information on its own.
                        DESC
 
-  s.homepage         = "https://bitbucket.com/prolificinteractive/swiftpaymentkit.git"
+  s.homepage         = "https://bitbucket.com/prolificinteractive/caishen.git"
   # s.screenshots     = "www.example.com/screenshots_1", "www.example.com/screenshots_2"
   s.license          = 'MIT'
   s.author           = { "Daniel Vancura" => "daniel@prolificinteractive.com" }
-  s.source           = { :git => "git@bitbucket.org:prolificinteractive/swiftpaymentkit.git", :tag => s.version.to_s }
+  s.source           = { :git => "git@bitbucket.org:prolificinteractive/caishen.git", :tag => s.version.to_s }
   # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
 
   s.platform     = :ios, '8.0'

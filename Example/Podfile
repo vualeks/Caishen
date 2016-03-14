@@ -1,13 +1,13 @@
 source 'https://github.com/CocoaPods/Specs.git'
 use_frameworks!
 
-target 'CardKit_Example', :exclusive => true do
-  pod 'CardKit', :path => '../'
+target 'Caishen_Example', :exclusive => true do
+  pod 'Caishen', :path => '../'
   pod 'CardIO'
 end
 
-target 'CardKit_Tests', :exclusive => true do
-  pod 'CardKit', :path => '../'
+target 'Caishen_Tests', :exclusive => true do
+  pod 'Caishen', :path => '../'
 
   
 end

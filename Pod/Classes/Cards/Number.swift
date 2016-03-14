@@ -1,6 +1,6 @@
 //
 //  Number.swift
-//  SwiftPaymentKit
+//  Caishen
 //
 //  Created by Sagar Natekar on 11/25/15.
 //  Copyright © 2015 Prolific Interactive. All rights reserved.

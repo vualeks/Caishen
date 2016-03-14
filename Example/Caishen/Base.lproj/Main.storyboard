@@ -84,7 +84,7 @@
         <!--View Controller-->
         <scene sceneID="dnl-HE-hyL">
             <objects>
-                <viewController modalPresentationStyle="overFullScreen" id="hsS-UZ-mFd" customClass="ViewController" customModule="CardKit_Example" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController modalPresentationStyle="overFullScreen" id="hsS-UZ-mFd" customClass="ViewController" customModule="Caishen_Example" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="oHI-K3-Xu3"/>
                         <viewControllerLayoutGuide type="bottom" id="B9J-d7-Ph2"/>
@@ -99,7 +99,7 @@
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
-                                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="0000000000000000" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="xhV-mK-kcC" customClass="CardNumberTextField" customModule="CardKit">
+                                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="0000000000000000" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="xhV-mK-kcC" customClass="CardNumberTextField" customModule="Caishen">
                                             <rect key="frame" x="170" y="292" width="260" height="17"/>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                             <constraints>

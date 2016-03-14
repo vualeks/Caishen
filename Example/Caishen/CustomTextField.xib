@@ -6,7 +6,7 @@
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CustomCardNumberTextField" customModule="CardKit_Example" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CustomCardNumberTextField" customModule="Caishen_Example" customModuleProvider="target">
             <connections>
                 <outlet property="cardImageView" destination="qfc-ci-m37" id="hVZ-fL-glT"/>
                 <outlet property="cardInfoView" destination="plq-0X-1Ro" id="hEO-ev-HBE"/>
@@ -21,7 +21,7 @@
             <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="WXl-2K-lbz" customClass="CardNumberInputTextField" customModule="CardKit">
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="WXl-2K-lbz" customClass="CardNumberInputTextField" customModule="Caishen">
                     <rect key="frame" x="8" y="0.0" width="584" height="600"/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <textInputTraits key="textInputTraits"/>
@@ -29,7 +29,7 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="plq-0X-1Ro">
                     <rect key="frame" x="80" y="0.0" width="520" height="600"/>
                     <subviews>
-                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Month" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="PSx-iE-bhJ" customClass="StylizedTextField" customModule="CardKit">
+                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Month" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="PSx-iE-bhJ" customClass="StylizedTextField" customModule="Caishen">
                             <rect key="frame" x="0.0" y="2" width="50" height="596"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="50" id="h7f-at-VZI"/>
@@ -37,7 +37,7 @@
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <textInputTraits key="textInputTraits"/>
                         </textField>
-                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="CVC" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="WE6-N4-pRz" customClass="StylizedTextField" customModule="CardKit">
+                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="CVC" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="WE6-N4-pRz" customClass="StylizedTextField" customModule="Caishen">
                             <rect key="frame" x="462" y="1" width="50" height="598"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="50" id="vQB-UP-3Es"/>
@@ -45,7 +45,7 @@
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <textInputTraits key="textInputTraits"/>
                         </textField>
-                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Year" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="tRd-fG-Ek1" customClass="StylizedTextField" customModule="CardKit">
+                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Year" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="tRd-fG-Ek1" customClass="StylizedTextField" customModule="Caishen">
                             <rect key="frame" x="50" y="2" width="50" height="596"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="50" id="d5q-9m-8EN"/>

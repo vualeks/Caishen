@@ -1,6 +1,6 @@
 //
-//  CardKitTests.swift
-//  CardKitTests
+//  CaishenTests.swift
+//  CaishenTests
 //
 //  Created by Daniel Vancura on 2/3/16.
 //
@@ -8,7 +8,7 @@
 
 import XCTest
 
-class CardKitTests: XCTestCase {
+class CaishenTests: XCTestCase {
     
     override func setUp() {
         super.setUp()

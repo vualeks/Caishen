@@ -1,13 +1,13 @@
 //
 //  CustomCardNumberTextField.swift
-//  CardKit
+//  Caishen
 //
 //  Created by Daniel Vancura on 2/24/16.
 //  Copyright © 2016 CocoaPods. All rights reserved.
 //
 
 import UIKit
-import CardKit
+import Caishen
 
 class CustomCardNumberTextField: CardNumberTextField {
 

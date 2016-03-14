@@ -1,6 +1,6 @@
 import UIKit
 import XCTest
-import CardKit
+import Caishen
 
 class Tests: XCTestCase {
     

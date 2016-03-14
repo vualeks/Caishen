@@ -1,17 +1,17 @@
-# CardKit
+# Caishen
 
-[![CI Status](http://img.shields.io/travis/Daniel Vancura/CardKit.svg?style=flat)](https://travis-ci.org/Daniel Vancura/CardKit)
-[![Version](https://img.shields.io/cocoapods/v/CardKit.svg?style=flat)](http://cocoapods.org/pods/CardKit)
-[![License](https://img.shields.io/cocoapods/l/CardKit.svg?style=flat)](http://cocoapods.org/pods/CardKit)
-[![Platform](https://img.shields.io/cocoapods/p/CardKit.svg?style=flat)](http://cocoapods.org/pods/CardKit)
+[![CI Status](http://img.shields.io/travis/Daniel Vancura/Caishen.svg?style=flat)](https://travis-ci.org/Daniel Vancura/Caishen)
+[![Version](https://img.shields.io/cocoapods/v/Caishen.svg?style=flat)](http://cocoapods.org/pods/Caishen)
+[![License](https://img.shields.io/cocoapods/l/Caishen.svg?style=flat)](http://cocoapods.org/pods/Caishen)
+[![Platform](https://img.shields.io/cocoapods/p/Caishen.svg?style=flat)](http://cocoapods.org/pods/Caishen)
 
 ## Installation
 
-CardKit is available through [CocoaPods](http://cocoapods.org). To install
+Caishen is available through [CocoaPods](http://cocoapods.org). To install
 it, simply add the following line to your Podfile:
 
 ```ruby
-pod "CardKit"
+pod "Caishen"
 ```
 
 ## Usage
@@ -136,4 +136,4 @@ Daniel Vancura, daniel@prolificinteractive.comm
 
 ## License
 
-CardKit is available under the MIT license. See the LICENSE file for more info.
+Caishen is available under the MIT license. See the LICENSE file for more info.
