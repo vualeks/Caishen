@@ -2,7 +2,7 @@
 
 ## Description
 
-Caishen provides an easy-to-use text field to ask users for payment card information and validate the input. It serves a similar purpose as [PaymentKit](https://github.com/stripe/PaymentKit), but is developed as a standalone framework entirely written in Swift. Caishen also allows an easy integration with other third-party frameworks, such as [CardIO](https://www.card.io).
+Caishen provides an easy-to-use text field to ask users for payment card information and to validate the input. It serves a similar purpose as [PaymentKit](https://github.com/stripe/PaymentKit), but is developed as a standalone framework entirely written in Swift. Caishen also allows an easy integration with other third-party frameworks, such as [CardIO](https://www.card.io).
 
 ## Installation
 
@@ -11,13 +11,14 @@ it, simply add the following line to your Podfile:
 
 ```ruby
 pod "Caishen"
-```
 
 ## Usage
 
 ### Example
 
 To run the example project, clone the repo, and run `pod install` from the Example directory first.
+
+---
 
 ### Inside your project
 
@@ -58,7 +59,82 @@ class MyViewController: UIViewController, CardNumberTextFieldDelegate {
 	...
 ```
 
-#### Specifying your own card types
+---
+
+### Customizing the text field appearance
+
+CardNumberTextField is mostly customizable like every other UITextField. Setting any of the following standard attributes for a CardNumberTextField (either from code or from interface builder) will affect the text field just like it affects any other UITextField:
+
+- **placeholder** (will be automatically formatted at runtime to look like an actual Visa card number, so entering any 16 digits will look authentic.)
+- **textColor**
+- **backgroundColor**
+- **font**
+- **keyboardType**
+- **secureTextEntry**
+- **keyboardAppearance**
+- **borderStyle**
+
+Additionally, CardNumberTextField offers attributes tailored to its purpose (accessible from interface builder as well):
+
+- **cardNumberSeparator**: A string that is used to separate the groups in a card number. Defaults to " - ".
+- **viewAnimationDuration**: The duration for a view animation in seconds when switching between the card number text field and details (month, view and cvc text fields).
+- **invalidInputColor**: The text color for invalid input. When entering an invalid card number, the text will flash in this color and in case of an expired card, the expiry will be displayed in this color as well.
+
+---
+
+### CardIO
+
+CardIO might be among the most powerful tools to let users enter their payment card information. It uses the camera and lets the user scan his or her credit card. However, you might still want to provide users with a visually appealing text field to enter their payment card information, since users might want to restrict access to their camera or simply want to enter this information manually.
+
+In order to provide users with a link to CardIO, you can use a CardNumberTextField's `prefillCardInformation` method alongside the previously mentioned accessory button:
+
+```swift
+// 1. Let your view controller confirm to the CardNumberTextFieldDelegate and CardIOPaymentViewControllerDelegate protocol:
+class ViewController: UIViewController, CardNumberTextFieldDelegate, CardIOPaymentViewControllerDelegate {
+	...
+	
+	// MARK: - CardNumberTextFieldDelegate
+    func cardNumberTextField(cardNumberTextField: CardNumberTextField, didEnterCardInformation information: Card?, withValidationResult validationResult: CardValidationResult?) {
+        if validationResult == .Valid {
+        	// A valid payment card has been manually entered or CardIO was used to scan one.
+        }
+    }
+    
+    // 2. Optionally provide an image for the CardIO button
+    func cardNumberTextFieldShouldShowAccessoryImage(cardNumberTextField: CardNumberTextField) -> UIImage? {
+        return UIImage(named: "cardIOIcon")
+    }
+    
+    // 3. Set the action for the accessoryButton to open CardIO:
+    func cardNumberTextFieldShouldProvideAccessoryAction(cardNumberTextField: CardNumberTextField) -> (() -> ())? {
+        return { [weak self] _ in
+            let cardIOViewController = CardIOPaymentViewController(paymentDelegate: self)
+            self?.presentViewController(cardIOViewController, animated: true, completion: nil)
+        }
+    }
+    
+    // MARK: - CardIOPaymentViewControllerDelegate
+    
+    // 4. When receiving payment card information from CardIO, prefill the text field with that information:
+    func userDidProvideCreditCardInfo(cardInfo: CardIOCreditCardInfo!, inPaymentViewController paymentViewController: CardIOPaymentViewController!) {
+        cardNumberTextField.prefillCardInformation(
+        	cardInfo.cardNumber, 
+        	month: Int(cardInfo.expiryMonth), 
+        	year: Int(cardInfo.expiryYear), 
+        	cvc: cardInfo.cvv)
+        	
+        paymentViewController.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    func userDidCancelPaymentViewController(paymentViewController: CardIOPaymentViewController!) {
+        paymentViewController.dismissViewControllerAnimated(true, completion: nil)
+    }
+}
+```
+
+---
+
+### Specifying your own card types
 
 CardNumberTextField further contains a *CardTypeRegister* which maintains a set of different card types that are accepted by this text field.
 You can create your own card types and add or remove them to or from card number text fields:
@@ -86,6 +162,7 @@ struct MyCardType: CardType {
 	// Not specifying this will load a default cvc image:
     public let cvcImage: UIImage? = UIImage(named: "MyCardTypeCVCImage")
 	
+	// Not specifying this will result in a 16 digit number, separated into 4 groups of 4 digits.
 	// The grouping of your card number type. The following results in a card number format
 	// like "100 - 0000 - 00000 - 000000":
 	public let numberGrouping = [3, 4, 5, 6]
@@ -109,25 +186,6 @@ class MyViewController: UIViewController, CardNumberTextFieldDelegate {
 	...
 }
 ```
-
-#### Customizing the text field appearance
-
-CardNumberTextField is mostly customizable like every other UITextField. Setting any of the following standard attributes for a CardNumberTextField will affect the text field just like it affects any other UITextField:
-
-- **placeholder** (will be automatically formatted at runtime to look like an actual Visa card number, so entering any 16 digits will look authentic.)
-- **textColor**
-- **backgroundColor**
-- **font**
-- **keyboardType**
-- **secureTextEntry**
-- **keyboardAppearance**
-- **borderStyle**
-
-Additionally, CardNumberTextField offers attributes tailored to its purpose (accessible from interface builder as well):
-
-- **cardNumberSeparator**: A string that is used to separate the groups in a card number. Defaults to " - ".
-- **viewAnimationDuration**: The duration for a view animation in seconds when switching between the card number text field and details (month, view and cvc text fields).
-- **invalidInputColor**: The text color for invalid input. When entering an invalid card number, the text will flash in this color and in case of an expired card, the expiry will be displayed in this color as well.
 
 ## Author
 
