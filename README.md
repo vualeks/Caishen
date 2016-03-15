@@ -65,20 +65,24 @@ class MyViewController: UIViewController, CardNumberTextFieldDelegate {
 
 CardNumberTextField is mostly customizable like every other UITextField. Setting any of the following standard attributes for a CardNumberTextField (either from code or from interface builder) will affect the text field just like it affects any other UITextField:
 
-- **placeholder** (will be automatically formatted at runtime to look like an actual Visa card number, so entering any 16 digits will look authentic.)
-- **textColor**
-- **backgroundColor**
-- **font**
-- **keyboardType**
-- **secureTextEntry**
-- **keyboardAppearance**
-- **borderStyle**
+| Property           | Type                 | Description                                                                                                            |
+|:-------------------|:---------------------|:-----------------------------------------------------------------------------------------------------------------------|
+| placeholder        | String?              | The card number place holder. This will be automatically formatted at runtime to look like an actual Visa card number. |
+| textColor          | UIColor?             | The color of text entered into the CardNumberTextField.                                                                |
+| backgroundColor    | UIColor?             | The background color of the text field.                                                                                |
+| font               | UIFont?              | The font of the entered text.                                                                                          |
+| keyboardType       | UIKeyboardType       | The keyboard type that is used for input in the text field.                                                            |
+| secureTextEntry    | Bool                 | When set to true, any input in the text field will be secure (i.e. masked with "•" characters).                        |
+| keyboardAppearance | UIKeyboardAppearance | The keyboard appearance when editing text in the text field.                                                           |
+| borderStyle        | UITextBorderStyle    | The border style for the text field.                                                                                   |
 
 Additionally, CardNumberTextField offers attributes tailored to its purpose (accessible from interface builder as well):
 
-- **cardNumberSeparator**: A string that is used to separate the groups in a card number. Defaults to " - ".
-- **viewAnimationDuration**: The duration for a view animation in seconds when switching between the card number text field and details (month, view and cvc text fields).
-- **invalidInputColor**: The text color for invalid input. When entering an invalid card number, the text will flash in this color and in case of an expired card, the expiry will be displayed in this color as well.
+| Property           | Type                 | Description                                                                                                            |
+|:-------------------|:---------------------|:-----------------------------------------------------------------------------------------------------------------------|
+| cardNumberSeparator| String?              | A string that is used to separate the groups in a card number. Defaults to " - ".                                      |
+| viewAnimationDuration | Double?           | The duration for a view animation in seconds when switching between the card number text field and details (month, view and cvc text fields). |
+| invalidInputColor  | UIColor?             | The text color for invalid input. When entering an invalid card number, the text will flash in this color and in case of an expired card, the expiry will be displayed in this color as well. |
 
 ---
 
