@@ -1,9 +1,8 @@
-# Caishen
+# 💳 Caishen - Payment Card UI & Validation for iOS
 
-[![CI Status](http://img.shields.io/travis/Daniel Vancura/Caishen.svg?style=flat)](https://travis-ci.org/Daniel Vancura/Caishen)
-[![Version](https://img.shields.io/cocoapods/v/Caishen.svg?style=flat)](http://cocoapods.org/pods/Caishen)
-[![License](https://img.shields.io/cocoapods/l/Caishen.svg?style=flat)](http://cocoapods.org/pods/Caishen)
-[![Platform](https://img.shields.io/cocoapods/p/Caishen.svg?style=flat)](http://cocoapods.org/pods/Caishen)
+## Description
+
+Caishen provides an easy-to-use text field to ask users for payment card information and validate the input. It serves a similar purpose as [PaymentKit](https://github.com/stripe/PaymentKit), but is developed as a standalone framework entirely written in Swift. Caishen also allows an easy integration with other third-party frameworks, such as [CardIO](https://www.card.io).
 
 ## Installation
 
@@ -132,7 +131,7 @@ Additionally, CardNumberTextField offers attributes tailored to its purpose (acc
 
 ## Author
 
-Daniel Vancura, daniel@prolificinteractive.comm
+Daniel Vancura, daniel@prolificinteractive.com
 
 ## License
 
