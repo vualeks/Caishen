@@ -25,10 +25,7 @@
                     <rect key="frame" x="31" y="2" width="530" height="596"/>
                     <subviews>
                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="0000000000000000" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="T6o-6e-fLS" customClass="NumberInputTextField" customModule="Caishen" customModuleProvider="target">
-                            <rect key="frame" x="4" y="0.0" width="219" height="596"/>
-                            <constraints>
-                                <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="200" id="hIP-gN-RQQ"/>
-                            </constraints>
+                            <rect key="frame" x="4" y="0.0" width="526" height="596"/>
                             <fontDescription key="fontDescription" type="system" pointSize="20"/>
                             <textInputTraits key="textInputTraits"/>
                             <userDefinedRuntimeAttributes>
@@ -97,6 +94,7 @@
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstAttribute="bottom" secondItem="8iN-aK-Jz9" secondAttribute="bottom" id="2qC-nH-TOb"/>
+                        <constraint firstItem="T6o-6e-fLS" firstAttribute="trailing" secondItem="8iN-aK-Jz9" secondAttribute="trailing" id="2wV-fp-QSh"/>
                         <constraint firstItem="T6o-6e-fLS" firstAttribute="top" secondItem="UFG-yT-gmg" secondAttribute="top" id="33E-7t-cqB"/>
                         <constraint firstAttribute="trailing" secondItem="8iN-aK-Jz9" secondAttribute="trailing" id="3nI-Om-zhN"/>
                         <constraint firstAttribute="bottom" secondItem="T6o-6e-fLS" secondAttribute="bottom" id="5A1-86-yL3"/>
