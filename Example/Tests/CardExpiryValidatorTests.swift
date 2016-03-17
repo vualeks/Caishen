@@ -20,8 +20,8 @@ class CardExpiryValidatorTests: XCTestCase {
     }
 
     func testDateBeforeNow() {
-        let lastYear = Expiry(month: 01, year: 2015)
-        let future = Expiry(month: 12, year: 2115)
+        let lastYear = Expiry(month: 01, year: 2015)!
+        let future = Expiry(month: 12, year: 2115)!
         
         XCTAssertValid(validator.validateExpiry(future))
         XCTAssertCardExpired(validator.validateExpiry(lastYear))
@@ -53,13 +53,13 @@ class CardExpiryValidatorTests: XCTestCase {
         
         for i in 0..<shouldBeNil.count {
             let obj = shouldBeNil[i]
-            XCTAssertNil(obj, "Object \(i) should be nil, but is \(obj?.stringValue())")
+            XCTAssertNil(obj, "Object \(i) should be nil, but is \(obj?.description)")
         }
         
         for i in 0..<shouldNotBeNil.count {
             let obj = shouldNotBeNil[i]
             XCTAssertNotNil(obj, "Object \(i) should not be nil, but is")
-            XCTAssertEqual(obj?.stringValue(), "02/2006")
+            XCTAssertEqual(obj?.description, "02/2006")
             if let obj = obj {
                 XCTAssertCardExpired(validator.validateExpiry(obj))
             }
@@ -68,7 +68,7 @@ class CardExpiryValidatorTests: XCTestCase {
         for i in 0..<shouldNotBeNilAndValid.count {
             let obj = shouldNotBeNilAndValid[i]
             XCTAssertNotNil(obj, "Object \(i) should not be nil, but is")
-            XCTAssertEqual(obj?.stringValue(), "02/2096")
+            XCTAssertEqual(obj?.description, "02/2096")
             if let obj = obj {
                 XCTAssertCardNotExpired(validator.validateExpiry(obj))
             }
