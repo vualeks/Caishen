@@ -137,6 +137,13 @@ public class CardNumberTextField: UITextField, NumberInputTextFieldDelegate {
     }
     #endif
     
+    public override var attributedPlaceholder: NSAttributedString? {
+        didSet {
+            numberInputTextField?.attributedPlaceholder = attributedPlaceholder
+            super.attributedPlaceholder = nil
+        }
+    }
+    
     /**
      The card expiry of the card number or nil, if a valid expiry has not been entered yet.
      */
