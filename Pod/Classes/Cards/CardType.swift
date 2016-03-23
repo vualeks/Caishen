@@ -62,6 +62,8 @@ public protocol CardType {
 
     func validateNumber(number: Number) -> CardValidationResult
 
+    func validateExpiry(expiry: Expiry) -> CardValidationResult 
+
     func isEqualTo(cardType: CardType) -> Bool
 }
 
@@ -97,6 +99,21 @@ extension CardType {
         return lengthMatchesType(cardNumber.length)
             .union(numberIsNumeric(cardNumber))
             .union(numberIsValidLuhn(cardNumber))
+    }
+
+    public func validateExpiry(expiry: Expiry) -> CardValidationResult {
+        guard expiry != Expiry.invalid else {
+            return .InvalidExpiry
+        }
+
+        let currentDate = NSDate()
+        let expiryDate = expiry.rawValue
+
+        if expiryDate.timeIntervalSince1970 < currentDate.timeIntervalSince1970 {
+            return CardValidationResult.CardExpired
+        } else {
+            return CardValidationResult.Valid
+        }
     }
 
     public func expectedCardNumberLength() -> Int {

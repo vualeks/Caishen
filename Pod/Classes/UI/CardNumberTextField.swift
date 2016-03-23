@@ -370,11 +370,23 @@ public class CardNumberTextField: UITextField, NumberInputTextFieldDelegate {
      Notifies `cardNumberTextFieldDelegate` about changes to the entered card information.
      */
     internal func notifyDelegate() {
-        if let card = card {
-            cardNumberTextFieldDelegate?.cardNumberTextField(self, didEnterCardInformation: card, withValidationResult: CardValidator(cardTypeRegister: cardTypeRegister).validateCard(card))
-        } else {
-            cardNumberTextFieldDelegate?.cardNumberTextField(self, didEnterCardInformation: nil, withValidationResult: nil)
-        }
+        let numberText = numberInputTextField?.text?.stringByReplacingOccurrencesOfString(cardNumberSeparator ?? "", withString: "") ?? ""
+        let number = Number(rawValue: numberText)
+        let cvc = CVC(rawValue: cvcTextField?.text ?? "")
+        let expiry = cardExpiry ?? Expiry.invalid
+
+        let result: CardValidationResult = {
+            guard let cardType = self.cardType else {
+                return .UnknownType
+            }
+
+            return cardType.validateNumber(number)
+                .union(cardType.validateCVC(cvc))
+                .union(cardType.validateExpiry(expiry))
+        }()
+
+        let card = Card(bankCardNumber: number, cardVerificationCode: cvc, expiryDate: expiry)
+        cardNumberTextFieldDelegate?.cardNumberTextField(self, didEnterCardInformation: card, withValidationResult: result)
     }
     
     @objc public func numberInputTextFieldDidChangeText(cardNumberTextField: NumberInputTextField) {

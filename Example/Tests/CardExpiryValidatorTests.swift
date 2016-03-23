@@ -10,21 +10,21 @@ import XCTest
 import Caishen
 
 class CardExpiryValidatorTests: XCTestCase {
-    
-    var validator: CardExpiryDateValidator!
+
+    var cardType: CardType!
 
     override func setUp() {
         super.setUp()
         
-        validator = CardExpiryDateValidator()
+        cardType = Visa()
     }
 
     func testDateBeforeNow() {
         let lastYear = Expiry(month: 01, year: 2015)!
         let future = Expiry(month: 12, year: 2115)!
         
-        XCTAssertValid(validator.validateExpiry(future))
-        XCTAssertCardExpired(validator.validateExpiry(lastYear))
+        XCTAssertValid(cardType.validateExpiry(future))
+        XCTAssertCardExpired(cardType.validateExpiry(lastYear))
     }
     
     func testInvalidExpiryCreation() {
@@ -61,7 +61,7 @@ class CardExpiryValidatorTests: XCTestCase {
             XCTAssertNotNil(obj, "Object \(i) should not be nil, but is")
             XCTAssertEqual(obj?.description, "02/2006")
             if let obj = obj {
-                XCTAssertCardExpired(validator.validateExpiry(obj))
+                XCTAssertCardExpired(cardType.validateExpiry(obj))
             }
         }
         
@@ -70,7 +70,7 @@ class CardExpiryValidatorTests: XCTestCase {
             XCTAssertNotNil(obj, "Object \(i) should not be nil, but is")
             XCTAssertEqual(obj?.description, "02/2096")
             if let obj = obj {
-                XCTAssertCardNotExpired(validator.validateExpiry(obj))
+                XCTAssertCardNotExpired(cardType.validateExpiry(obj))
             }
         }
     }

@@ -68,43 +68,61 @@ public struct CardValidationResult: OptionSetType {
     /// Indicates that the type of card could not be inferred.
     public static let UnknownType             = CardValidationResult(rawValue: 1 << 7)
 
+    /// Indicates that the expiry is invalid
+    public static let InvalidExpiry           = CardValidationResult(rawValue: 1 << 8)
+
 }
 
 extension CardValidationResult: CustomStringConvertible {
 
-    public var description: String {
+    public func toString() -> [String] {
+        var strings: [String] = []
         if self == .Valid {
-            return "Valid"
-        } else {
-            var resultString = "{\n"
-            if isSupersetOf(.NumberDoesNotMatchType) {
-                resultString += "\tNumber does not match type\n"
-            }
-            if isSupersetOf(.CVCIncomplete) {
-                resultString += "\tCVC is too short\n"
-            }
-            if isSupersetOf(.InvalidCVC) {
-                resultString += "\tCVC is invalid\n"
-            }
-            if isSupersetOf(.CardExpired) {
-                resultString += "\tCard has expired\n"
-            }
-            if isSupersetOf(.NumberIsNotNumeric) {
-                resultString += "\tCard number is not numeric\n"
-            }
-            if isSupersetOf(.LuhnTestFailed) {
-                resultString += "\tLuhn test failed for card number\n"
-            }
-            if isSupersetOf(.NumberIncomplete) {
-                resultString += "\tCard number seems to be incomplete\n"
-            }
-            if isSupersetOf(.UnknownType) {
-                resultString += "\tCard type could not be inferred\n"
-            }
+            strings.append("Valid")
+        }
 
-            resultString += "}"
+        if isSupersetOf(.NumberDoesNotMatchType) {
+            strings.append("Number does not match type")
+        }
 
-            return resultString
+        if isSupersetOf(.CVCIncomplete) {
+            strings.append("CVC is too short")
+        }
+
+        if isSupersetOf(.InvalidCVC) {
+            strings.append("CVC is invalid")
+        }
+
+        if isSupersetOf(.CardExpired) {
+            strings.append("Card has expired")
+        }
+
+        if isSupersetOf(.InvalidExpiry) {
+            strings.append("Expiration date is not valid")
+        }
+
+        if isSupersetOf(.NumberIsNotNumeric) {
+            strings.append("Card number is not numeric")
+        }
+
+        if isSupersetOf(.LuhnTestFailed) {
+            strings.append("Luhn test failed for card number")
+        }
+
+        if isSupersetOf(.NumberIncomplete) {
+            strings.append("Card number seems to be incomplete")
+        }
+
+        if isSupersetOf(.UnknownType) {
+            strings.append("Card type could not be inferred")
+        }
+
+        return strings
+    }
+
+    public var description: String {
+        return toString().reduce("") { (current, next) in
+            return "\(current)\n\(next)"
         }
     }
 
