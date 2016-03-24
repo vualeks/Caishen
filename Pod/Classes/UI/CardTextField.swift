@@ -170,6 +170,8 @@ public class CardTextField: UITextField, NumberInputTextFieldDelegate {
             fatalError("The nib is expected to contain a UIView as root element.")
         }
         
+        numberInputTextField.contentMode = UIViewContentMode.Redraw
+        
         clipsToBounds = true
         
         firstObjectInNib.autoresizesSubviews = true
