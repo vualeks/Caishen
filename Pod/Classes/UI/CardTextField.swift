@@ -1,5 +1,5 @@
 //
-//  CardNumberTextField.swift
+//  CardTextField.swift
 //  Caishen
 //
 //  Created by Daniel Vancura on 2/12/16.
@@ -11,8 +11,8 @@ import UIKit
 /**
  This kind of text field serves as a container for subviews, which allow a user to enter card information.
  
- The typical structure of a `CardNumberTextField`'s subviews is as follows:
- - _: UIView (in most cases with a transparent background in order to not hide the CardNumberTextField)
+ The typical structure of a `CardTextField`'s subviews is as follows:
+ - _: UIView (in most cases with a transparent background in order to not hide the CardTextField)
     - cardImageView: UIImageView
     - CardNumberInputTextField (for entering a card number)
     - cardInfoView: UIView (container for other views to enter additional information after entering a valid card number) with subviews ordered from left to right:
@@ -20,7 +20,7 @@ import UIKit
         - yearTextField: StylizedTextField
         - cvcTextField: StylizedTextField
  
- In order to create a custom CardNumberTextField, you can create a subclass which overrides `getNibName()` and `getNibBundle()` in order to load a nib from a specific bundle, which follows this structure
+ In order to create a custom CardTextField, you can create a subclass which overrides `getNibName()` and `getNibBundle()` in order to load a nib from a specific bundle, which follows this structure
  */
 @IBDesignable
 public class CardTextField: UITextField, NumberInputTextFieldDelegate {
@@ -65,7 +65,7 @@ public class CardTextField: UITextField, NumberInputTextFieldDelegate {
     /// The image store for the card number text field.
     public var cardTypeImageStore: CardTypeImageStore = NSBundle(forClass: CardTextField.self)
 
-    public var cardNumberTextFieldDelegate: CardNumberTextFieldDelegate? {
+    public var cardTextFieldDelegate: CardTextFieldDelegate? {
         didSet {
             setupAccessoryButton()
         }
@@ -239,18 +239,18 @@ public class CardTextField: UITextField, NumberInputTextFieldDelegate {
     }
     
     internal func buttonReceivedAction() {
-        cardNumberTextFieldDelegate?.cardNumberTextFieldShouldProvideAccessoryAction(self)?()
+        cardTextFieldDelegate?.cardTextFieldShouldProvideAccessoryAction(self)?()
     }
     
     private func setupAccessoryButton() {
-        guard let _ = cardNumberTextFieldDelegate?.cardNumberTextFieldShouldProvideAccessoryAction(self) else {
+        guard let _ = cardTextFieldDelegate?.cardTextFieldShouldProvideAccessoryAction(self) else {
             accessoryButton?.alpha = 0
             return
         }
         accessoryButton?.addTarget(self, action: Selector("buttonReceivedAction"), forControlEvents: .TouchUpInside)
         accessoryButton?.alpha = 1.0
         
-        if let buttonImage = cardNumberTextFieldDelegate?.cardNumberTextFieldShouldShowAccessoryImage(self) {
+        if let buttonImage = cardTextFieldDelegate?.cardTextFieldShouldShowAccessoryImage(self) {
             let scaledImage = buttonImage.resizableImageWithCapInsets(UIEdgeInsetsZero, resizingMode: .Stretch).imageWithRenderingMode(.AlwaysTemplate)
             accessoryButton?.titleLabel?.text = nil
             accessoryButton?.setImage(scaledImage, forState: .Normal)
@@ -295,7 +295,7 @@ public class CardTextField: UITextField, NumberInputTextFieldDelegate {
     // MARK: - CardNumberInputTextFieldDelegate
     
     /**
-     Notifies `cardNumberTextFieldDelegate` about changes to the entered card information.
+     Notifies `CardTextFieldDelegate` about changes to the entered card information.
      */
     internal func notifyDelegate() {
         let result: CardValidationResult = {
@@ -308,17 +308,17 @@ public class CardTextField: UITextField, NumberInputTextFieldDelegate {
                 .union(cardType.validateExpiry(self.card.expiryDate))
         }()
 
-        cardNumberTextFieldDelegate?.cardNumberTextField(self,
-                                                         didEnterCardInformation: card,
-                                                         withValidationResult: result)
+        cardTextFieldDelegate?.cardTextField(self,
+                                             didEnterCardInformation: card,
+                                             withValidationResult: result)
     }
     
-    @objc public func numberInputTextFieldDidChangeText(cardNumberTextField: NumberInputTextField) {
+    @objc public func numberInputTextFieldDidChangeText(CardTextField: NumberInputTextField) {
         showCardImage()
         notifyDelegate()
     }
     
-    public func numberInputTextFieldDidComplete(cardNumberTextField: NumberInputTextField) {
+    public func numberInputTextFieldDidComplete(CardTextField: NumberInputTextField) {
         moveNumberFieldLeftAnimated()
         
         notifyDelegate()

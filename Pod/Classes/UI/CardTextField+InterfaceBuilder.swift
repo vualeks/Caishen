@@ -1,5 +1,5 @@
 //
-//  CardNumberTextField+InterfaceBuilder.swift
+//  CardTextField+InterfaceBuilder.swift
 //  Caishen
 //
 //  Created by Daniel Vancura on 3/8/16.

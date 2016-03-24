@@ -1,5 +1,5 @@
 //
-//  CardNumberTextField+UITextFieldDelegate.swift
+//  CardTextField+UITextFieldDelegate.swift
 //  Caishen
 //
 //  Created by Daniel Vancura on 3/4/16.
