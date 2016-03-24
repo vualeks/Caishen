@@ -8,7 +8,7 @@
 
 import UIKit
 
-public extension CardNumberTextField {
+public extension CardTextField {
     
     public func prefillCardInformation(cardNumber: String?, month: Int?, year: Int?, cvc: String?) {
         if let year = year {

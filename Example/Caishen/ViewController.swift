@@ -12,7 +12,7 @@ import Caishen
 class ViewController: UIViewController, CardNumberTextFieldDelegate, CardIOPaymentViewControllerDelegate {
     
     @IBOutlet weak var buyButton: UIButton?
-    @IBOutlet weak var cardNumberTextField: CardNumberTextField!
+    @IBOutlet weak var cardNumberTextField: CardTextField!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,18 +30,15 @@ class ViewController: UIViewController, CardNumberTextFieldDelegate, CardIOPayme
     // MARK: - CardNumberTextField delegate methods
     
     // This method of `CardNumberTextFieldDelegate` will set the saveButton enabled or disabled, based on whether valid card information has been entered.
-    func cardNumberTextField(cardNumberTextField: CardNumberTextField, didEnterCardInformation information: Card, withValidationResult validationResult: CardValidationResult) {
-
-        print (validationResult)
-
-        buyButton?.enabled = validationResult == .Valid
+    func cardNumberTextField(cardNumberTextField: CardTextField, didEnterCardInformation information: Card, withValidationResult validationResult: CardValidationResult) {
+            buyButton?.enabled = validationResult == .Valid
     }
     
-    func cardNumberTextFieldShouldShowAccessoryImage(cardNumberTextField: CardNumberTextField) -> UIImage? {
+    func cardNumberTextFieldShouldShowAccessoryImage(cardNumberTextField: CardTextField) -> UIImage? {
         return UIImage(named: "camera")
     }
     
-    func cardNumberTextFieldShouldProvideAccessoryAction(cardNumberTextField: CardNumberTextField) -> (() -> ())? {
+    func cardNumberTextFieldShouldProvideAccessoryAction(cardNumberTextField: CardTextField) -> (() -> ())? {
         return { [weak self] _ in
             let cardIOViewController = CardIOPaymentViewController(paymentDelegate: self)
             self?.presentViewController(cardIOViewController, animated: true, completion: nil)

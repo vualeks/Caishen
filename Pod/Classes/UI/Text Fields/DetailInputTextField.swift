@@ -19,16 +19,16 @@ public class DetailInputTextField: StylizedTextField {
     
     public func textFieldDidBeginEditing(textField: UITextField) {
         if (textField.text ?? "").isEmpty {
-            textField.text = CardNumberTextField.emptyTextFieldCharacter
+            textField.text = UITextField.emptyTextFieldCharacter
         }
     }
     
     public override func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
-        let newText = NSString(string: (textField.text ?? "")).stringByReplacingCharactersInRange(range, withString: string).stringByReplacingOccurrencesOfString(CardNumberTextField.emptyTextFieldCharacter, withString: "")
+        let newText = NSString(string: (textField.text ?? "")).stringByReplacingCharactersInRange(range, withString: string).stringByReplacingOccurrencesOfString(UITextField.emptyTextFieldCharacter, withString: "")
         
-        let deletingLastCharacter = !(textField.text ?? "").isEmpty && textField.text != CardNumberTextField.emptyTextFieldCharacter && newText.isEmpty
+        let deletingLastCharacter = !(textField.text ?? "").isEmpty && textField.text != UITextField.emptyTextFieldCharacter && newText.isEmpty
         if deletingLastCharacter {
-            textField.text = CardNumberTextField.emptyTextFieldCharacter
+            textField.text = UITextField.emptyTextFieldCharacter
             cardInfoTextFieldDelegate?.textField(self, didEnterPartiallyValidInfo: newText)
             return false
         }

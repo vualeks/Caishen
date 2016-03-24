@@ -8,7 +8,7 @@
 
 import UIKit
 
-public extension CardNumberTextField {
+public extension CardTextField {
     // MARK: - View animations
     
     internal func moveNumberFieldLeftAnimated() {
@@ -27,11 +27,6 @@ public extension CardNumberTextField {
      Translates the card number text field outside the screen.
      */
     internal func moveNumberFieldLeft() {
-        // Only when the card number has been set, the user can swipe to the details
-        if cardNumber == nil {
-            return
-        }
-        
         numberInputTextField?.becomeFirstResponder()
         if let rect = numberInputTextField?.rectForLastGroup() {
             numberInputTextField?.transform =

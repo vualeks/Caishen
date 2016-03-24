@@ -23,7 +23,7 @@ import UIKit
  In order to create a custom CardNumberTextField, you can create a subclass which overrides `getNibName()` and `getNibBundle()` in order to load a nib from a specific bundle, which follows this structure
  */
 @IBDesignable
-public class CardNumberTextField: UITextField, NumberInputTextFieldDelegate {
+public class CardTextField: UITextField, NumberInputTextFieldDelegate {
     
     // MARK: - Public variables
     
@@ -40,28 +40,31 @@ public class CardNumberTextField: UITextField, NumberInputTextFieldDelegate {
     /**
      The formatted text field which is used to enter the card number.
      */
-    @IBOutlet public weak var numberInputTextField: NumberInputTextField?
+    @IBOutlet public weak var numberInputTextField: NumberInputTextField!
     
     /**
      The text field which is used to enter the card validation code.
      */
-    @IBOutlet public weak var cvcTextField: CVCInputTextField?
+    @IBOutlet public weak var cvcTextField: CVCInputTextField!
     
     /**
      The text field which is used to enter the month of the expiry date.
      */
-    @IBOutlet public weak var monthTextField: MonthInputTextField?
+    @IBOutlet public weak var monthTextField: MonthInputTextField!
     
     /**
      The text field which is used to enter the year of the expiry date.
      */
-    @IBOutlet public weak var yearTextField: YearInputTextField?
+    @IBOutlet public weak var yearTextField: YearInputTextField!
     
     /**
      The view which is slided in from the right after a valid card number has been entered.
      */
     @IBOutlet public weak var cardInfoView: UIView?
-    
+
+    /// The image store for the card number text field.
+    public var cardTypeImageStore: CardTypeImageStore = NSBundle(forClass: CardTextField.self)
+
     public var cardNumberTextFieldDelegate: CardNumberTextFieldDelegate? {
         didSet {
             setupAccessoryButton()
@@ -96,38 +99,26 @@ public class CardNumberTextField: UITextField, NumberInputTextFieldDelegate {
     }
     
     /**
-     The currently entered card, or nil, if some of the card information is missing.
+     The currently entered card values. Note that the values are not guaranteed to be valid.
      */
-    public var card: Card? {
+    public var card: Card {
         get {
-            guard let cardNumber = cardNumber, let cardCVC = cardCVC, let cardExpiry = cardExpiry else {
-                return nil
-            }
+            let cardNumber = numberInputTextField.cardNumber
+            let cardCVC = CVC(rawValue: cvcTextField.text ?? "")
+            let cardExpiry =
+                Expiry(month: monthTextField.text ?? "", year: yearTextField.text ?? "")
+                    ?? Expiry.invalid
+
             return Card(bankCardNumber: cardNumber, cardVerificationCode: cardCVC, expiryDate: cardExpiry)
         }
     }
-    /**
-     The image that is displayed if the currently entered card number does not match any card types
-     */
-    public var unknownCardTypeImage: UIImage? = UIImage(named: "Unknown") ?? UIImage(named: "Unknown", inBundle: NSBundle(forClass: CardNumberTextField.self), compatibleWithTraitCollection: nil)
     
     /**
      This card type register contains a list of all valid card types. You can provide separate card type registers for different card number text fields.
      By default, CardTypeRegister.sharedCardTypeRegister is used.
      */
     public var cardTypeRegister: CardTypeRegister = CardTypeRegister.sharedCardTypeRegister
-    
-    /**
-     Array of all card types that are accepted by this card number text field.
-     */
-    public var validCardTypes: [CardType] {
-        get {
-            return cardTypeRegister.registeredCardTypes
-        }
-        set {
-            cardTypeRegister.setRegisteredCardTypes(newValue)
-        }
-    }
+
     #if !TARGET_INTERFACE_BUILDER
     public override var placeholder: String? {
         didSet {
@@ -145,77 +136,14 @@ public class CardNumberTextField: UITextField, NumberInputTextFieldDelegate {
     }
     
     /**
-     The card expiry of the card number or nil, if a valid expiry has not been entered yet.
-     */
-    public final var cardExpiry: Expiry? {
-        get {
-            guard let month = monthString, year = yearString else {
-                return nil
-            }
-            return Expiry(month: month, year: year)
-        } set {
-            guard let components = newValue?.description.componentsSeparatedByString("/") where components.count == 2 else {
-                return
-            }
-            guard components[0].characters.count == 2 && components[1].characters.count == 4 else {
-                return
-            }
-            
-            monthString = components[0]
-            yearString = components[1][2,4]
-        }
-    }
-    
-    /**
      The card type for the entered card number or nil, if no card type has been detected with the given input.
      */
     public final var cardType: CardType? {
-        guard let number = numberInputTextField?.parsedCardNumber else {
+        guard let number = numberInputTextField?.cardNumber else {
             return nil
         }
         
         return cardTypeRegister.cardTypeForNumber(number)
-    }
-    
-    // MARK: - Internal variables
-    
-    /**
-     The text that is shown inside an empty text field to detect a backspace action inside an empty text field.
-     */
-    internal static var emptyTextFieldCharacter: String = "\u{202F}"
-    
-    /**
-     The string that has been entered for the month of the expiry date or nil, if no valid month has been entered yet.
-     */
-    internal var monthString: String?
-    
-    /**
-     The string that has been entered for the year of the expiry date or nil, if no valid year has been entered yet.
-     */
-    internal var yearString: String?
-    
-    /**
-     The entered card validation code or nil, if no valid cvc has been entered yet.
-     */
-    internal var cardCVC: CVC?
-    
-    /**
-     The entered card number or nil, if no valid card number has been entered yet.
-     */
-    internal var cardNumber: Number? {
-        guard let number = numberInputTextField?.parsedCardNumber else {
-            return nil
-        }
-        
-        guard let cardType = cardTypeRegister.cardTypeForNumber(number) else {
-            return nil
-        }
-        
-        guard cardType.validateNumber(number) == .Valid else {
-            return nil
-        }
-        
-        return number
     }
     
     // MARK: - Initializers & view setup
@@ -249,7 +177,7 @@ public class CardNumberTextField: UITextField, NumberInputTextFieldDelegate {
         firstObjectInNib.frame = bounds
         addSubview(firstObjectInNib)
         
-        cardImageView?.image = unknownCardTypeImage
+        cardImageView?.image = cardTypeImageStore.imageForCardType(UnknownCardType())
         cardImageView?.backgroundColor = backgroundColor ?? UIColor.whiteColor()
         cardImageView?.layer.cornerRadius = 5.0
         
@@ -361,7 +289,7 @@ public class CardNumberTextField: UITextField, NumberInputTextFieldDelegate {
      You can override this function to provide the NSBundle for your own Nib. If you do so, please override 'getNibName' as well to provide the right Nib to load the nib file.
      */
     public func getNibBundle() -> NSBundle {
-        return NSBundle(forClass: CardNumberTextField.self)
+        return NSBundle(forClass: CardTextField.self)
     }
     
     // MARK: - CardNumberInputTextFieldDelegate
@@ -370,31 +298,23 @@ public class CardNumberTextField: UITextField, NumberInputTextFieldDelegate {
      Notifies `cardNumberTextFieldDelegate` about changes to the entered card information.
      */
     internal func notifyDelegate() {
-        let numberText = numberInputTextField?.text?.stringByReplacingOccurrencesOfString(cardNumberSeparator ?? "", withString: "") ?? ""
-        let number = Number(rawValue: numberText)
-        let cvc = CVC(rawValue: cvcTextField?.text ?? "")
-        let expiry = cardExpiry ?? Expiry.invalid
-
         let result: CardValidationResult = {
             guard let cardType = self.cardType else {
                 return .UnknownType
             }
 
-            return cardType.validateNumber(number)
-                .union(cardType.validateCVC(cvc))
-                .union(cardType.validateExpiry(expiry))
+            return cardType.validateNumber(self.card.bankCardNumber)
+                .union(cardType.validateCVC(self.card.cardVerificationCode))
+                .union(cardType.validateExpiry(self.card.expiryDate))
         }()
 
-        let card = Card(bankCardNumber: number, cardVerificationCode: cvc, expiryDate: expiry)
-        cardNumberTextFieldDelegate?.cardNumberTextField(self, didEnterCardInformation: card, withValidationResult: result)
+        cardNumberTextFieldDelegate?.cardNumberTextField(self,
+                                                         didEnterCardInformation: card,
+                                                         withValidationResult: result)
     }
     
     @objc public func numberInputTextFieldDidChangeText(cardNumberTextField: NumberInputTextField) {
-        if let cardNumber = cardNumberTextField.parsedCardNumber {
-            cardImageView?.image = cardTypeRegister.cardTypeForNumber(cardNumber)?.cardTypeImage ?? unknownCardTypeImage
-            cvcTextField?.cardType = cardTypeRegister.cardTypeForNumber(cardNumber)
-        }
-        
+        showCardImage()
         notifyDelegate()
     }
     
@@ -405,14 +325,21 @@ public class CardNumberTextField: UITextField, NumberInputTextFieldDelegate {
         monthTextField?.becomeFirstResponder()
     }
     
-    // MARK: - Card image
+    // MARK: - Card 
     
     internal func showCardImage() {
-        cardImageView?.image = cardType?.cardTypeImage ?? unknownCardTypeImage
+        let cardType = cardTypeRegister.cardTypeForNumber(numberInputTextField.cardNumber)
+        let cardTypeImage = cardTypeImageStore.imageForCardType(cardType)
+
+        cardImageView?.image = cardTypeImage
     }
     
     internal func showCVCImage() {
-        cardImageView?.image = cardType?.cvcImage ?? Visa().cvcImage
+        let cardType = cardTypeRegister.cardTypeForNumber(numberInputTextField.cardNumber)
+        let cvcImage = cardTypeImageStore.cvcImageForCardType(cardType)
+        
+        cardImageView?.image = cvcImage
+        cvcTextField?.cardType = cardType
     }
     
     // MARK: - UIView
