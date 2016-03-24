@@ -15,6 +15,8 @@ private let gregorianCalendar = NSCalendar(calendarIdentifier: NSCalendarIdentif
  */
 public struct Expiry: RawRepresentable {
 
+    static let invalid = Expiry(rawValue: NSDate(timeIntervalSince1970: 0))
+
     public typealias RawValue = NSDate
 
     public let rawValue: NSDate

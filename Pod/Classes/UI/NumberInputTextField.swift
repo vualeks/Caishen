@@ -35,6 +35,7 @@ public class NumberInputTextField: StylizedTextField {
             placeholder = cardNumberFormatter.formattedCardNumber(self.placeholder ?? "1234123412341234")
         }
     }
+
     override public var placeholder: String? {
         didSet {
             guard let placeholder = placeholder else {
