@@ -33,12 +33,14 @@ public class DetailInputTextField: StylizedTextField {
             return false
         }
         
-        if isInputValid(newText, partiallyValid: false) {
-            textField.text = newText
-            cardInfoTextFieldDelegate?.textField(self, didEnterValidInfo: newText)
-        } else if isInputValid(newText, partiallyValid: true) {
-            textField.text = newText
-            cardInfoTextFieldDelegate?.textField(self, didEnterPartiallyValidInfo: newText)
+        let autoCompletedNewText = autoCompletedText(newText)
+
+        if isInputValid(autoCompletedNewText, partiallyValid: false) {
+            textField.text = autoCompletedNewText
+            cardInfoTextFieldDelegate?.textField(self, didEnterValidInfo: autoCompletedNewText)
+        } else if isInputValid(autoCompletedNewText, partiallyValid: true) {
+            textField.text = autoCompletedNewText
+            cardInfoTextFieldDelegate?.textField(self, didEnterPartiallyValidInfo: autoCompletedNewText)
         }
         
         return false
@@ -61,5 +63,16 @@ public class DetailInputTextField: StylizedTextField {
      */
     internal func isInputValid(input: String, partiallyValid: Bool) -> Bool {
         return true
+    }
+
+    /**
+     Returns the auto-completed text for the new text
+     E.g. if user input a "4" in a monthInputTextField, it should show a string of "04" instead.
+     This makes the input process easier for users
+
+     - returns: Auto-completed string.
+     */
+    internal func autoCompletedText(text: String) -> String {
+        return text
     }
 }

@@ -68,7 +68,7 @@ public struct Expiry: RawRepresentable {
      Creates a CardExpiry with the given month and year as String.
      */
     public init?(month: String, year: String) {
-        guard let monthVal = UInt(month), yearVal = UInt(year) else {
+        guard let monthVal = UInt(month), yearVal = UInt(year) where year.characters.count >= 2 else {
             return nil
         }
         

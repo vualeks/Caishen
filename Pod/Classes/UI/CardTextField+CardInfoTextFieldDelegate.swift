@@ -11,12 +11,14 @@ import UIKit
 extension CardTextField: CardInfoTextFieldDelegate {
 
     public func textField(textField: UITextField, didEnterValidInfo: String) {
-        checkCardExpired()
+        updateNumberColor()
+        notifyDelegate()
         selectNextTextField(textField)
     }
     
     public func textField(textField: UITextField, didEnterPartiallyValidInfo: String) {
-        checkCardExpired()
+        updateNumberColor()
+        notifyDelegate()
     }
     
     private func selectNextTextField(textField: UITextField) {
@@ -27,16 +29,15 @@ extension CardTextField: CardInfoTextFieldDelegate {
         }
     }
     
-    private func checkCardExpired() {
-        // if the date is invalid, set the text color for the date to `invalidNumberColor`
-        if card.expiryDate.rawValue.timeIntervalSinceNow < 0 {
+    private func updateNumberColor() {
+        // if the date is Expiry.invalid, it means that no real date is calculated yet
+        // if the calculated real date is in the past, set the text color for the date to `invalidNumberColor`
+        if card.expiryDate.rawValue.timeIntervalSinceNow < 0 && card.expiryDate != Expiry.invalid {
             monthTextField?.textColor = invalidInputColor ?? UIColor.redColor()
             yearTextField?.textColor = invalidInputColor ?? UIColor.redColor()
         } else {
             monthTextField?.textColor = numberInputTextField?.textColor ?? UIColor.blackColor()
             yearTextField?.textColor = numberInputTextField?.textColor ?? UIColor.blackColor()
         }
-        
-        notifyDelegate()
     }
 }
