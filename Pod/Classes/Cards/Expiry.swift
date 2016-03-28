@@ -90,7 +90,7 @@ public struct Expiry: RawRepresentable {
             return year
         }()
 
-        guard (0...12).contains(month) else {
+        guard (1...12).contains(month) else {
             return nil
         }
 
