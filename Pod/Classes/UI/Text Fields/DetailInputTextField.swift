@@ -15,6 +15,11 @@ import UIKit
  */
 public class DetailInputTextField: StylizedTextField {
     
+    // Default number of expected digits for MonthInputTextField and YearInputTextField
+    var expectedDigitsNumber: Int {
+        return 2
+    }
+
     var cardInfoTextFieldDelegate: CardInfoTextFieldDelegate?
     
     public func textFieldDidBeginEditing(textField: UITextField) {
