@@ -1,5 +1,5 @@
 //
-//  CardNumberTextField+PrefillInformation.swift
+//  CardTextField+PrefillInformation.swift
 //  Caishen
 //
 //  Created by Daniel Vancura on 3/4/16.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-public extension CardNumberTextField {
+public extension CardTextField {
     
     public func prefillCardInformation(cardNumber: String?, month: Int?, year: Int?, cvc: String?) {
         if let year = year {

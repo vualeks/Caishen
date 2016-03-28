@@ -9,15 +9,15 @@
 import UIKit
 import Caishen
 
-class ViewController: UIViewController, CardNumberTextFieldDelegate, CardIOPaymentViewControllerDelegate {
+class ViewController: UIViewController, CardTextFieldDelegate, CardIOPaymentViewControllerDelegate {
     
     @IBOutlet weak var buyButton: UIButton?
-    @IBOutlet weak var cardNumberTextField: CardNumberTextField!
+    @IBOutlet weak var cardNumberTextField: CardTextField!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        cardNumberTextField.cardNumberTextFieldDelegate = self
+        cardNumberTextField.cardTextFieldDelegate = self
     }
     
     @IBAction func buy(sender: AnyObject) {
@@ -30,18 +30,15 @@ class ViewController: UIViewController, CardNumberTextFieldDelegate, CardIOPayme
     // MARK: - CardNumberTextField delegate methods
     
     // This method of `CardNumberTextFieldDelegate` will set the saveButton enabled or disabled, based on whether valid card information has been entered.
-    func cardNumberTextField(cardNumberTextField: CardNumberTextField, didEnterCardInformation information: Card, withValidationResult validationResult: CardValidationResult) {
-
-        print (validationResult)
-
-        buyButton?.enabled = validationResult == .Valid
+    func cardTextField(cardTextField: CardTextField, didEnterCardInformation information: Card, withValidationResult validationResult: CardValidationResult) {
+            buyButton?.enabled = validationResult == .Valid
     }
     
-    func cardNumberTextFieldShouldShowAccessoryImage(cardNumberTextField: CardNumberTextField) -> UIImage? {
+    func cardTextFieldShouldShowAccessoryImage(cardTextField: CardTextField) -> UIImage? {
         return UIImage(named: "camera")
     }
     
-    func cardNumberTextFieldShouldProvideAccessoryAction(cardNumberTextField: CardNumberTextField) -> (() -> ())? {
+    func cardTextFieldShouldProvideAccessoryAction(cardTextField: CardTextField) -> (() -> ())? {
         return { [weak self] _ in
             let cardIOViewController = CardIOPaymentViewController(paymentDelegate: self)
             self?.presentViewController(cardIOViewController, animated: true, completion: nil)

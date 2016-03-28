@@ -1,12 +1,12 @@
 //
-//  CardNumberTextField+InterfaceBuilder.swift
+//  CardTextField+InterfaceBuilder.swift
 //  Caishen
 //
 //  Created by Daniel Vancura on 3/8/16.
 //  Copyright © 2016 Prolific Interactive. All rights reserved.
 //
 
-public extension CardNumberTextField {
+public extension CardTextField {
     override public final var textColor: UIColor? {
         didSet {
             let textFieldArray: [UITextField?] = [numberInputTextField, cvcTextField, monthTextField, yearTextField]

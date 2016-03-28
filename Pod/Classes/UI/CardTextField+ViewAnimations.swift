@@ -1,5 +1,5 @@
 //
-//  CardNumberTextField+ViewAnimations.swift
+//  CardTextField+ViewAnimations.swift
 //  Caishen
 //
 //  Created by Daniel Vancura on 3/9/16.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-public extension CardNumberTextField {
+public extension CardTextField {
     // MARK: - View animations
     
     internal func moveNumberFieldLeftAnimated() {
@@ -27,11 +27,10 @@ public extension CardNumberTextField {
      Translates the card number text field outside the screen.
      */
     internal func moveNumberFieldLeft() {
-        // Only when the card number has been set, the user can swipe to the details
-        if cardNumber == nil {
+        // If the card number is invalid, do not allow to move to the card detail
+        if cardType?.validateNumber(card.bankCardNumber) != .Valid {
             return
         }
-        
         numberInputTextField?.becomeFirstResponder()
         if let rect = numberInputTextField?.rectForLastGroup() {
             numberInputTextField?.transform =
