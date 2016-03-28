@@ -39,8 +39,11 @@ public class DetailInputTextField: StylizedTextField {
         }
         
         let autoCompletedNewText = autoCompletedText(newText)
-
-        if isInputValid(autoCompletedNewText, partiallyValid: false) {
+        
+        if autoCompletedNewText.characters.count > expectedDigitsNumber {
+            let index = autoCompletedNewText.startIndex.advancedBy(expectedDigitsNumber)
+            cardInfoTextFieldDelegate?.textField(self, didEnterOverflowInfo: autoCompletedNewText.substringFromIndex(index))
+        } else if isInputValid(autoCompletedNewText, partiallyValid: false) {
             textField.text = autoCompletedNewText
             cardInfoTextFieldDelegate?.textField(self, didEnterValidInfo: autoCompletedNewText)
         } else if isInputValid(autoCompletedNewText, partiallyValid: true) {
