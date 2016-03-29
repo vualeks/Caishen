@@ -41,17 +41,17 @@ public class MonthInputTextField: DetailInputTextField {
 
      - returns: Auto-completed string.
      */
-    internal override func autocompleteText(text: String) -> String {
-        let length = text.characters.count
+    internal override func autocompleteText(month: String) -> String {
+        let length = month.characters.count
         if length != 1 {
-            return text
+            return month
         }
 
-        let monthNumber = Int(text)
+        let monthNumber = Int(month)
         if monthNumber > 1 {
-            return "0" + text
+            return "0" + month
         }
 
-        return text
+        return month
     }
 }
