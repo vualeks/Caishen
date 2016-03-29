@@ -14,7 +14,7 @@
                 <outlet property="cardInfoView" destination="8iN-aK-Jz9" id="esE-ci-h9N"/>
                 <outlet property="cvcTextField" destination="HOM-PC-B5m" id="dFv-Ti-Hef"/>
                 <outlet property="imageViewLeadingConstraint" destination="fP2-Mh-h6I" id="1g4-D0-ir2"/>
-                <outlet property="imageViewTrailingConstraint" destination="hAO-hn-H7p" id="3yS-IO-bDa"/>
+                <outlet property="imageViewTrailingConstraint" destination="mBS-KC-Ice" id="haC-BP-Ul7"/>
                 <outlet property="monthTextField" destination="5cX-Z5-afy" id="bXA-0j-EIb"/>
                 <outlet property="numberInputTextField" destination="T6o-6e-fLS" id="nXK-WK-fxm"/>
                 <outlet property="yearTextField" destination="CgE-Em-qHJ" id="3Mf-RK-Pnk"/>
