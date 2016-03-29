@@ -57,13 +57,13 @@ public class NumberInputTextField: StylizedTextField {
     
     private var _textColor: UIColor?
     override public var textColor: UIColor? {
+        get {
+            return _textColor
+        }
         set {
             /// Just store the text color in `_textColor`. It will be set as soon as input has been entered by setting super.textColor = _textColor.
             /// This is to avoid overriding `textColor` with `invalidInputColor` when invalid input has been entered.
             _textColor = newValue
-        }
-        get {
-            return _textColor
         }
     }
 
