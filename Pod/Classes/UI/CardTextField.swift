@@ -98,12 +98,19 @@ public class CardTextField: UITextField, NumberInputTextFieldDelegate {
     }
     
     @IBOutlet weak var imageViewLeadingConstraint: NSLayoutConstraint?
+    
+    /**
+     Inset before the card type image view. Defaults to 1.0.
+     */
     @IBInspectable public var imageViewLeadingInset: CGFloat = 1.0 {
         didSet {
             imageViewLeadingConstraint?.constant = imageViewLeadingInset
         }
     }
     
+    /**
+     Inset after the card type image view. Defaults to 4.0.
+     */
     @IBOutlet weak var imageViewTrailingConstraint: NSLayoutConstraint?
     @IBInspectable public var imageViewTrailingInset: CGFloat = 4.0 {
         didSet {
@@ -111,6 +118,9 @@ public class CardTextField: UITextField, NumberInputTextFieldDelegate {
         }
     }
     
+    /**
+     Inset before the accessory button. Defaults to 4.0.
+     */
     @IBOutlet weak var accessoryButtonLeadingConstraint: NSLayoutConstraint?
     @IBInspectable public var accessoryButtonLeadingInset: CGFloat = 4.0 {
         didSet {
@@ -118,6 +128,9 @@ public class CardTextField: UITextField, NumberInputTextFieldDelegate {
         }
     }
     
+    /**
+     Inset after the card type image view. Defaults to 5.0.
+     */
     @IBOutlet weak var accessoryButtonTrailingConstraint: NSLayoutConstraint?
     @IBInspectable public var accessoryButtonTrailingInset: CGFloat = 5.0 {
         didSet {
