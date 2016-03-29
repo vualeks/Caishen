@@ -97,7 +97,7 @@ public class NumberInputTextField: StylizedTextField {
         let newTextFormatted = textFieldTextFormatted.stringByReplacingCharactersInRange(range, withString: string)
         let newTextUnformatted = cardNumberFormatter.unformattedCardNumber(newTextFormatted)
         
-        if !newTextUnformatted.isEmpty && !newTextUnformatted.characters.reduce(true, combine: { return $0 && "0123456789".characters.contains($1)}) {
+        if !newTextUnformatted.isEmpty && !newTextUnformatted.isNumeric() {
             flashTextFieldInvalid()
             return false
         }
