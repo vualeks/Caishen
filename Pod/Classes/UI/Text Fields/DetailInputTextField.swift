@@ -35,16 +35,19 @@ public class DetailInputTextField: StylizedTextField {
         
         let autoCompletedNewText = autocompleteText(newText)
         
-        if autoCompletedNewText.characters.count > expectedInputLength {
-            let index = autoCompletedNewText.startIndex.advancedBy(expectedInputLength)
-            cardInfoTextFieldDelegate?.textField(self, didEnterOverflowInfo: autoCompletedNewText.substringFromIndex(index))
+        let (currentTextFieldText, overflowTextFieldText) = splitText(autoCompletedNewText)
+        
+        if isInputValid(currentTextFieldText, partiallyValid: true) {
+            textField.text = currentTextFieldText
+            if isInputValid(currentTextFieldText, partiallyValid: false) {
+                cardInfoTextFieldDelegate?.textField(self, didEnterValidInfo: currentTextFieldText)
+            } else {
+                cardInfoTextFieldDelegate?.textField(self, didEnterPartiallyValidInfo: currentTextFieldText)
+            }
         }
-        if isInputValid(autoCompletedNewText, partiallyValid: false) {
-            textField.text = autoCompletedNewText
-            cardInfoTextFieldDelegate?.textField(self, didEnterValidInfo: autoCompletedNewText)
-        } else if isInputValid(autoCompletedNewText, partiallyValid: true) {
-            textField.text = autoCompletedNewText
-            cardInfoTextFieldDelegate?.textField(self, didEnterPartiallyValidInfo: autoCompletedNewText)
+        
+        if !overflowTextFieldText.characters.isEmpty {
+            cardInfoTextFieldDelegate?.textField(self, didEnterOverflowInfo: overflowTextFieldText)
         }
         
         return false
@@ -59,6 +62,15 @@ public class DetailInputTextField: StylizedTextField {
             cardInfoTextFieldDelegate?.textField(self, didEnterPartiallyValidInfo: info)
         }
     }
+    
+    private func splitText(text: String) -> (currentText: String, overflowText: String) {
+        let hasOverflow = text.characters.count > expectedInputLength
+        let index = (hasOverflow) ?
+            text.startIndex.advancedBy(expectedInputLength) :
+            text.startIndex.advancedBy(text.characters.count)
+        return (text.substringToIndex(index), text.substringFromIndex(index))
+    }
+}
 
 extension DetailInputTextField: AutoCompletingTextField {
 
