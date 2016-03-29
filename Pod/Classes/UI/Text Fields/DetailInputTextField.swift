@@ -42,6 +42,7 @@ public class DetailInputTextField: StylizedTextField {
         
         if autoCompletedNewText.characters.count > expectedDigitsNumber {
             let index = autoCompletedNewText.startIndex.advancedBy(expectedDigitsNumber)
+            cardInfoTextFieldDelegate?.textField(self, didEnterValidInfo: autoCompletedNewText.substringToIndex(index))
             cardInfoTextFieldDelegate?.textField(self, didEnterOverflowInfo: autoCompletedNewText.substringFromIndex(index))
         } else if isInputValid(autoCompletedNewText, partiallyValid: false) {
             textField.text = autoCompletedNewText
