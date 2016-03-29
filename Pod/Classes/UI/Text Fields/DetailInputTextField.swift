@@ -16,7 +16,7 @@ import UIKit
 public class DetailInputTextField: StylizedTextField {
     
     // Default number of expected digits for MonthInputTextField and YearInputTextField
-    var expectedDigitsNumber: Int {
+    var expectedDigits: Int {
         return 2
     }
 
@@ -40,11 +40,11 @@ public class DetailInputTextField: StylizedTextField {
         
         let autoCompletedNewText = autoCompletedText(newText)
         
-        if autoCompletedNewText.characters.count > expectedDigitsNumber {
-            let index = autoCompletedNewText.startIndex.advancedBy(expectedDigitsNumber)
-            cardInfoTextFieldDelegate?.textField(self, didEnterValidInfo: autoCompletedNewText.substringToIndex(index))
+        if autoCompletedNewText.characters.count > expectedDigits {
+            let index = autoCompletedNewText.startIndex.advancedBy(expectedDigits)
             cardInfoTextFieldDelegate?.textField(self, didEnterOverflowInfo: autoCompletedNewText.substringFromIndex(index))
-        } else if isInputValid(autoCompletedNewText, partiallyValid: false) {
+        }
+        if isInputValid(autoCompletedNewText, partiallyValid: false) {
             textField.text = autoCompletedNewText
             cardInfoTextFieldDelegate?.textField(self, didEnterValidInfo: autoCompletedNewText)
         } else if isInputValid(autoCompletedNewText, partiallyValid: true) {

@@ -39,8 +39,9 @@ extension CardTextField: CardInfoTextFieldDelegate {
         guard let prefillText = prefillText else {
             return
         }
-
-        nextTextField?.text = prefillText
+        
+        let nextTextFieldText = (nextTextField?.text ?? "").stringByAppendingString(prefillText)
+        nextTextField?.delegate?.textField?(nextTextField!, shouldChangeCharactersInRange: NSMakeRange(0, (nextTextField?.text ?? "").characters.count), replacementString: nextTextFieldText)
     }
     
     private func updateNumberColor() {

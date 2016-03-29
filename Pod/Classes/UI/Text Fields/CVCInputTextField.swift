@@ -11,7 +11,7 @@ import UIKit
 public class CVCInputTextField: DetailInputTextField {
     
     var cardType: CardType?
-    override var expectedDigitsNumber: Int {
+    override var expectedDigits: Int {
         return cardType?.CVCLength ?? 3
     }
     /**
