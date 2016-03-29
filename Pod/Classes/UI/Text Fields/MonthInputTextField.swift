@@ -15,7 +15,7 @@ public class MonthInputTextField: DetailInputTextField {
      
      - returns: True, if the month is valid.
      */
-    internal override func isInputValid(month: String, partiallyValid: Bool) -> Bool {
+    internal func isInputValid(month: String, partiallyValid: Bool) -> Bool {
         let length = month.characters.count
         if partiallyValid && length == 0 {
             return true
@@ -41,7 +41,7 @@ public class MonthInputTextField: DetailInputTextField {
 
      - returns: Auto-completed string.
      */
-    internal override func autoCompletedText(month: String) -> String {
+    func autocompleteText(month: String) -> String {
         let length = month.characters.count
         if length != 1 {
             return month

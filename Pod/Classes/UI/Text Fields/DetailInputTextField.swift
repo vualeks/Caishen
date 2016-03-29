@@ -13,13 +13,8 @@ import UIKit
  You can subclass `DetailInputTextField` and override `isInputValid` to specify the validation routine.
  The default implementation accepts any input.
  */
-public class DetailInputTextField: StylizedTextField {
+public class DetailInputTextField: StylizedTextField, AutoCompletingTextField, TextFieldValidation {
     
-    // Default number of expected digits for MonthInputTextField and YearInputTextField
-    var expectedDigits: Int {
-        return 2
-    }
-
     var cardInfoTextFieldDelegate: CardInfoTextFieldDelegate?
     
     public func textFieldDidBeginEditing(textField: UITextField) {
@@ -38,10 +33,10 @@ public class DetailInputTextField: StylizedTextField {
             return false
         }
         
-        let autoCompletedNewText = autoCompletedText(newText)
+        let autoCompletedNewText = autocompleteText(newText)
         
-        if autoCompletedNewText.characters.count > expectedDigits {
-            let index = autoCompletedNewText.startIndex.advancedBy(expectedDigits)
+        if autoCompletedNewText.characters.count > expectedInputLength {
+            let index = autoCompletedNewText.startIndex.advancedBy(expectedInputLength)
             cardInfoTextFieldDelegate?.textField(self, didEnterOverflowInfo: autoCompletedNewText.substringFromIndex(index))
         }
         if isInputValid(autoCompletedNewText, partiallyValid: false) {
@@ -63,25 +58,5 @@ public class DetailInputTextField: StylizedTextField {
             text = info
             cardInfoTextFieldDelegate?.textField(self, didEnterPartiallyValidInfo: info)
         }
-    }
-    
-    /**
-     Checks the validity of the input.
-     
-     - returns: True, if the input is valid.
-     */
-    internal func isInputValid(input: String, partiallyValid: Bool) -> Bool {
-        return true
-    }
-
-    /**
-     Returns the auto-completed text for the new text
-     E.g. if user input a "4" in a monthInputTextField, it should show a string of "04" instead.
-     This makes the input process easier for users
-
-     - returns: Auto-completed string.
-     */
-    internal func autoCompletedText(text: String) -> String {
-        return text
     }
 }

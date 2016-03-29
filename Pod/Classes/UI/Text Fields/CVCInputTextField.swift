@@ -11,7 +11,7 @@ import UIKit
 public class CVCInputTextField: DetailInputTextField {
     
     var cardType: CardType?
-    override var expectedDigits: Int {
+    var expectedInputLength: Int {
         return cardType?.CVCLength ?? 3
     }
     /**
@@ -19,7 +19,7 @@ public class CVCInputTextField: DetailInputTextField {
      
      - returns: True, if the card validation code is valid.
      */
-    internal override func isInputValid(cvcString: String, partiallyValid: Bool) -> Bool {
+    internal func isInputValid(cvcString: String, partiallyValid: Bool) -> Bool {
         if cvcString.characters.count == 0 && partiallyValid {
             return true
         }
