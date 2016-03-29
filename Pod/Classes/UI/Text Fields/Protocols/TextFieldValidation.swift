@@ -22,14 +22,3 @@ internal protocol TextFieldValidation {
      */
     func isInputValid(input: String, partiallyValid: Bool) -> Bool
 }
-
-extension TextFieldValidation {
-    
-    internal var expectedInputLength: Int {
-        return 2
-    }
-    
-    internal func isInputValid(input: String, partiallyValid: Bool) -> Bool {
-        return true
-    }
-}

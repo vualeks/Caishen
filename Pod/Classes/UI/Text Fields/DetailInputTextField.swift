@@ -13,7 +13,7 @@ import UIKit
  You can subclass `DetailInputTextField` and override `isInputValid` to specify the validation routine.
  The default implementation accepts any input.
  */
-public class DetailInputTextField: StylizedTextField, AutoCompletingTextField, TextFieldValidation {
+public class DetailInputTextField: StylizedTextField {
     
     var cardInfoTextFieldDelegate: CardInfoTextFieldDelegate?
     
@@ -66,4 +66,13 @@ extension DetailInputTextField: AutoCompletingTextField {
         return text
     }
 }
+
+extension DetailInputTextField: TextFieldValidation {
+    var expectedInputLength: Int {
+        return 2
+    }
+
+    func isInputValid(input: String, partiallyValid: Bool) -> Bool {
+        return true
+    }
 }

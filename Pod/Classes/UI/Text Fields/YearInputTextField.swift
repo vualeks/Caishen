@@ -15,7 +15,7 @@ public class YearInputTextField: DetailInputTextField {
      
      - returns: True, if the year is valid.
      */
-    internal func isInputValid(year: String, partiallyValid: Bool) -> Bool {
+    internal override func isInputValid(year: String, partiallyValid: Bool) -> Bool {
         if partiallyValid && year.characters.count == 0 {
             return true
         }

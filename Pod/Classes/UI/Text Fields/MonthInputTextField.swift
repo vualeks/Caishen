@@ -15,7 +15,7 @@ public class MonthInputTextField: DetailInputTextField {
      
      - returns: True, if the month is valid.
      */
-    internal func isInputValid(month: String, partiallyValid: Bool) -> Bool {
+    internal override func isInputValid(month: String, partiallyValid: Bool) -> Bool {
         let length = month.characters.count
         if partiallyValid && length == 0 {
             return true
