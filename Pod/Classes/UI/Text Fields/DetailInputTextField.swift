@@ -80,6 +80,9 @@ extension DetailInputTextField: AutoCompletingTextField {
 }
 
 extension DetailInputTextField: TextFieldValidation {
+    /**
+     Default number of expected digits for MonthInputTextField and YearInputTextField
+     */
     var expectedInputLength: Int {
         return 2
     }

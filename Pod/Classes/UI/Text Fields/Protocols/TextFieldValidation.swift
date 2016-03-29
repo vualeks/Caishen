@@ -11,7 +11,8 @@ import Foundation
 internal protocol TextFieldValidation {
     
     /**
-     Default number of expected digits for MonthInputTextField and YearInputTextField
+     number of expected digits for a DetailInputTextField,
+     E.g. For a MonthInputTextField, it is 2. For a CVCInputTextField with Visa type, it is 3
      */
     var expectedInputLength: Int { get }
     
