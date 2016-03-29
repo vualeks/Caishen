@@ -13,7 +13,7 @@ extension CardTextField: CardInfoTextFieldDelegate {
     public func textField(textField: UITextField, didEnterValidInfo: String) {
         updateNumberColor()
         notifyDelegate()
-        selectNextTextField(textField)
+        selectNextTextField(textField, prefillText: nil)
     }
     
     public func textField(textField: UITextField, didEnterPartiallyValidInfo: String) {
@@ -21,12 +21,26 @@ extension CardTextField: CardInfoTextFieldDelegate {
         notifyDelegate()
     }
     
-    private func selectNextTextField(textField: UITextField) {
+    public func textField(textField: UITextField, didEnterOverflowInfo overFlowDigits: String) {
+        updateNumberColor()
+        selectNextTextField(textField, prefillText: overFlowDigits)
+    }
+
+    private func selectNextTextField(textField: UITextField, prefillText: String?) {
+        var nextTextField: UITextField?
         if textField == monthTextField {
-            yearTextField?.becomeFirstResponder()
+            nextTextField = yearTextField
         } else if textField == yearTextField {
-            cvcTextField?.becomeFirstResponder()
+            nextTextField = cvcTextField
         }
+
+        nextTextField?.becomeFirstResponder()
+
+        guard let prefillText = prefillText else {
+            return
+        }
+        
+        nextTextField?.delegate?.textField?(nextTextField!, shouldChangeCharactersInRange: NSMakeRange(0, (nextTextField?.text ?? "").characters.count), replacementString: prefillText)
     }
     
     private func updateNumberColor() {

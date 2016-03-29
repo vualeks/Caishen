@@ -33,14 +33,21 @@ public class DetailInputTextField: StylizedTextField {
             return false
         }
         
-        let autoCompletedNewText = autoCompletedText(newText)
-
-        if isInputValid(autoCompletedNewText, partiallyValid: false) {
-            textField.text = autoCompletedNewText
-            cardInfoTextFieldDelegate?.textField(self, didEnterValidInfo: autoCompletedNewText)
-        } else if isInputValid(autoCompletedNewText, partiallyValid: true) {
-            textField.text = autoCompletedNewText
-            cardInfoTextFieldDelegate?.textField(self, didEnterPartiallyValidInfo: autoCompletedNewText)
+        let autoCompletedNewText = autocompleteText(newText)
+        
+        let (currentTextFieldText, overflowTextFieldText) = splitText(autoCompletedNewText)
+        
+        if isInputValid(currentTextFieldText, partiallyValid: true) {
+            textField.text = currentTextFieldText
+            if isInputValid(currentTextFieldText, partiallyValid: false) {
+                cardInfoTextFieldDelegate?.textField(self, didEnterValidInfo: currentTextFieldText)
+            } else {
+                cardInfoTextFieldDelegate?.textField(self, didEnterPartiallyValidInfo: currentTextFieldText)
+            }
+        }
+        
+        if !overflowTextFieldText.characters.isEmpty {
+            cardInfoTextFieldDelegate?.textField(self, didEnterOverflowInfo: overflowTextFieldText)
         }
         
         return false
@@ -56,23 +63,31 @@ public class DetailInputTextField: StylizedTextField {
         }
     }
     
+    private func splitText(text: String) -> (currentText: String, overflowText: String) {
+        let hasOverflow = text.characters.count > expectedInputLength
+        let index = (hasOverflow) ?
+            text.startIndex.advancedBy(expectedInputLength) :
+            text.startIndex.advancedBy(text.characters.count)
+        return (text.substringToIndex(index), text.substringFromIndex(index))
+    }
+}
+
+extension DetailInputTextField: AutoCompletingTextField {
+
+    func autocompleteText(text: String) -> String {
+        return text
+    }
+}
+
+extension DetailInputTextField: TextFieldValidation {
     /**
-     Checks the validity of the input.
-     
-     - returns: True, if the input is valid.
+     Default number of expected digits for MonthInputTextField and YearInputTextField
      */
-    internal func isInputValid(input: String, partiallyValid: Bool) -> Bool {
-        return true
+    var expectedInputLength: Int {
+        return 2
     }
 
-    /**
-     Returns the auto-completed text for the new text
-     E.g. if user input a "4" in a monthInputTextField, it should show a string of "04" instead.
-     This makes the input process easier for users
-
-     - returns: Auto-completed string.
-     */
-    internal func autoCompletedText(text: String) -> String {
-        return text
+    func isInputValid(input: String, partiallyValid: Bool) -> Bool {
+        return true
     }
 }
