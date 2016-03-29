@@ -22,7 +22,6 @@ import UIKit
  
  In order to create a custom CardTextField, you can create a subclass which overrides `getNibName()` and `getNibBundle()` in order to load a nib from a specific bundle, which follows this structure
  */
-@IBDesignable
 public class CardTextField: UITextField, NumberInputTextFieldDelegate {
     
     // MARK: - Public variables
@@ -83,7 +82,7 @@ public class CardTextField: UITextField, NumberInputTextFieldDelegate {
     /**
      The duration of the view animation when switching from number input to detail.
      */
-    @IBInspectable public var viewAnimationDuration: Double? = 0.3
+    @IBInspectable public var viewAnimationDuration: CGFloat = 0.3
     
     /**
      The text color for invalid input in a text field.
@@ -95,6 +94,34 @@ public class CardTextField: UITextField, NumberInputTextFieldDelegate {
             }
             let textFields: [StylizedTextField?] = [numberInputTextField, monthTextField, yearTextField, cvcTextField]
             textFields.forEach({$0?.invalidInputColor = invalidInputColor})
+        }
+    }
+    
+    @IBOutlet weak var imageViewLeadingConstraint: NSLayoutConstraint?
+    @IBInspectable public var imageViewLeadingInset: CGFloat = 1.0 {
+        didSet {
+            imageViewLeadingConstraint?.constant = imageViewLeadingInset
+        }
+    }
+    
+    @IBOutlet weak var imageViewTrailingConstraint: NSLayoutConstraint?
+    @IBInspectable public var imageViewTrailingInset: CGFloat = 4.0 {
+        didSet {
+            imageViewTrailingConstraint?.constant = imageViewTrailingInset
+        }
+    }
+    
+    @IBOutlet weak var accessoryButtonLeadingConstraint: NSLayoutConstraint?
+    @IBInspectable public var accessoryButtonLeadingInset: CGFloat = 4.0 {
+        didSet {
+            accessoryButtonLeadingConstraint?.constant = accessoryButtonLeadingInset
+        }
+    }
+    
+    @IBOutlet weak var accessoryButtonTrailingConstraint: NSLayoutConstraint?
+    @IBInspectable public var accessoryButtonTrailingInset: CGFloat = 5.0 {
+        didSet {
+            accessoryButtonTrailingConstraint?.constant = accessoryButtonTrailingInset
         }
     }
     
@@ -119,14 +146,12 @@ public class CardTextField: UITextField, NumberInputTextFieldDelegate {
      */
     public var cardTypeRegister: CardTypeRegister = CardTypeRegister.sharedCardTypeRegister
 
-    #if !TARGET_INTERFACE_BUILDER
     public override var placeholder: String? {
         didSet {
             numberInputTextField?.placeholder = placeholder
             super.placeholder = nil
         }
     }
-    #endif
     
     public override var attributedPlaceholder: NSAttributedString? {
         didSet {
@@ -182,6 +207,11 @@ public class CardTextField: UITextField, NumberInputTextFieldDelegate {
         cardImageView?.image = cardTypeImageStore.imageForCardType(UnknownCardType())
         cardImageView?.backgroundColor = backgroundColor ?? UIColor.whiteColor()
         cardImageView?.layer.cornerRadius = 5.0
+        
+        imageViewLeadingConstraint?.constant = imageViewLeadingInset
+        imageViewTrailingConstraint?.constant = imageViewTrailingInset
+        accessoryButtonLeadingConstraint?.constant = accessoryButtonLeadingInset
+        accessoryButtonTrailingConstraint?.constant = accessoryButtonTrailingInset
         
         let leftSwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: Selector("moveNumberFieldLeftAnimated"))
         leftSwipeGestureRecognizer.direction = .Left
