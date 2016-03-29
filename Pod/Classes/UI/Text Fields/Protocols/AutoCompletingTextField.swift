@@ -8,7 +8,7 @@
 
 import Foundation
 
-public protocol AutoCompletingTextField {
+protocol AutoCompletingTextField {
     
     /**
      Returns the auto-completed text for the new text
@@ -20,10 +20,4 @@ public protocol AutoCompletingTextField {
      - returns: Auto-completed string.
      */
     func autocompleteText(text: String) -> String
-}
-
-extension AutoCompletingTextField {
-    public func autocompleteText(text: String) -> String {
-        return text
-    }
 }

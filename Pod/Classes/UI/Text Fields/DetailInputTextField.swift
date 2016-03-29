@@ -59,4 +59,11 @@ public class DetailInputTextField: StylizedTextField, AutoCompletingTextField, T
             cardInfoTextFieldDelegate?.textField(self, didEnterPartiallyValidInfo: info)
         }
     }
+
+extension DetailInputTextField: AutoCompletingTextField {
+
+    func autocompleteText(text: String) -> String {
+        return text
+    }
+}
 }
