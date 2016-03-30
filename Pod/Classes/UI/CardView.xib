@@ -60,7 +60,7 @@
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="CVC" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="HOM-PC-B5m" customClass="CVCInputTextField" customModule="Caishen" customModuleProvider="target">
-                                    <rect key="frame" x="487" y="286" width="50" height="24"/>
+                                    <rect key="frame" x="487" y="0.0" width="50" height="596"/>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="50" id="Ie7-YX-tsz"/>
@@ -83,6 +83,8 @@
                                 <constraint firstItem="5cX-Z5-afy" firstAttribute="bottom" secondItem="CgE-Em-qHJ" secondAttribute="bottom" id="K27-9l-pGM"/>
                                 <constraint firstItem="CgE-Em-qHJ" firstAttribute="height" secondItem="8iN-aK-Jz9" secondAttribute="height" id="S9Q-tZ-J9h"/>
                                 <constraint firstAttribute="bottom" secondItem="5cX-Z5-afy" secondAttribute="bottom" id="XM4-dt-rH1"/>
+                                <constraint firstItem="HOM-PC-B5m" firstAttribute="top" secondItem="8iN-aK-Jz9" secondAttribute="top" id="cer-3O-lXf"/>
+                                <constraint firstAttribute="bottom" secondItem="HOM-PC-B5m" secondAttribute="bottom" id="euw-CL-UoC"/>
                                 <constraint firstItem="5cX-Z5-afy" firstAttribute="centerY" secondItem="DD8-kX-0ru" secondAttribute="centerY" id="gPj-h0-kbB"/>
                                 <constraint firstItem="CgE-Em-qHJ" firstAttribute="leading" secondItem="DD8-kX-0ru" secondAttribute="trailing" id="mqG-6S-dv0"/>
                                 <constraint firstItem="HOM-PC-B5m" firstAttribute="top" secondItem="8iN-aK-Jz9" secondAttribute="top" id="pKk-pg-dWg"/>
@@ -162,6 +164,7 @@
                 <mask key="constraints">
                     <exclude reference="zLl-wV-W3O"/>
                     <exclude reference="4Wr-tr-pZn"/>
+                    <exclude reference="RPY-4q-cnz"/>
                 </mask>
             </variation>
         </view>
