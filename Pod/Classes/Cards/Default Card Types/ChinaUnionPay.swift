@@ -10,7 +10,7 @@ import UIKit
 
 public struct ChinaUnionPay: CardType {
     
-    public let name = "ChinaUnionPay"
+    public let name = "China UnionPay"
     
     public let CVCLength = 3
     
