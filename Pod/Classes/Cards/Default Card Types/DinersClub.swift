@@ -10,7 +10,7 @@ import UIKit
 
 public struct DinersClub: CardType {
     
-    public let name = "Diners Club"
+    public let name = "DinersClub"
     
     public let CVCLength = 3
 
