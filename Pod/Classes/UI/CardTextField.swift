@@ -255,9 +255,10 @@ public class CardTextField: UITextField, NumberInputTextFieldDelegate {
         }
         accessoryButton?.addTarget(self, action: Selector("buttonReceivedAction"), forControlEvents: .TouchUpInside)
         accessoryButton?.alpha = 1.0
+        accessoryButton?.imageView?.contentMode = .ScaleAspectFit
         
         if let buttonImage = cardTextFieldDelegate?.cardTextFieldShouldShowAccessoryImage(self) {
-            let scaledImage = buttonImage.resizableImageWithCapInsets(UIEdgeInsetsZero, resizingMode: .Stretch).imageWithRenderingMode(.AlwaysTemplate)
+            let scaledImage = buttonImage.resizableImageWithCapInsets(UIEdgeInsetsZero, resizingMode: .Stretch)
             accessoryButton?.titleLabel?.text = nil
             accessoryButton?.setImage(scaledImage, forState: .Normal)
             accessoryButton?.tintColor = numberInputTextField?.textColor

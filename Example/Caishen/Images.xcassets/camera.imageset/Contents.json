@@ -2,11 +2,12 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "icon-camera-128.png",
+      "filename" : "Card_io.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
+      "filename" : "Card_io@2x.png",
       "scale" : "2x"
     },
     {
