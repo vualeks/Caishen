@@ -182,6 +182,10 @@ public class CardTextField: UITextField, NumberInputTextFieldDelegate {
         cardImageView?.image = cardTypeImageStore.imageForCardType(UnknownCardType())
         cardImageView?.backgroundColor = backgroundColor ?? UIColor.whiteColor()
         cardImageView?.layer.cornerRadius = 5.0
+        cardImageView?.layer.shadowColor = UIColor.blackColor().CGColor
+        cardImageView?.layer.shadowRadius = 2
+        cardImageView?.layer.shadowOffset = CGSize(width: 0, height: 0)
+        cardImageView?.layer.shadowOpacity = 0.2
         
         let leftSwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: Selector("moveNumberFieldLeftAnimated"))
         leftSwipeGestureRecognizer.direction = .Left
