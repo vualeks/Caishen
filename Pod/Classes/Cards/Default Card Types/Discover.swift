@@ -14,7 +14,7 @@ public struct Discover: CardType {
     
     public let CVCLength = 3
     
-    public let identifyingDigits = Set(644...649).union( Set(622126...622925) ).union( Set([6011]) )
+    public let identifyingDigits = Set(644...649).union( Set([6011]) ).union(Set([65]))
 
     public init() {
         
