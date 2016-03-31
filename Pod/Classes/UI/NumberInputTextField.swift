@@ -88,12 +88,11 @@ public class NumberInputTextField: StylizedTextField {
         // Text in text field after applying changes, formatted and unformatted:
         let newTextFormatted = textFieldTextFormatted.stringByReplacingCharactersInRange(range, withString: string)
         let newTextUnformatted = cardNumberFormatter.unformattedCardNumber(newTextFormatted)
-
         
         // Set the text color to invalid - this will be changed to `validTextColor` later in this method if the input was valid
         super.textColor = invalidInputColor
         
-        if !newTextUnformatted.isEmpty && UInt(newTextUnformatted) == nil {
+        if !newTextUnformatted.isEmpty && !newTextUnformatted.isNumeric() {
             return false
         }
 

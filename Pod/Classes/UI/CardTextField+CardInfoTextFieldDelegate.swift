@@ -11,32 +11,47 @@ import UIKit
 extension CardTextField: CardInfoTextFieldDelegate {
 
     public func textField(textField: UITextField, didEnterValidInfo: String) {
-        checkCardExpired()
-        selectNextTextField(textField)
+        updateNumberColor()
+        notifyDelegate()
+        selectNextTextField(textField, prefillText: nil)
     }
     
     public func textField(textField: UITextField, didEnterPartiallyValidInfo: String) {
-        checkCardExpired()
+        updateNumberColor()
+        notifyDelegate()
     }
     
-    private func selectNextTextField(textField: UITextField) {
+    public func textField(textField: UITextField, didEnterOverflowInfo overFlowDigits: String) {
+        updateNumberColor()
+        selectNextTextField(textField, prefillText: overFlowDigits)
+    }
+
+    private func selectNextTextField(textField: UITextField, prefillText: String?) {
+        var nextTextField: UITextField?
         if textField == monthTextField {
-            yearTextField?.becomeFirstResponder()
+            nextTextField = yearTextField
         } else if textField == yearTextField {
-            cvcTextField?.becomeFirstResponder()
+            nextTextField = cvcTextField
         }
+
+        nextTextField?.becomeFirstResponder()
+
+        guard let prefillText = prefillText else {
+            return
+        }
+        
+        nextTextField?.delegate?.textField?(nextTextField!, shouldChangeCharactersInRange: NSMakeRange(0, (nextTextField?.text ?? "").characters.count), replacementString: prefillText)
     }
     
-    private func checkCardExpired() {
-        // if the date is invalid, set the text color for the date to `invalidNumberColor`
-        if card.expiryDate.rawValue.timeIntervalSinceNow < 0 {
+    private func updateNumberColor() {
+        // if the date is Expiry.invalid, it means that no real date is calculated yet
+        // if the calculated real date is in the past, set the text color for the date to `invalidNumberColor`
+        if card.expiryDate.rawValue.timeIntervalSinceNow < 0 && card.expiryDate != Expiry.invalid {
             monthTextField?.textColor = invalidInputColor ?? UIColor.redColor()
             yearTextField?.textColor = invalidInputColor ?? UIColor.redColor()
         } else {
             monthTextField?.textColor = numberInputTextField?.textColor ?? UIColor.blackColor()
             yearTextField?.textColor = numberInputTextField?.textColor ?? UIColor.blackColor()
         }
-        
-        notifyDelegate()
     }
 }
