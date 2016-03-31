@@ -183,12 +183,12 @@ public class CardTextField: UITextField, NumberInputTextFieldDelegate {
         cardImageView?.backgroundColor = backgroundColor ?? UIColor.whiteColor()
         cardImageView?.layer.cornerRadius = 5.0
         
-        let leftSwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: Selector("moveNumberFieldLeftAnimated"))
+        let leftSwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(moveNumberFieldLeftAnimated))
         leftSwipeGestureRecognizer.direction = .Left
         firstObjectInNib.addGestureRecognizer(leftSwipeGestureRecognizer)
         
         [firstObjectInNib, cardInfoView].forEach({
-            let rightSwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: Selector("moveNumberFieldRightAnimated"))
+            let rightSwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(moveNumberFieldRightAnimated))
             rightSwipeGestureRecognizer.direction = .Right
             $0?.addGestureRecognizer(rightSwipeGestureRecognizer)
         })
@@ -232,12 +232,12 @@ public class CardTextField: UITextField, NumberInputTextFieldDelegate {
     
     private func setupTargetsForEditinBegin() {
         // Show the full number text field, if editing began on it
-        numberInputTextField?.addTarget(self, action: Selector("moveNumberFieldRightAnimated"), forControlEvents: UIControlEvents.EditingDidBegin)
+        numberInputTextField?.addTarget(self, action: #selector(moveNumberFieldRightAnimated), forControlEvents: UIControlEvents.EditingDidBegin)
         
         // Show CVC image if the cvcTextField is selected, show card image otherwise
         let nonCVCTextFields: [UITextField?] = [numberInputTextField, monthTextField, yearTextField]
-        nonCVCTextFields.forEach({$0?.addTarget(self, action: Selector("showCardImage"), forControlEvents: .EditingDidBegin)})
-        cvcTextField?.addTarget(self, action: Selector("showCVCImage"), forControlEvents: .EditingDidBegin)
+        nonCVCTextFields.forEach({$0?.addTarget(self, action: #selector(showCardImage), forControlEvents: .EditingDidBegin)})
+        cvcTextField?.addTarget(self, action: #selector(showCVCImage), forControlEvents: .EditingDidBegin)
     }
     
     internal func buttonReceivedAction() {
@@ -249,7 +249,7 @@ public class CardTextField: UITextField, NumberInputTextFieldDelegate {
             accessoryButton?.alpha = 0
             return
         }
-        accessoryButton?.addTarget(self, action: Selector("buttonReceivedAction"), forControlEvents: .TouchUpInside)
+        accessoryButton?.addTarget(self, action: #selector(buttonReceivedAction), forControlEvents: .TouchUpInside)
         accessoryButton?.alpha = 1.0
         
         if let buttonImage = cardTextFieldDelegate?.cardTextFieldShouldShowAccessoryImage(self) {
