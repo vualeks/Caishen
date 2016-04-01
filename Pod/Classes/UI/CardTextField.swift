@@ -217,9 +217,9 @@ public class CardTextField: UITextField, NumberInputTextFieldDelegate {
         monthTextField?.deleteBackwardCallback = {_ -> Void in self.numberInputTextField?.becomeFirstResponder()}
         yearTextField?.deleteBackwardCallback = {_ -> Void in self.monthTextField?.becomeFirstResponder()}
         
-        let textFields: [UITextField?] = [numberInputTextField,cvcTextField,monthTextField,yearTextField]
+        let textFields: [UITextField?] = [numberInputTextField, cvcTextField, monthTextField, yearTextField]
         textFields.forEach({
-            $0?.keyboardType = .NumberPad
+            $0?.keyboardType = keyboardType
             $0?.textColor = textColor
             $0?.font = font
             $0?.keyboardAppearance = keyboardAppearance
