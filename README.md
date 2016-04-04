@@ -1,4 +1,4 @@
-# 💳 Caishen - Payment Card UI & Validation for iOS
+![Caishen](caishen.jpg)
 
 ## Description
 

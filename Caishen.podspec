@@ -8,8 +8,8 @@
 
 Pod::Spec.new do |s|
   s.name             = "Caishen"
-  s.version          = "0.1.0"
-  s.summary          = "A short description of Caishen."
+  s.version          = "1.0.0"
+  s.summary          = "A Payment Card UI & Validator for iOS"
 
 # This description is used to generate tags and improve search results.
 #   * Think: What does it do? Why did you write it? What is the focus?
@@ -20,19 +20,14 @@ Pod::Spec.new do |s|
                        Caishen provides a text field to enter credit card (or other card) information and validates most of this information on its own.
                        DESC
 
-  s.homepage         = "https://bitbucket.com/prolificinteractive/caishen.git"
-  # s.screenshots     = "www.example.com/screenshots_1", "www.example.com/screenshots_2"
+  s.homepage         = "https://github.com/prolificinteractive/caishen.git"
   s.license          = 'MIT'
   s.author           = { "Daniel Vancura" => "daniel@prolificinteractive.com" }
-  s.source           = { :git => "git@bitbucket.org:prolificinteractive/caishen.git", :tag => s.version.to_s }
-  # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
+  s.source           = { :git => "git@github.com:prolificinteractive/caishen.git", :tag => s.version.to_s }
 
   s.platform     = :ios, '8.0'
   s.requires_arc = true
 
   s.source_files = 'Pod/Classes/**/*'
   s.resources = 'Pod/Assets/*'
-
-  # s.public_header_files = 'Pod/Classes/**/*.h'
-  # s.frameworks = 'UIKit', 'MapKit'
 end
