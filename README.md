@@ -9,6 +9,8 @@
 
 Caishen provides an easy-to-use text field to ask users for payment card information and to validate the input. It serves a similar purpose as [PaymentKit](https://github.com/stripe/PaymentKit), but is developed as a standalone framework entirely written in Swift. Caishen also allows an easy integration with other third-party frameworks, such as [CardIO](https://www.card.io).
 
+<center> ![Caishen example](caishen_example.gif) </center>
+
 ## Requirements
 
 * iOS 8.0+
