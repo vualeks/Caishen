@@ -176,11 +176,11 @@ extension CardType {
         }
     }
 
-    private func lengthMatchesType(length: Int) -> CardValidationResult {
+    internal func lengthMatchesType(length: Int) -> CardValidationResult {
         return testLength(length, assumingLength: expectedCardNumberLength())
     }
 
-    private func numberIsNumeric(number: Number) -> CardValidationResult {
+    internal func numberIsNumeric(number: Number) -> CardValidationResult {
         for c in number.description.characters {
             if !["0","1","2","3","4","5","6","7","8","9"].contains(c) {
                 return CardValidationResult.NumberIsNotNumeric
