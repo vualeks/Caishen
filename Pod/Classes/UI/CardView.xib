@@ -17,6 +17,7 @@
                 <outlet property="imageViewTrailingConstraint" destination="mBS-KC-Ice" id="haC-BP-Ul7"/>
                 <outlet property="monthTextField" destination="5cX-Z5-afy" id="bXA-0j-EIb"/>
                 <outlet property="numberInputTextField" destination="T6o-6e-fLS" id="nXK-WK-fxm"/>
+                <outlet property="slashLabel" destination="DD8-kX-0ru" id="j1v-0U-FIY"/>
                 <outlet property="yearTextField" destination="CgE-Em-qHJ" id="3Mf-RK-Pnk"/>
             </connections>
         </placeholder>
@@ -64,10 +65,9 @@
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="CVC" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="HOM-PC-B5m" customClass="CVCInputTextField" customModule="Caishen" customModuleProvider="target">
-                                    <rect key="frame" x="480" y="0.0" width="50" height="596"/>
+                                    <rect key="frame" x="309" y="0.0" width="221" height="596"/>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                     <constraints>
-                                        <constraint firstAttribute="width" constant="50" id="Ie7-YX-tsz"/>
                                         <constraint firstAttribute="width" constant="48" id="Qg6-cj-7bj"/>
                                     </constraints>
                                     <fontDescription key="fontDescription" type="system" pointSize="20"/>
@@ -83,6 +83,7 @@
                             <constraints>
                                 <constraint firstItem="5cX-Z5-afy" firstAttribute="top" secondItem="8iN-aK-Jz9" secondAttribute="top" id="2Zp-xN-g24"/>
                                 <constraint firstAttribute="bottom" secondItem="HOM-PC-B5m" secondAttribute="bottom" id="D8T-2E-T05"/>
+                                <constraint firstItem="HOM-PC-B5m" firstAttribute="leading" secondItem="CgE-Em-qHJ" secondAttribute="trailing" id="IPC-0F-WFq"/>
                                 <constraint firstAttribute="trailing" secondItem="HOM-PC-B5m" secondAttribute="trailing" id="JGE-wn-CSH"/>
                                 <constraint firstItem="5cX-Z5-afy" firstAttribute="bottom" secondItem="CgE-Em-qHJ" secondAttribute="bottom" id="K27-9l-pGM"/>
                                 <constraint firstItem="CgE-Em-qHJ" firstAttribute="height" secondItem="8iN-aK-Jz9" secondAttribute="height" id="S9Q-tZ-J9h"/>

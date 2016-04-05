@@ -22,6 +22,7 @@ import UIKit
  
  In order to create a custom CardTextField, you can create a subclass which overrides `getNibName()` and `getNibBundle()` in order to load a nib from a specific bundle, which follows this structure
  */
+@IBDesignable
 public class CardTextField: UITextField, NumberInputTextFieldDelegate {
     
     // MARK: - Public variables
@@ -82,7 +83,7 @@ public class CardTextField: UITextField, NumberInputTextFieldDelegate {
     /**
      The duration of the view animation when switching from number input to detail.
      */
-    @IBInspectable public var viewAnimationDuration: CGFloat = 0.3
+    @IBInspectable public var viewAnimationDuration: Double? = 0.3
     
     /**
      The text color for invalid input in a text field.
@@ -96,6 +97,8 @@ public class CardTextField: UITextField, NumberInputTextFieldDelegate {
             textFields.forEach({$0?.invalidInputColor = invalidInputColor})
         }
     }
+    
+    @IBOutlet weak var slashLabel: UILabel!
     
     @IBOutlet weak var imageViewLeadingConstraint: NSLayoutConstraint?
     
@@ -159,12 +162,14 @@ public class CardTextField: UITextField, NumberInputTextFieldDelegate {
      */
     public var cardTypeRegister: CardTypeRegister = CardTypeRegister.sharedCardTypeRegister
 
+    #if !TARGET_INTERFACE_BUILDER
     public override var placeholder: String? {
         didSet {
             numberInputTextField?.placeholder = placeholder
             super.placeholder = nil
         }
     }
+    #endif
     
     public override var attributedPlaceholder: NSAttributedString? {
         didSet {
@@ -226,12 +231,12 @@ public class CardTextField: UITextField, NumberInputTextFieldDelegate {
         accessoryButtonLeadingConstraint?.constant = accessoryButtonLeadingInset
         accessoryButtonTrailingConstraint?.constant = accessoryButtonTrailingInset
         
-        let leftSwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: Selector("moveNumberFieldLeftAnimated"))
+        let leftSwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(moveNumberFieldLeftAnimated))
         leftSwipeGestureRecognizer.direction = .Left
         firstObjectInNib.addGestureRecognizer(leftSwipeGestureRecognizer)
         
         [firstObjectInNib, cardInfoView].forEach({
-            let rightSwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: Selector("moveNumberFieldRightAnimated"))
+            let rightSwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(moveNumberFieldRightAnimated))
             rightSwipeGestureRecognizer.direction = .Right
             $0?.addGestureRecognizer(rightSwipeGestureRecognizer)
         })
@@ -275,12 +280,12 @@ public class CardTextField: UITextField, NumberInputTextFieldDelegate {
     
     private func setupTargetsForEditinBegin() {
         // Show the full number text field, if editing began on it
-        numberInputTextField?.addTarget(self, action: Selector("moveNumberFieldRightAnimated"), forControlEvents: UIControlEvents.EditingDidBegin)
+        numberInputTextField?.addTarget(self, action: #selector(moveNumberFieldRightAnimated), forControlEvents: UIControlEvents.EditingDidBegin)
         
         // Show CVC image if the cvcTextField is selected, show card image otherwise
         let nonCVCTextFields: [UITextField?] = [numberInputTextField, monthTextField, yearTextField]
-        nonCVCTextFields.forEach({$0?.addTarget(self, action: Selector("showCardImage"), forControlEvents: .EditingDidBegin)})
-        cvcTextField?.addTarget(self, action: Selector("showCVCImage"), forControlEvents: .EditingDidBegin)
+        nonCVCTextFields.forEach({$0?.addTarget(self, action: #selector(showCardImage), forControlEvents: .EditingDidBegin)})
+        cvcTextField?.addTarget(self, action: #selector(showCVCImage), forControlEvents: .EditingDidBegin)
     }
     
     internal func buttonReceivedAction() {
@@ -292,7 +297,7 @@ public class CardTextField: UITextField, NumberInputTextFieldDelegate {
             accessoryButton?.alpha = 0
             return
         }
-        accessoryButton?.addTarget(self, action: Selector("buttonReceivedAction"), forControlEvents: .TouchUpInside)
+        accessoryButton?.addTarget(self, action: #selector(buttonReceivedAction), forControlEvents: .TouchUpInside)
         accessoryButton?.alpha = 1.0
         
         if let buttonImage = cardTextFieldDelegate?.cardTextFieldShouldShowAccessoryImage(self) {
@@ -402,9 +407,9 @@ public class CardTextField: UITextField, NumberInputTextFieldDelegate {
         // Detect touches in card number text field as long as the detail view is on top of it
         touches.forEach({ touch -> () in
             let point = touch.locationInView(self)
-            if (numberInputTextField?.pointInside(point, withEvent: event) ?? false) && [monthTextField,yearTextField,cvcTextField].reduce(true, combine: { (currentValue: Bool, textField: UITextField?) -> Bool in
-                let pointInTextField = touch.locationInView(textField)
-                return currentValue && !(textField?.pointInside(pointInTextField, withEvent: event) ?? false)
+            if (numberInputTextField?.pointInside(point, withEvent: event) ?? false) && [monthTextField,yearTextField,cvcTextField, slashLabel].reduce(true, combine: { (currentValue: Bool, view: UIView?) -> Bool in
+                let pointInView = touch.locationInView(view)
+                return currentValue && !(view?.pointInside(pointInView, withEvent: event) ?? false)
             }) {
                 numberInputTextField?.becomeFirstResponder()
             }
