@@ -225,6 +225,10 @@ public class CardTextField: UITextField, NumberInputTextFieldDelegate {
         cardImageView?.image = cardTypeImageStore.imageForCardType(UnknownCardType())
         cardImageView?.backgroundColor = backgroundColor ?? UIColor.whiteColor()
         cardImageView?.layer.cornerRadius = 5.0
+        cardImageView?.layer.shadowColor = UIColor.blackColor().CGColor
+        cardImageView?.layer.shadowRadius = 2
+        cardImageView?.layer.shadowOffset = CGSize(width: 0, height: 0)
+        cardImageView?.layer.shadowOpacity = 0.2
         
         imageViewLeadingConstraint?.constant = imageViewLeadingInset
         imageViewTrailingConstraint?.constant = imageViewTrailingInset
@@ -299,9 +303,10 @@ public class CardTextField: UITextField, NumberInputTextFieldDelegate {
         }
         accessoryButton?.addTarget(self, action: #selector(buttonReceivedAction), forControlEvents: .TouchUpInside)
         accessoryButton?.alpha = 1.0
+        accessoryButton?.imageView?.contentMode = .ScaleAspectFit
         
         if let buttonImage = cardTextFieldDelegate?.cardTextFieldShouldShowAccessoryImage(self) {
-            let scaledImage = buttonImage.resizableImageWithCapInsets(UIEdgeInsetsZero, resizingMode: .Stretch).imageWithRenderingMode(.AlwaysTemplate)
+            let scaledImage = buttonImage.resizableImageWithCapInsets(UIEdgeInsetsZero, resizingMode: .Stretch)
             accessoryButton?.titleLabel?.text = nil
             accessoryButton?.setImage(scaledImage, forState: .Normal)
             accessoryButton?.tintColor = numberInputTextField?.textColor
