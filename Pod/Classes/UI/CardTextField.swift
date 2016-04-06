@@ -219,7 +219,7 @@ public class CardTextField: UITextField, NumberInputTextFieldDelegate {
         
         let textFields: [UITextField?] = [numberInputTextField, cvcTextField, monthTextField, yearTextField]
         textFields.forEach({
-            $0?.keyboardType = keyboardType
+            $0?.keyboardType = .NumberPad
             $0?.textColor = textColor
             $0?.font = font
             $0?.keyboardAppearance = keyboardAppearance
