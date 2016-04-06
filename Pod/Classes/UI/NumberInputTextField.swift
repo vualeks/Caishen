@@ -105,7 +105,11 @@ public class NumberInputTextField: StylizedTextField {
             cardNumberFormatter.replaceRangeFormatted(range, inTextField: textField, withString: string)
             numberInputTextFieldDelegate?.numberInputTextFieldDidChangeText(self)
         } else if oldValidation == .Valid {
+            // If the card number is already valid, should call numberInputTextFieldDidComplete on delegate
+            // then set the text color back to normal and return
             numberInputTextFieldDelegate?.numberInputTextFieldDidComplete(self)
+            super.textColor = _textColor
+            return false
         }
 
         let newLengthComplete =
