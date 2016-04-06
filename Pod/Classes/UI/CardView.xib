@@ -8,9 +8,13 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CardTextField" customModule="Caishen" customModuleProvider="target">
             <connections>
                 <outlet property="accessoryButton" destination="WR5-rr-22S" id="8Mg-jG-iB9"/>
+                <outlet property="accessoryButtonLeadingConstraint" destination="Ivc-7s-fyb" id="7ud-Ug-JyA"/>
+                <outlet property="accessoryButtonTrailingConstraint" destination="8IL-Hs-rCS" id="68G-sh-uO5"/>
                 <outlet property="cardImageView" destination="puU-AL-gPV" id="AIn-X0-fGf"/>
                 <outlet property="cardInfoView" destination="8iN-aK-Jz9" id="esE-ci-h9N"/>
                 <outlet property="cvcTextField" destination="HOM-PC-B5m" id="dFv-Ti-Hef"/>
+                <outlet property="imageViewLeadingConstraint" destination="fP2-Mh-h6I" id="1g4-D0-ir2"/>
+                <outlet property="imageViewTrailingConstraint" destination="mBS-KC-Ice" id="haC-BP-Ul7"/>
                 <outlet property="monthTextField" destination="5cX-Z5-afy" id="bXA-0j-EIb"/>
                 <outlet property="numberInputTextField" destination="T6o-6e-fLS" id="nXK-WK-fxm"/>
                 <outlet property="slashLabel" destination="DD8-kX-0ru" id="j1v-0U-FIY"/>
