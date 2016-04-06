@@ -13,7 +13,10 @@ internal struct UnknownCardType: CardType {
     let identifyingDigits: Set<Int> = []
 
     func validateNumber(cardNumber: Number) -> CardValidationResult {
-        return .UnknownType
+        return CardValidationResult.UnknownType
+            .union(lengthMatchesType(cardNumber.length))
+            .union(numberIsNumeric(cardNumber))
+            .union(numberIsValidLuhn(cardNumber))
     }
 
     func validateCVC(cvc: CVC) -> CardValidationResult {
