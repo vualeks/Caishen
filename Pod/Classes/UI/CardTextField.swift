@@ -223,7 +223,6 @@ public class CardTextField: UITextField, NumberInputTextFieldDelegate {
         addSubview(firstObjectInNib)
         
         cardImageView?.image = cardTypeImageStore.imageForCardType(UnknownCardType())
-        cardImageView?.backgroundColor = backgroundColor ?? UIColor.whiteColor()
         cardImageView?.layer.cornerRadius = 5.0
         cardImageView?.layer.shadowColor = UIColor.blackColor().CGColor
         cardImageView?.layer.shadowRadius = 2
