@@ -45,6 +45,9 @@ extension CardTextField: CardInfoTextFieldDelegate {
         nextTextField?.delegate?.textField?(nextTextField!, shouldChangeCharactersInRange: NSMakeRange(0, (nextTextField?.text ?? "").characters.count), replacementString: prefillText)
     }
     
+    /**
+     Updates the color of month and year text field based on whether or not the input into those text fields is valid or not.
+     */
     private func updateNumberColor() {
         // if the expiration date is not valid, set the text color for the date to `invalidNumberColor`
         if !expirationDateIsValid() {
