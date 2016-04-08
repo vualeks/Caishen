@@ -304,10 +304,8 @@ public class CardTextField: UITextField, NumberInputTextFieldDelegate {
      */
     private func setupAccessibilityLabelForTextField(textField: UITextField) {
         let currentBundle = NSBundle(forClass: CardTextField.self)
-        textField.accessibilityLabel = NSLocalizedString(textField.accessibilityLabelLocalizationKey(),
-                                                         tableName: localizationStringFileName,
-                                                         bundle: currentBundle,
-                                                         comment: "Accessibility label for \(String(textField))")
+        textField.accessibilityLabel = Localization.accessibilityLabelForTextField(textField,
+                                                                                   comment: "Accessibility label for \(String(textField))")
     }
     
     private func setupTargetsForEditinBegin() {
