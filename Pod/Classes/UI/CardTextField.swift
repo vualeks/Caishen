@@ -303,7 +303,6 @@ public class CardTextField: UITextField, NumberInputTextFieldDelegate {
      - parameter textField: a text field that needs support for voice over accessibility
      */
     private func setupAccessibilityLabelForTextField(textField: UITextField) {
-        let currentBundle = NSBundle(forClass: CardTextField.self)
         textField.accessibilityLabel = Localization.accessibilityLabelForTextField(textField,
                                                                                    comment: "Accessibility label for \(String(textField))")
     }
