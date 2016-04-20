@@ -9,11 +9,8 @@
 /* Begin PBXBuildFile section */
 		2FDD151B1CC7B0B90086CEAC /* Caishen.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2FDD15101CC7B0B90086CEAC /* Caishen.framework */; };
 		2FDD15201CC7B0B90086CEAC /* CaishenTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FDD151F1CC7B0B90086CEAC /* CaishenTests.swift */; };
-		2FDD152C1CC7B1A10086CEAC /* Caishen.h in Headers */ = {isa = PBXBuildFile; fileRef = 2FDD152A1CC7B1A10086CEAC /* Caishen.h */; };
-		2FDD152D1CC7B1A10086CEAC /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2FDD152B1CC7B1A10086CEAC /* Info.plist */; };
-		2FDD155F1CC7B1AC0086CEAC /* .gitkeep in Resources */ = {isa = PBXBuildFile; fileRef = 2FDD152F1CC7B1AC0086CEAC /* .gitkeep */; };
+		2FDD152C1CC7B1A10086CEAC /* Caishen.h in Headers */ = {isa = PBXBuildFile; fileRef = 2FDD152A1CC7B1A10086CEAC /* Caishen.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2FDD15601CC7B1AC0086CEAC /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2FDD15301CC7B1AC0086CEAC /* Media.xcassets */; };
-		2FDD15611CC7B1AC0086CEAC /* .gitkeep in Resources */ = {isa = PBXBuildFile; fileRef = 2FDD15321CC7B1AC0086CEAC /* .gitkeep */; };
 		2FDD15621CC7B1AC0086CEAC /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FDD15341CC7B1AC0086CEAC /* Card.swift */; };
 		2FDD15631CC7B1AC0086CEAC /* CardType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FDD15351CC7B1AC0086CEAC /* CardType.swift */; };
 		2FDD15641CC7B1AC0086CEAC /* CardTypeRegister.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FDD15361CC7B1AC0086CEAC /* CardTypeRegister.swift */; };
@@ -377,11 +374,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2FDD152D1CC7B1A10086CEAC /* Info.plist in Resources */,
 				2FDD15601CC7B1AC0086CEAC /* Media.xcassets in Resources */,
 				2FDD15791CC7B1AC0086CEAC /* CardView.xib in Resources */,
-				2FDD155F1CC7B1AC0086CEAC /* .gitkeep in Resources */,
-				2FDD15611CC7B1AC0086CEAC /* .gitkeep in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -554,7 +548,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = Caishen/Info.plist;
+				INFOPLIST_FILE = Pod/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.prolificinteractive.Caishen;
@@ -570,7 +564,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = Caishen/Info.plist;
+				INFOPLIST_FILE = Pod/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.prolificinteractive.Caishen;
