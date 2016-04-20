@@ -16,7 +16,6 @@ public extension CardTextField {
     public override final var backgroundColor: UIColor? {
         didSet {
             numberInputTextField?.backgroundColor = backgroundColor
-            cardImageView?.backgroundColor = backgroundColor
         }
     }
     public override final var font: UIFont? {
