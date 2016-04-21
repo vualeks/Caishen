@@ -10,7 +10,7 @@ import XCTest
 import Caishen
 
 class CardNumberFormatterTests: XCTestCase {
-
+    
     private let separator = "-"
     private var formatter: CardNumberFormatter!
     

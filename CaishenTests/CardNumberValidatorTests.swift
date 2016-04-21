@@ -25,7 +25,7 @@ class CardNumberValidatorTests: XCTestCase {
         "6202825789208058", "6239804726435477", "6286698514203507",
         "6234017862752879", "6273996009006863", "6268602610482249",
         "6201175172181186", "6205373975695173",
-    ]
+        ]
     private let validDinersClubNumbers = [
         "38923577957110","30014619316479","30230875312552",
         "30039434938819","30322407024993","30398292508332",
@@ -61,7 +61,7 @@ class CardNumberValidatorTests: XCTestCase {
         "4532075300709459","4716793955224230","4556481214195861",
         "4556485551226429"
     ]
-
+    
     override func setUp() {
         super.setUp()
         // Put setup code here. This method is called before the invocation of each test method in the class.
@@ -109,7 +109,7 @@ class CardNumberValidatorTests: XCTestCase {
             XCTAssertValid(JCB().validateNumber(Number(rawValue: $0)))
         })
     }
-
+    
     func testValidateCardLength() {
         let tooShortVisa = "411111111111111"
         let tooShortAmex = "37828224631000"
@@ -146,7 +146,7 @@ class CardNumberValidatorTests: XCTestCase {
     
     /**
      Changes the last digit of the card number (i.e. the digit that is used for validation with the Luhn test) and tests, if the Luhn test fails.
-    */
+     */
     func testInvalidLuhnTest() {
         var allValidCardNumbers = validVisaNumbers
         allValidCardNumbers.appendContentsOf(self.validAmexNumbers)
@@ -176,5 +176,5 @@ class CardNumberValidatorTests: XCTestCase {
             XCTAssertLuhnTestFailed(Visa().validateNumber(Number(rawValue: $0)))
         })
     }
-
+    
 }

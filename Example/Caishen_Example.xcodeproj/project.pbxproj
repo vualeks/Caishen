@@ -8,18 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		00A5F9A4A948E7C226FCF96B /* Pods_Caishen_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2C5B500BD17E808EB601278 /* Pods_Caishen_Example.framework */; };
-		080E847E1C6AA3AB00AAA47F /* CardNumberFormatterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 080E847D1C6AA3AB00AAA47F /* CardNumberFormatterTests.swift */; };
-		08A3BADD1C62C412001B81D6 /* CardCVCValidatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A3BAD91C62C3CE001B81D6 /* CardCVCValidatorTests.swift */; };
-		08A3BADE1C62C412001B81D6 /* XCTAssertValidation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A3BADA1C62C3CE001B81D6 /* XCTAssertValidation.swift */; };
-		08A3BAE41C62DFE4001B81D6 /* CardExpiryValidatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A3BAE31C62DFE4001B81D6 /* CardExpiryValidatorTests.swift */; };
-		08A3BAE81C63D5FC001B81D6 /* CardNumberValidatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A3BAE71C63D5FC001B81D6 /* CardNumberValidatorTests.swift */; };
 		08C34F401C971F2F008F57D8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08C34F3F1C971F2F008F57D8 /* AppDelegate.swift */; };
 		08C34F481C971F50008F57D8 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 08C34F441C971F50008F57D8 /* Images.xcassets */; };
 		08C34F491C971F50008F57D8 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08C34F451C971F50008F57D8 /* ViewController.swift */; };
 		08C34F4E1C971F6B008F57D8 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 08C34F4A1C971F6B008F57D8 /* LaunchScreen.xib */; };
 		08C34F4F1C971F6B008F57D8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 08C34F4C1C971F6B008F57D8 /* Main.storyboard */; };
 		08C34F521C9728D6008F57D8 /* Caishen.podspec in Resources */ = {isa = PBXBuildFile; fileRef = 08C34F511C9728D6008F57D8 /* Caishen.podspec */; };
-		607FACEC1AFB9204008FA782 /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* Tests.swift */; };
 		9F31C4DC462668079FCABDB4 /* Pods_Caishen_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9559D8D53C30F3FAC256766D /* Pods_Caishen_Tests.framework */; };
 /* End PBXBuildFile section */
 
@@ -34,11 +28,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		080E847D1C6AA3AB00AAA47F /* CardNumberFormatterTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardNumberFormatterTests.swift; sourceTree = "<group>"; };
-		08A3BAD91C62C3CE001B81D6 /* CardCVCValidatorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardCVCValidatorTests.swift; sourceTree = "<group>"; };
-		08A3BADA1C62C3CE001B81D6 /* XCTAssertValidation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XCTAssertValidation.swift; sourceTree = "<group>"; };
-		08A3BAE31C62DFE4001B81D6 /* CardExpiryValidatorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardExpiryValidatorTests.swift; sourceTree = "<group>"; };
-		08A3BAE71C63D5FC001B81D6 /* CardNumberValidatorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardNumberValidatorTests.swift; sourceTree = "<group>"; };
 		08C34F3F1C971F2F008F57D8 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = Caishen/AppDelegate.swift; sourceTree = SOURCE_ROOT; };
 		08C34F441C971F50008F57D8 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = Caishen/Images.xcassets; sourceTree = SOURCE_ROOT; };
 		08C34F451C971F50008F57D8 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ViewController.swift; path = Caishen/ViewController.swift; sourceTree = SOURCE_ROOT; };
@@ -53,8 +42,6 @@
 		5C2F66327519DFF42ED0E09E /* Pods-Caishen_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Caishen_Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-Caishen_Tests/Pods-Caishen_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		607FACD01AFB9204008FA782 /* Caishen_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Caishen_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACE51AFB9204008FA782 /* Caishen_Example.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Caishen_Example.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		607FACEA1AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		607FACEB1AFB9204008FA782 /* Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests.swift; sourceTree = "<group>"; };
 		9559D8D53C30F3FAC256766D /* Pods_Caishen_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Caishen_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D16F00C251F96816CB5C0F5B /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		D308422F08FF13844BA17BF8 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
@@ -81,18 +68,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		08A3BAE51C62E77E001B81D6 /* Validation */ = {
-			isa = PBXGroup;
-			children = (
-				08A3BADA1C62C3CE001B81D6 /* XCTAssertValidation.swift */,
-				08A3BAD91C62C3CE001B81D6 /* CardCVCValidatorTests.swift */,
-				08A3BAE31C62DFE4001B81D6 /* CardExpiryValidatorTests.swift */,
-				08A3BAE71C63D5FC001B81D6 /* CardNumberValidatorTests.swift */,
-				080E847D1C6AA3AB00AAA47F /* CardNumberFormatterTests.swift */,
-			);
-			name = Validation;
-			sourceTree = "<group>";
-		};
 		1E9F4BF354A66B4DFE2F93E1 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -118,7 +93,6 @@
 			children = (
 				607FACF51AFB993E008FA782 /* Podspec Metadata */,
 				607FACD21AFB9204008FA782 /* Example for Caishen */,
-				607FACE81AFB9204008FA782 /* Tests */,
 				607FACD11AFB9204008FA782 /* Products */,
 				1E9F4BF354A66B4DFE2F93E1 /* Pods */,
 				4032CC4F2123014244455632 /* Frameworks */,
@@ -153,24 +127,6 @@
 			isa = PBXGroup;
 			children = (
 				08C34F531C9728EB008F57D8 /* Info.plist */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		607FACE81AFB9204008FA782 /* Tests */ = {
-			isa = PBXGroup;
-			children = (
-				08A3BAE51C62E77E001B81D6 /* Validation */,
-				607FACEB1AFB9204008FA782 /* Tests.swift */,
-				607FACE91AFB9204008FA782 /* Supporting Files */,
-			);
-			path = Tests;
-			sourceTree = "<group>";
-		};
-		607FACE91AFB9204008FA782 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				607FACEA1AFB9204008FA782 /* Info.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -396,12 +352,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				08A3BADD1C62C412001B81D6 /* CardCVCValidatorTests.swift in Sources */,
-				08A3BAE41C62DFE4001B81D6 /* CardExpiryValidatorTests.swift in Sources */,
-				08A3BADE1C62C412001B81D6 /* XCTAssertValidation.swift in Sources */,
-				080E847E1C6AA3AB00AAA47F /* CardNumberFormatterTests.swift in Sources */,
-				08A3BAE81C63D5FC001B81D6 /* CardNumberValidatorTests.swift in Sources */,
-				607FACEC1AFB9204008FA782 /* Tests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
