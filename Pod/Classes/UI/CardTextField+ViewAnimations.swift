@@ -39,8 +39,16 @@ public extension CardTextField {
         }
         numberInputTextField?.becomeFirstResponder()
         if let rect = numberInputTextField?.rectForLastGroup() {
-            numberInputTextField?.transform =
-                CGAffineTransformMakeTranslation(-rect.origin.x, 0)
+            if isRightToLeftLanguage {
+                let shapeLayer = CAShapeLayer()
+                let path = CGPathCreateWithRect(rect, nil)
+                shapeLayer.path = path
+                numberInputTextField.layer.mask = shapeLayer
+                numberInputTextField?.transform = CGAffineTransformIdentity
+            } else {
+                numberInputTextField?.transform =
+                    CGAffineTransformMakeTranslation(-rect.origin.x, 0)
+            }
         } else {
             numberInputTextField?.alpha = 0
         }
@@ -58,6 +66,8 @@ public extension CardTextField {
         numberInputTextField?.transform = CGAffineTransformIdentity
         numberInputTextField?.alpha = 1
         numberInputTextField.becomeFirstResponder()
-        cardInfoView?.transform = CGAffineTransformMakeTranslation(superview!.bounds.width, 0)
+        numberInputTextField.layer.mask = nil
+        let offset = isRightToLeftLanguage ? -superview!.bounds.width : superview!.bounds.width
+        cardInfoView?.transform = CGAffineTransformMakeTranslation(offset, 0)
     }
 }
