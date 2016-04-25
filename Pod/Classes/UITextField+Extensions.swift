@@ -19,6 +19,5 @@ internal extension UITextField {
     internal static var emptyTextFieldCharacter: String {
         return "\u{202F}"
     }
-
 }
 

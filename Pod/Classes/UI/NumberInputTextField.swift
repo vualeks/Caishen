@@ -54,6 +54,32 @@ public class NumberInputTextField: StylizedTextField {
         }
     }
     
+    public override var accessibilityValue: String? {
+        get {
+            // In order to read digits of the card number one by one, return them as "4 1 1 ..." separated by single spaces and commas inbetween groups for pauses
+            var singleDigits: [Character] = []
+            var lastCharWasReplacedWithComma = false
+            text?.characters.forEach({
+                if !$0.isNumeric() {
+                    if !lastCharWasReplacedWithComma {
+                        singleDigits.append(",")
+                        lastCharWasReplacedWithComma = true
+                    } else {
+                        lastCharWasReplacedWithComma = false
+                    }
+                }
+                singleDigits.append($0)
+                singleDigits.append(" ")
+            })
+            return String(singleDigits)
+                + ". "
+                + Localization.CardType.localizedStringWithComment("Description for detected card type.")
+                + ": "
+                + cardTypeRegister.cardTypeForNumber(cardNumber).name
+        }
+        
+        set {  }
+    }
     
     private var _textColor: UIColor?
     override public var textColor: UIColor? {
@@ -110,12 +136,15 @@ public class NumberInputTextField: StylizedTextField {
             numberInputTextFieldDelegate?.numberInputTextFieldDidComplete(self)
             super.textColor = _textColor
             return false
+        } else {
+            notifyNumberInvalidity()
         }
 
         let newLengthComplete =
             parsedCardNumber.length == cardTypeRegister.cardTypeForNumber(parsedCardNumber).maxLength
 
         if newLengthComplete && newValidation != .Valid {
+            addNumberInvalidityObserver()
         } else if newValidation == .Valid {
             numberInputTextFieldDelegate?.numberInputTextFieldDidComplete(self)
         }
@@ -130,8 +159,7 @@ public class NumberInputTextField: StylizedTextField {
     }
     
     public func prefillInformation(cardNumber: String) {
-        let validCharacters: Set<Character> = Set("0123456789".characters)
-        let unformattedCardNumber = String(cardNumber.characters.filter({validCharacters.contains($0)}))
+        let unformattedCardNumber = String(cardNumber.characters.filter({$0.isNumeric()}))
         let cardNumber = Number(rawValue: unformattedCardNumber)
         let type = cardTypeRegister.cardTypeForNumber(cardNumber)
         let numberPartiallyValid = type.checkCardNumberPartiallyValid(cardNumber) == .Valid
@@ -179,5 +207,31 @@ public class NumberInputTextField: StylizedTextField {
         }
         
         return rectForTextRange(NSMakeRange(textLength - lastGroupLength, lastGroupLength), inTextField: self)
+    }
+    
+    // MARK: Accessibility
+    
+    /**
+     Add an observer to listen to the event of UIAccessibilityAnnouncementDidFinishNotification, and then post an accessibility
+     notification to user that the entered card number is not valid.
+     
+     The reason why can't we just post an accessbility notification is that only the last accessibility notification would be read to users.
+     As each time users input something there will be an accessibility notification from the system which will always replace what we have
+     posted here. Thus we need to listen to the notification from the system first, wait until it is finished, and post ours afterwards.
+     */
+    private func addNumberInvalidityObserver() {
+        NSNotificationCenter.defaultCenter().addObserver(self,
+                                                         selector: #selector(notifyNumberInvalidity),
+                                                         name: UIAccessibilityAnnouncementDidFinishNotification,
+                                                         object: nil)
+    }
+    
+    /**
+     Notify user the entered card number is invalid when accessibility is turned on
+     */
+    @objc private func notifyNumberInvalidity() {
+        let localizedString = Localization.InvalidCardNumber.localizedStringWithComment("The expiration date entered is not valid")
+        UIAccessibilityPostNotification(UIAccessibilityAnnouncementNotification, localizedString)
+        NSNotificationCenter.defaultCenter().removeObserver(self)
     }
 }

@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		08A9C6CB1CC980BD00B5C4D7 /* CharacterExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A9C6C91CC980BD00B5C4D7 /* CharacterExtension.swift */; };
+		08A9C6CC1CC980BD00B5C4D7 /* Localization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A9C6CA1CC980BD00B5C4D7 /* Localization.swift */; };
 		2FDD151B1CC7B0B90086CEAC /* Caishen.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2FDD15101CC7B0B90086CEAC /* Caishen.framework */; };
 		2FDD15201CC7B0B90086CEAC /* CaishenTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FDD151F1CC7B0B90086CEAC /* CaishenTests.swift */; };
 		2FDD152C1CC7B1A10086CEAC /* Caishen.h in Headers */ = {isa = PBXBuildFile; fileRef = 2FDD152A1CC7B1A10086CEAC /* Caishen.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -65,6 +67,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		08A9C6C91CC980BD00B5C4D7 /* CharacterExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CharacterExtension.swift; sourceTree = "<group>"; };
+		08A9C6CA1CC980BD00B5C4D7 /* Localization.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Localization.swift; sourceTree = "<group>"; };
 		2FDD15101CC7B0B90086CEAC /* Caishen.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Caishen.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2FDD151A1CC7B0B90086CEAC /* CaishenTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CaishenTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2FDD151F1CC7B0B90086CEAC /* CaishenTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaishenTests.swift; sourceTree = "<group>"; };
@@ -193,11 +197,13 @@
 			isa = PBXGroup;
 			children = (
 				2FDD15321CC7B1AC0086CEAC /* .gitkeep */,
+				2FDD15451CC7B1AC0086CEAC /* StringExtension.swift */,
+				2FDD155C1CC7B1AC0086CEAC /* UITextField+Extensions.swift */,
+				08A9C6C91CC980BD00B5C4D7 /* CharacterExtension.swift */,
+				08A9C6CA1CC980BD00B5C4D7 /* Localization.swift */,
 				2FDD15331CC7B1AC0086CEAC /* Cards */,
 				2FDD15431CC7B1AC0086CEAC /* Format */,
-				2FDD15451CC7B1AC0086CEAC /* StringExtension.swift */,
 				2FDD15461CC7B1AC0086CEAC /* UI */,
-				2FDD155C1CC7B1AC0086CEAC /* UITextField+Extensions.swift */,
 				2FDD155D1CC7B1AC0086CEAC /* Validation */,
 			);
 			name = Classes;
@@ -413,6 +419,7 @@
 				2FDD15691CC7B1AC0086CEAC /* Discover.swift in Sources */,
 				2FDD15841CC7B1AC0086CEAC /* UITextField+Extensions.swift in Sources */,
 				2FDD15681CC7B1AC0086CEAC /* DinersClub.swift in Sources */,
+				08A9C6CC1CC980BD00B5C4D7 /* Localization.swift in Sources */,
 				2FDD15781CC7B1AC0086CEAC /* CardTypeImageStore.swift in Sources */,
 				2FDD156C1CC7B1AC0086CEAC /* UnknownCardType.swift in Sources */,
 				2FDD156A1CC7B1AC0086CEAC /* JCB.swift in Sources */,
@@ -429,6 +436,7 @@
 				2FDD15751CC7B1AC0086CEAC /* CardTextField+ViewAnimations.swift in Sources */,
 				2FDD156B1CC7B1AC0086CEAC /* MasterCard.swift in Sources */,
 				2FDD15801CC7B1AC0086CEAC /* MonthInputTextField.swift in Sources */,
+				08A9C6CB1CC980BD00B5C4D7 /* CharacterExtension.swift in Sources */,
 				2FDD157C1CC7B1AC0086CEAC /* StylizedTextField.swift in Sources */,
 				2FDD157D1CC7B1AC0086CEAC /* CVCInputTextField.swift in Sources */,
 				2FDD156F1CC7B1AC0086CEAC /* Number.swift in Sources */,

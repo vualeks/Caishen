@@ -248,6 +248,7 @@ public class CardTextField: UITextField, NumberInputTextFieldDelegate {
         setupTextFieldAttributes()
         setupTargetsForEditinBegin()
         setupAccessoryButton()
+        setupAccessibilityLabels()
     }
     
     private func setupTextFieldDelegates() {
@@ -281,6 +282,26 @@ public class CardTextField: UITextField, NumberInputTextFieldDelegate {
         super.placeholder = nil
     }
     
+    /**
+     Adds voice over accessibility support for all text fields
+     */
+    private func setupAccessibilityLabels() {
+        setupAccessibilityLabelForTextField(numberInputTextField)
+        setupAccessibilityLabelForTextField(cvcTextField)
+        setupAccessibilityLabelForTextField(monthTextField)
+        setupAccessibilityLabelForTextField(yearTextField)
+    }
+    
+    /**
+     Adds voice over accessibility support for a particular text fields
+     
+     - parameter textField: a text field that needs support for voice over accessibility
+     */
+    private func setupAccessibilityLabelForTextField(textField: UITextField) {
+        textField.accessibilityLabel = Localization.accessibilityLabelForTextField(textField,
+                                                                                   comment: "Accessibility label for \(String(textField))")
+    }
+    
     private func setupTargetsForEditinBegin() {
         // Show the full number text field, if editing began on it
         numberInputTextField?.addTarget(self, action: #selector(moveNumberFieldRightAnimated), forControlEvents: UIControlEvents.EditingDidBegin)
@@ -310,6 +331,8 @@ public class CardTextField: UITextField, NumberInputTextFieldDelegate {
             accessoryButton?.setImage(scaledImage, forState: .Normal)
             accessoryButton?.tintColor = numberInputTextField?.textColor
         }
+        
+        accessoryButton?.accessibilityLabel = cardTextFieldDelegate?.cardTextFieldShouldProvideAccessoryButtonAccessibilityLabel(self)
     }
     
     // MARK: - View lifecycle
@@ -418,6 +441,43 @@ public class CardTextField: UITextField, NumberInputTextFieldDelegate {
                 numberInputTextField?.becomeFirstResponder()
             }
         })
+    }
+    
+    // MARK: Accessibility
+    
+    /**
+     There are 5 elements that enables accessibility in a CardTextField.
+     They are numberInputTextField, monthTextField, yearTextField, cvcTextField and accessoryButton.
+     They should be focused when user click on one of them when accessibility is on.
+     
+     - returns: total number accessibility elements in the container CardTextField
+     */
+    public override func accessibilityElementCount() -> Int {
+        return 5
+    }
+    
+    /**
+     Returns the accessibility element at the specified index
+     
+     - parameter index: The index of the accessibility element
+     
+     - returns: The accessibility element at the specified index, or nil if none exists
+     */
+    public override func accessibilityElementAtIndex(index: Int) -> AnyObject? {
+        switch index {
+        case 0:
+            return numberInputTextField
+        case 1:
+            return monthTextField
+        case 2:
+            return yearTextField
+        case 3:
+            return cvcTextField
+        case 4:
+            return accessoryButton
+        default:
+            return nil
+        }
     }
     
     public override func becomeFirstResponder() -> Bool {
