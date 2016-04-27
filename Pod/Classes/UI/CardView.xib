@@ -29,7 +29,7 @@
                 <view clipsSubviews="YES" contentMode="scaleToFill" semanticContentAttribute="forceLeftToRight" translatesAutoresizingMaskIntoConstraints="NO" id="UFG-yT-gmg">
                     <rect key="frame" x="31" y="2" width="530" height="596"/>
                     <subviews>
-                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" semanticContentAttribute="forceLeftToRight" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="0000000000000000" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="T6o-6e-fLS" customClass="NumberInputTextField" customModule="Caishen" customModuleProvider="target">
+                        <textField opaque="NO" clipsSubviews="YES" contentMode="redraw" semanticContentAttribute="forceLeftToRight" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="0000000000000000" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="T6o-6e-fLS" customClass="NumberInputTextField" customModule="Caishen" customModuleProvider="target">
                             <rect key="frame" x="4" y="0.0" width="526" height="596"/>
                             <accessibility key="accessibilityConfiguration" label="Card Number"/>
                             <fontDescription key="fontDescription" type="system" pointSize="20"/>
@@ -41,7 +41,7 @@
                         <view contentMode="scaleToFill" semanticContentAttribute="forceLeftToRight" translatesAutoresizingMaskIntoConstraints="NO" id="8iN-aK-Jz9">
                             <rect key="frame" x="0.0" y="0.0" width="530" height="596"/>
                             <subviews>
-                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" semanticContentAttribute="forceLeftToRight" contentHorizontalAlignment="right" contentVerticalAlignment="center" placeholder="MM" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="5cX-Z5-afy" customClass="MonthInputTextField" customModule="Caishen" customModuleProvider="target">
+                                <textField opaque="NO" clipsSubviews="YES" contentMode="redraw" semanticContentAttribute="forceLeftToRight" contentHorizontalAlignment="right" contentVerticalAlignment="center" placeholder="MM" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="5cX-Z5-afy" customClass="MonthInputTextField" customModule="Caishen" customModuleProvider="target">
                                     <rect key="frame" x="229" y="0.0" width="37" height="596"/>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                     <accessibility key="accessibilityConfiguration" label="Expiration Month"/>
@@ -51,7 +51,7 @@
                                     <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                     <textInputTraits key="textInputTraits"/>
                                 </textField>
-                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" semanticContentAttribute="forceLeftToRight" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="YY" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="CgE-Em-qHJ" customClass="YearInputTextField" customModule="Caishen" customModuleProvider="target">
+                                <textField opaque="NO" clipsSubviews="YES" contentMode="redraw" semanticContentAttribute="forceLeftToRight" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="YY" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="CgE-Em-qHJ" customClass="YearInputTextField" customModule="Caishen" customModuleProvider="target">
                                     <rect key="frame" x="272" y="0.0" width="37" height="596"/>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                     <accessibility key="accessibilityConfiguration" label="Expiration Year"/>
@@ -70,7 +70,7 @@
                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" semanticContentAttribute="forceLeftToRight" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="CVC" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="HOM-PC-B5m" customClass="CVCInputTextField" customModule="Caishen" customModuleProvider="target">
+                                <textField opaque="NO" clipsSubviews="YES" contentMode="redraw" semanticContentAttribute="forceLeftToRight" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="CVC" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="HOM-PC-B5m" customClass="CVCInputTextField" customModule="Caishen" customModuleProvider="target">
                                     <rect key="frame" x="309" y="0.0" width="221" height="596"/>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                     <accessibility key="accessibilityConfiguration" label="Card Verification Code"/>
