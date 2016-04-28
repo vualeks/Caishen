@@ -67,7 +67,22 @@ public extension CardTextField {
         numberInputTextField?.alpha = 1
         numberInputTextField.becomeFirstResponder()
         numberInputTextField.layer.mask = nil
+        
+        // Move card info view
         let offset = isRightToLeftLanguage ? -superview!.bounds.width : superview!.bounds.width
         cardInfoView?.transform = CGAffineTransformMakeTranslation(offset, 0)
+        
+        // If card info view is moved with an animation, wait for it to finish before
+        // showing the full card number to avoid overlapping on RTL language.
+        if cardInfoView?.layer.animationKeys() != nil {
+            dispatch_after(dispatch_time(
+                DISPATCH_TIME_NOW,
+                Int64(viewAnimationDuration * Double(NSEC_PER_SEC))),
+                           dispatch_get_main_queue()) { [weak self] _ in
+                self?.numberInputTextField?.layer.mask = nil
+            }
+        } else {
+            numberInputTextField?.layer.mask = nil
+        }
     }
 }
