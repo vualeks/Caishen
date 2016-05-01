@@ -37,8 +37,20 @@ public extension CardTextField {
         if cardType?.validateNumber(card.bankCardNumber) != .Valid {
             return
         }
-        numberInputTextField?.becomeFirstResponder()
+        // We will set numberInputTextField as first responder in the next step. This will trigger `editingDidBegin`
+        // which in turn will cause the number field to move to full display. This can cause animation issues.
+        // In order to tackle these animation issues, check if the cardInfoView was previously fully displayed (and should therefor not be moved with an animation).
+        var shouldMoveAnimated: Bool = true
+        if let transform = cardInfoView?.transform where CGAffineTransformIsIdentity(transform) {
+            shouldMoveAnimated = false
+        }
+        UIView.performWithoutAnimation { [weak self] _ in
+            self?.numberInputTextField?.becomeFirstResponder()
+        }
+        // Get the rect for the last group of digits
         if let rect = numberInputTextField?.rectForLastGroup() {
+            // If on RTL language: hide the entire number except for the last group.
+            // Else: Move the number out of range, except for the last group.
             if isRightToLeftLanguage {
                 let shapeLayer = CAShapeLayer()
                 let path = CGPathCreateWithRect(rect, nil)
@@ -52,9 +64,18 @@ public extension CardTextField {
         } else {
             numberInputTextField?.alpha = 0
         }
-        numberInputTextField?.resignFirstResponder()
-        cardInfoView?.transform = CGAffineTransformIdentity
-        monthTextField.becomeFirstResponder()
+        // Reset the first responder status as it was before.
+        UIView.performWithoutAnimation { [weak self] _ in
+            self?.numberInputTextField?.resignFirstResponder()
+        }
+        if shouldMoveAnimated {
+            cardInfoView?.transform = CGAffineTransformIdentity
+        } else {
+            UIView.performWithoutAnimation { [weak self] _ in
+                self?.cardInfoView?.transform = CGAffineTransformIdentity
+            }
+        }
+		monthTextField.becomeFirstResponder()
     }
     
     /**
