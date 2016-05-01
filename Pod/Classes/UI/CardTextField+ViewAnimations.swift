@@ -58,8 +58,15 @@ public extension CardTextField {
                 numberInputTextField.layer.mask = shapeLayer
                 numberInputTextField?.transform = CGAffineTransformIdentity
             } else {
-                numberInputTextField?.transform =
-                    CGAffineTransformMakeTranslation(-rect.origin.x, 0)
+                if shouldMoveAnimated {
+                    numberInputTextField?.transform =
+                        CGAffineTransformMakeTranslation(-rect.origin.x, 0)
+                } else {
+                    UIView.performWithoutAnimation { [weak self] _ in
+                        self?.numberInputTextField?.transform =
+                            CGAffineTransformMakeTranslation(-rect.origin.x, 0)
+                    }
+                }
             }
         } else {
             numberInputTextField?.alpha = 0
