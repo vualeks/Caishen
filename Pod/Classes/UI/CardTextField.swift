@@ -500,7 +500,7 @@ public class CardTextField: UITextField, NumberInputTextFieldDelegate {
     public override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
         // Detect touches in card number text field as long as the detail view is on top of it
         touches.forEach({ touch -> () in
-            let point = touch.locationInView(self)
+            let point = touch.locationInView(numberInputTextField)
             if (numberInputTextField?.pointInside(point, withEvent: event) ?? false) && [monthTextField,yearTextField,cvcTextField, slashLabel].reduce(true, combine: { (currentValue: Bool, view: UIView?) -> Bool in
                 let pointInView = touch.locationInView(view)
                 return currentValue && !(view?.pointInside(pointInView, withEvent: event) ?? false)
