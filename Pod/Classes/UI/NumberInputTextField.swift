@@ -94,11 +94,10 @@ public class NumberInputTextField: StylizedTextField {
         }
     }
 
-    
     /**
      The card type register that holds information about which card types are accepted and which ones are not.
      */
-    private let cardTypeRegister: CardTypeRegister = CardTypeRegister.sharedCardTypeRegister
+    public var cardTypeRegister: CardTypeRegister = CardTypeRegister.sharedCardTypeRegister
     
     /**
      A card number formatter used to format the input
