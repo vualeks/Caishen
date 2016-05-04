@@ -274,14 +274,14 @@ public class CardTextField: UITextField, NumberInputTextFieldDelegate {
         // Reset gesture recognizers
         [firstObjectInNib, cardInfoView].forEach({$0?.gestureRecognizers = []})
         
-        let leftSwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(moveCardNumberOutAnimated))
-        leftSwipeGestureRecognizer.direction = isRightToLeftLanguage ? .Right : .Left
-        firstObjectInNib.addGestureRecognizer(leftSwipeGestureRecognizer)
+        let hideCardNumberSwipeRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(moveCardNumberOutAnimated))
+        hideCardNumberSwipeRecognizer.direction = isRightToLeftLanguage ? .Right : .Left
+        firstObjectInNib.addGestureRecognizer(hideCardNumberSwipeRecognizer)
         
         [firstObjectInNib, cardInfoView].forEach({
-            let rightSwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(moveCardNumberInAnimated))
-            rightSwipeGestureRecognizer.direction = isRightToLeftLanguage ? .Left : .Right
-            $0?.addGestureRecognizer(rightSwipeGestureRecognizer)
+            let showCardNumberSwipeRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(moveCardNumberInAnimated))
+            showCardNumberSwipeRecognizer.direction = isRightToLeftLanguage ? .Left : .Right
+            $0?.addGestureRecognizer(showCardNumberSwipeRecognizer)
         })
         
         setupTextFieldDelegates()
