@@ -46,6 +46,7 @@ public extension CardTextField {
         }
         numberInputTextField?.resignFirstResponder()
         cardInfoView?.transform = CGAffineTransformIdentity
+        monthTextField.becomeFirstResponder()
     }
     
     /**
@@ -56,6 +57,7 @@ public extension CardTextField {
         infoTextFields.forEach({$0?.resignFirstResponder()})
         numberInputTextField?.transform = CGAffineTransformIdentity
         numberInputTextField?.alpha = 1
+        numberInputTextField.becomeFirstResponder()
         cardInfoView?.transform = CGAffineTransformMakeTranslation(superview!.bounds.width, 0)
     }
 }
