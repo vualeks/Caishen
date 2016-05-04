@@ -46,7 +46,7 @@ public extension CardTextField {
         NSOperationQueue().addOperationWithBlock({
             NSThread.sleepForTimeInterval(0.5)
             NSOperationQueue.mainQueue().addOperationWithBlock({ [weak self] _ in
-                self?.moveNumberFieldLeftAnimated()
+                self?.moveCardNumberOutAnimated()
             })
         })
         

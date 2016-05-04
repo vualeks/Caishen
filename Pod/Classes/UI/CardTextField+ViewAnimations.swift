@@ -14,25 +14,25 @@ public extension CardTextField {
     /**
      Moves the card number input field to the left outside of the screen with an animation of the duration `viewAnimationDuration`, so that only the last group of the card number is visible. At the same time, the card detail (expiration month and year and CVC) slide in from the right.
      */
-    internal func moveNumberFieldLeftAnimated() {
+    public func moveCardNumberOutAnimated() {
         UIView.animateWithDuration(viewAnimationDuration, animations: { [weak self] _ in
-            self?.moveNumberFieldLeft()
+            self?.moveCardNumberOut()
             })
     }
     
     /**
      Moves the full card number input field to inside the screen with an animation of the duration `viewAnimationDuration`. At the same time, the card detail (expiration month and year and CVC) slide outside the view.
      */
-    internal func moveNumberFieldRightAnimated() {
+    public func moveCardNumberInAnimated() {
         UIView.animateWithDuration(viewAnimationDuration, animations: { [weak self] _ in
-            self?.moveNumberFieldRight()
+            self?.moveCardNumberIn()
             })
     }
     
     /**
      Moves the card number input field to the left outside of the screen, so that only the last group of the card number is visible. At the same time, the card detail (expiration month and year and CVC) are displayed to its right.
      */
-    internal func moveNumberFieldLeft() {
+    public func moveCardNumberOut() {
         // If the card number is invalid, do not allow to move to the card detail
         if cardType?.validateNumber(card.bankCardNumber) != .Valid {
             return
@@ -51,7 +51,7 @@ public extension CardTextField {
     /**
      Moves the full card number input field to inside the screen. At the same time, the card detail (expiration month and year and CVC) are moved outside the view.
      */
-    internal func moveNumberFieldRight() {
+    public func moveCardNumberIn() {
         let infoTextFields: [UITextField?] = [monthTextField, yearTextField, cvcTextField]
         infoTextFields.forEach({$0?.resignFirstResponder()})
         numberInputTextField?.transform = CGAffineTransformIdentity

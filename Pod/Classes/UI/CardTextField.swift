@@ -248,12 +248,12 @@ public class CardTextField: UITextField, NumberInputTextFieldDelegate {
         accessoryButtonLeadingConstraint?.constant = accessoryButtonLeadingInset
         accessoryButtonTrailingConstraint?.constant = accessoryButtonTrailingInset
         
-        let leftSwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(moveNumberFieldLeftAnimated))
+        let leftSwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(moveCardNumberOutAnimated))
         leftSwipeGestureRecognizer.direction = .Left
         firstObjectInNib.addGestureRecognizer(leftSwipeGestureRecognizer)
         
         [firstObjectInNib, cardInfoView].forEach({
-            let rightSwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(moveNumberFieldRightAnimated))
+            let rightSwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(moveCardNumberInAnimated))
             rightSwipeGestureRecognizer.direction = .Right
             $0?.addGestureRecognizer(rightSwipeGestureRecognizer)
         })
@@ -321,7 +321,7 @@ public class CardTextField: UITextField, NumberInputTextFieldDelegate {
      */
     private func setupTargetsForEditinBegin() {
         // Show the full number text field, if editing began on it
-        numberInputTextField?.addTarget(self, action: #selector(moveNumberFieldRightAnimated), forControlEvents: UIControlEvents.EditingDidBegin)
+        numberInputTextField?.addTarget(self, action: #selector(moveCardNumberInAnimated), forControlEvents: UIControlEvents.EditingDidBegin)
         
         // Show CVC image if the cvcTextField is selected, show card image otherwise
         let nonCVCTextFields: [UITextField?] = [numberInputTextField, monthTextField, yearTextField]
@@ -373,7 +373,7 @@ public class CardTextField: UITextField, NumberInputTextFieldDelegate {
     
     public override func didMoveToSuperview() {
         super.didMoveToSuperview()
-        moveNumberFieldRight()
+        moveCardNumberIn()
     }
     
     // MARK: - View customization
@@ -419,7 +419,7 @@ public class CardTextField: UITextField, NumberInputTextFieldDelegate {
     }
     
     public func numberInputTextFieldDidComplete(CardTextField: NumberInputTextField) {
-        moveNumberFieldLeftAnimated()
+        moveCardNumberOutAnimated()
         
         notifyDelegate()
         monthTextField?.becomeFirstResponder()
@@ -455,7 +455,7 @@ public class CardTextField: UITextField, NumberInputTextFieldDelegate {
         
         // If moving to a larger screen size and not showing the detail view, make sure that it is outside the view.
         if let transform = cardInfoView?.transform where !CGAffineTransformIsIdentity(transform) {
-            moveNumberFieldRight()
+            moveCardNumberIn()
         }
     }
     
