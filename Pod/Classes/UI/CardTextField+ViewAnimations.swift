@@ -91,10 +91,16 @@ public extension CardTextField {
     public func moveCardNumberIn() {
         let infoTextFields: [UITextField?] = [monthTextField, yearTextField, cvcTextField]
         infoTextFields.forEach({$0?.resignFirstResponder()})
-        numberInputTextField?.transform = CGAffineTransformIdentity
-        numberInputTextField?.alpha = 1
-        numberInputTextField.becomeFirstResponder()
-        numberInputTextField.layer.mask = nil
+        if isRightToLeftLanguage {
+            UIView.performWithoutAnimation {
+                self.numberInputTextField?.alpha = 1
+                self.numberInputTextField?.transform = CGAffineTransformIdentity
+            }
+        } else {
+            numberInputTextField?.alpha = 1
+            numberInputTextField.becomeFirstResponder()
+            numberInputTextField?.transform = CGAffineTransformIdentity
+        }
         
         // Move card info view
         let offset = isRightToLeftLanguage ? -superview!.bounds.width : superview!.bounds.width
@@ -111,6 +117,12 @@ public extension CardTextField {
             }
         } else {
             numberInputTextField?.layer.mask = nil
+        }
+        
+        if isRightToLeftLanguage {
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(viewAnimationDuration / 2.0 * Double(NSEC_PER_SEC))), dispatch_get_main_queue()){
+                self.numberInputTextField.becomeFirstResponder()
+            }
         }
     }
 }
