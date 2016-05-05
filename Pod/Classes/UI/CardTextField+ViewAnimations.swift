@@ -37,16 +37,52 @@ public extension CardTextField {
         if cardType?.validateNumber(card.bankCardNumber) != .Valid {
             return
         }
-        numberInputTextField?.becomeFirstResponder()
+        // We will set numberInputTextField as first responder in the next step. This will trigger `editingDidBegin`
+        // which in turn will cause the number field to move to full display. This can cause animation issues.
+        // In order to tackle these animation issues, check if the cardInfoView was previously fully displayed (and should therefor not be moved with an animation).
+        var shouldMoveAnimated: Bool = true
+        if let transform = cardInfoView?.transform where CGAffineTransformIsIdentity(transform) {
+            shouldMoveAnimated = false
+        }
+        UIView.performWithoutAnimation { [weak self] _ in
+            self?.numberInputTextField?.becomeFirstResponder()
+        }
+        // Get the rect for the last group of digits
         if let rect = numberInputTextField?.rectForLastGroup() {
-            numberInputTextField?.transform =
-                CGAffineTransformMakeTranslation(-rect.origin.x, 0)
+            // If on RTL language: hide the entire number except for the last group.
+            // Else: Move the number out of range, except for the last group.
+            if isRightToLeftLanguage {
+                let shapeLayer = CAShapeLayer()
+                let path = CGPathCreateWithRect(rect, nil)
+                shapeLayer.path = path
+                numberInputTextField.layer.mask = shapeLayer
+                numberInputTextField?.transform = CGAffineTransformIdentity
+            } else {
+                if shouldMoveAnimated {
+                    numberInputTextField?.transform =
+                        CGAffineTransformMakeTranslation(-rect.origin.x, 0)
+                } else {
+                    UIView.performWithoutAnimation { [weak self] _ in
+                        self?.numberInputTextField?.transform =
+                            CGAffineTransformMakeTranslation(-rect.origin.x, 0)
+                    }
+                }
+            }
         } else {
             numberInputTextField?.alpha = 0
         }
-        numberInputTextField?.resignFirstResponder()
-        cardInfoView?.transform = CGAffineTransformIdentity
-        monthTextField.becomeFirstResponder()
+        // Reset the first responder status as it was before.
+        UIView.performWithoutAnimation { [weak self] _ in
+            self?.numberInputTextField?.resignFirstResponder()
+        }
+        if shouldMoveAnimated {
+            cardInfoView?.transform = CGAffineTransformIdentity
+        } else {
+            UIView.performWithoutAnimation { [weak self] _ in
+                self?.cardInfoView?.transform = CGAffineTransformIdentity
+            }
+        }
+		monthTextField.becomeFirstResponder()
     }
     
     /**
@@ -55,9 +91,38 @@ public extension CardTextField {
     public func moveCardNumberIn() {
         let infoTextFields: [UITextField?] = [monthTextField, yearTextField, cvcTextField]
         infoTextFields.forEach({$0?.resignFirstResponder()})
-        numberInputTextField?.transform = CGAffineTransformIdentity
-        numberInputTextField?.alpha = 1
-        numberInputTextField.becomeFirstResponder()
-        cardInfoView?.transform = CGAffineTransformMakeTranslation(superview!.bounds.width, 0)
+        if isRightToLeftLanguage {
+            UIView.performWithoutAnimation {
+                self.numberInputTextField?.alpha = 1
+                self.numberInputTextField?.transform = CGAffineTransformIdentity
+            }
+        } else {
+            numberInputTextField?.alpha = 1
+            numberInputTextField.becomeFirstResponder()
+            numberInputTextField?.transform = CGAffineTransformIdentity
+        }
+        
+        // Move card info view
+        let offset = isRightToLeftLanguage ? -superview!.bounds.width : superview!.bounds.width
+        cardInfoView?.transform = CGAffineTransformMakeTranslation(offset, 0)
+        
+        // If card info view is moved with an animation, wait for it to finish before
+        // showing the full card number to avoid overlapping on RTL language.
+        if cardInfoView?.layer.animationKeys() != nil {
+            dispatch_after(dispatch_time(
+                DISPATCH_TIME_NOW,
+                Int64(viewAnimationDuration * Double(NSEC_PER_SEC))),
+                           dispatch_get_main_queue()) { [weak self] _ in
+                self?.numberInputTextField?.layer.mask = nil
+            }
+        } else {
+            numberInputTextField?.layer.mask = nil
+        }
+        
+        if isRightToLeftLanguage {
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(viewAnimationDuration / 2.0 * Double(NSEC_PER_SEC))), dispatch_get_main_queue()){
+                self.numberInputTextField.becomeFirstResponder()
+            }
+        }
     }
 }

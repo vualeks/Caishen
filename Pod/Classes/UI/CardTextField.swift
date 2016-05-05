@@ -203,10 +203,21 @@ public class CardTextField: UITextField, NumberInputTextFieldDelegate {
         return cardTypeRegister.cardTypeForNumber(number)
     }
     
+    /// Computed variable that returns whether or not the view should use right to left layout design. On iOS 9 and newer, this will be based on the interface layout of `self`, whereas this property is not available on older versions of iOS and therefor uses the character direction of the device language.
+    internal var isRightToLeftLanguage: Bool {
+        if #available(iOS 9.0, *) {
+            return UIView.userInterfaceLayoutDirectionForSemanticContentAttribute(semanticContentAttribute) == .RightToLeft
+        } else {
+            let isoCode = NSLocale.autoupdatingCurrentLocale().objectForKey(NSLocaleLanguageCode) as? String ?? ""
+            return NSLocale.characterDirectionForLanguage(isoCode) == NSLocaleLanguageDirection.RightToLeft
+        }
+    }
+    
     // MARK: - Initializers & view setup
     
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.localeDidChange), name: NSCurrentLocaleDidChangeNotification, object: nil)
         #if !TARGET_INTERFACE_BUILDER
             setupView()
         #endif
@@ -214,9 +225,21 @@ public class CardTextField: UITextField, NumberInputTextFieldDelegate {
     
     public override init(frame: CGRect) {
         super.init(frame: frame)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.localeDidChange), name: NSCurrentLocaleDidChangeNotification, object: nil)
         #if !TARGET_INTERFACE_BUILDER
             setupView()
         #endif
+    }
+    
+    deinit {
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: NSCurrentLocaleDidChangeNotification, object: nil)
+    }
+    
+    /**
+     Updates the view after the locale did change to potentially switch between left to right and right to left reading style.
+     */
+    internal func localeDidChange() {
+        setupView()
     }
     
     /**
@@ -248,14 +271,17 @@ public class CardTextField: UITextField, NumberInputTextFieldDelegate {
         accessoryButtonLeadingConstraint?.constant = accessoryButtonLeadingInset
         accessoryButtonTrailingConstraint?.constant = accessoryButtonTrailingInset
         
-        let leftSwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(moveCardNumberOutAnimated))
-        leftSwipeGestureRecognizer.direction = .Left
-        firstObjectInNib.addGestureRecognizer(leftSwipeGestureRecognizer)
+        // Reset gesture recognizers
+        [firstObjectInNib, cardInfoView].forEach({$0?.gestureRecognizers = []})
+        
+        let hideCardNumberSwipeRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(moveCardNumberOutAnimated))
+        hideCardNumberSwipeRecognizer.direction = isRightToLeftLanguage ? .Right : .Left
+        firstObjectInNib.addGestureRecognizer(hideCardNumberSwipeRecognizer)
         
         [firstObjectInNib, cardInfoView].forEach({
-            let rightSwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(moveCardNumberInAnimated))
-            rightSwipeGestureRecognizer.direction = .Right
-            $0?.addGestureRecognizer(rightSwipeGestureRecognizer)
+            let showCardNumberSwipeRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(moveCardNumberInAnimated))
+            showCardNumberSwipeRecognizer.direction = isRightToLeftLanguage ? .Left : .Right
+            $0?.addGestureRecognizer(showCardNumberSwipeRecognizer)
         })
         
         setupTextFieldDelegates()
@@ -282,6 +308,17 @@ public class CardTextField: UITextField, NumberInputTextFieldDelegate {
         cvcTextField?.deleteBackwardCallback = {_ -> Void in self.yearTextField?.becomeFirstResponder()}
         monthTextField?.deleteBackwardCallback = {_ -> Void in self.numberInputTextField?.becomeFirstResponder()}
         yearTextField?.deleteBackwardCallback = {_ -> Void in self.monthTextField?.becomeFirstResponder()}
+        
+        // Set the text alignment of cvc and month text field manually, as there is no
+        // counterpart to `right` (in a left-to-right script) that changes based on localization
+        // and can be set in a Nib.
+        if isRightToLeftLanguage {
+            cvcTextField.textAlignment = .Left
+            monthTextField.textAlignment = .Left
+        } else {
+            cvcTextField.textAlignment = .Right
+            monthTextField.textAlignment = .Right
+        }
         
         let textFields: [UITextField?] = [numberInputTextField, cvcTextField, monthTextField, yearTextField]
         textFields.forEach({
@@ -462,7 +499,7 @@ public class CardTextField: UITextField, NumberInputTextFieldDelegate {
     public override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
         // Detect touches in card number text field as long as the detail view is on top of it
         touches.forEach({ touch -> () in
-            let point = touch.locationInView(self)
+            let point = touch.locationInView(numberInputTextField)
             if (numberInputTextField?.pointInside(point, withEvent: event) ?? false) && [monthTextField,yearTextField,cvcTextField, slashLabel].reduce(true, combine: { (currentValue: Bool, view: UIView?) -> Bool in
                 let pointInView = touch.locationInView(view)
                 return currentValue && !(view?.pointInside(pointInView, withEvent: event) ?? false)
