@@ -309,16 +309,15 @@ public class CardTextField: UITextField, NumberInputTextFieldDelegate {
         monthTextField?.deleteBackwardCallback = {_ -> Void in self.numberInputTextField?.becomeFirstResponder()}
         yearTextField?.deleteBackwardCallback = {_ -> Void in self.monthTextField?.becomeFirstResponder()}
         
+        // Set the text alignment of cvc and month text field manually, as there is no
+        // counterpart to `right` (in a left-to-right script) that changes based on localization
+        // and can be set in a Nib.
         if isRightToLeftLanguage {
             cvcTextField.textAlignment = .Left
             monthTextField.textAlignment = .Left
-            yearTextField.textAlignment = .Right
-            numberInputTextField.textAlignment = .Right
         } else {
             cvcTextField.textAlignment = .Right
             monthTextField.textAlignment = .Right
-            yearTextField.textAlignment = .Left
-            numberInputTextField.textAlignment = .Left
         }
         
         let textFields: [UITextField?] = [numberInputTextField, cvcTextField, monthTextField, yearTextField]

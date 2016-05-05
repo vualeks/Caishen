@@ -29,7 +29,7 @@
                 <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UFG-yT-gmg">
                     <rect key="frame" x="31" y="2" width="538" height="596"/>
                     <subviews>
-                        <textField opaque="NO" clipsSubviews="YES" contentMode="redraw" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="0000000000000000" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="T6o-6e-fLS" customClass="NumberInputTextField" customModule="Caishen" customModuleProvider="target">
+                        <textField opaque="NO" clipsSubviews="YES" contentMode="redraw" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="0000000000000000" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="T6o-6e-fLS" customClass="NumberInputTextField" customModule="Caishen" customModuleProvider="target">
                             <rect key="frame" x="4" y="0.0" width="538" height="596"/>
                             <accessibility key="accessibilityConfiguration" label="Card Number"/>
                             <fontDescription key="fontDescription" type="system" pointSize="20"/>
@@ -75,7 +75,7 @@
                                         </mask>
                                     </variation>
                                 </textField>
-                                <textField opaque="NO" clipsSubviews="YES" contentMode="redraw" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="YY" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="CgE-Em-qHJ" customClass="YearInputTextField" customModule="Caishen" customModuleProvider="target">
+                                <textField opaque="NO" clipsSubviews="YES" contentMode="redraw" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="YY" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="CgE-Em-qHJ" customClass="YearInputTextField" customModule="Caishen" customModuleProvider="target">
                                     <rect key="frame" x="272" y="0.0" width="37" height="596"/>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                     <accessibility key="accessibilityConfiguration" label="Expiration Year"/>
