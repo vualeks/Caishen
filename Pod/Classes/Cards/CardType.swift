@@ -61,6 +61,20 @@ public protocol CardType {
      */
     func validateCVC(cvc: CVC) -> CardValidationResult
 
+    
+    /** 
+     A boolean flag that indicates whether CVC validation is required for this card type or not.
+     Setting this value to false will hide the CVC text field from the `CardTextField` and remove the required validation routine.
+     */
+    var requiresCVC: Bool { get }
+
+    /**
+     A boolean flag that indicates whether expiry validation is required for this card type or not.
+     Setting this value to false will hide the month and year text field from the `CardTextField` and remove the required
+     validation routine.
+     */
+    var requiresExpiry: Bool { get }
+
     /**
      Validates the card number.
      
@@ -96,6 +110,14 @@ extension CardType {
     public func isEqualTo(cardType: CardType) -> Bool {
         return cardType.name == self.name
     }
+    
+    public var requiresExpiry: Bool {
+        return true
+    }
+    
+    public var requiresCVC: Bool {
+        return true
+    }
 
     public var numberGrouping: [Int] {
         return [4, 4, 4, 4]
@@ -106,6 +128,11 @@ extension CardType {
     }
 
     public func validateCVC(cvc: CVC) -> CardValidationResult {
+
+        guard requiresCVC else {
+            return .Valid
+        }
+
         guard let _ = cvc.toInt() else {
             return .InvalidCVC
         }
@@ -126,6 +153,10 @@ extension CardType {
     }
 
     public func validateExpiry(expiry: Expiry) -> CardValidationResult {
+        guard requiresExpiry else {
+            return .Valid
+        }
+        
         guard expiry != Expiry.invalid else {
             return .InvalidExpiry
         }

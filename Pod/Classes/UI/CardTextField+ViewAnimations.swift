@@ -37,6 +37,10 @@ public extension CardTextField {
         if cardType?.validateNumber(card.bankCardNumber) != .Valid {
             return
         }
+        // If neither expiry nor cvc are required, also do not allow to move to the detail
+        if hideExpiryTextFields && hideCVCTextField {
+            return
+        }
         // We will set numberInputTextField as first responder in the next step. This will trigger `editingDidBegin`
         // which in turn will cause the number field to move to full display. This can cause animation issues.
         // In order to tackle these animation issues, check if the cardInfoView was previously fully displayed (and should therefor not be moved with an animation).

@@ -203,6 +203,20 @@ public class CardTextField: UITextField, NumberInputTextFieldDelegate {
         return cardTypeRegister.cardTypeForNumber(number)
     }
     
+    internal var hideExpiryTextFields: Bool = false {
+        didSet {
+            monthTextField.hidden = hideExpiryTextFields
+            yearTextField.hidden = hideExpiryTextFields
+            slashLabel.hidden = hideExpiryTextFields
+        }
+    }
+    
+    internal var hideCVCTextField: Bool = false {
+        didSet {
+            cvcTextField.hidden = hideCVCTextField
+        }
+    }
+    
     /// Computed variable that returns whether or not the view should use right to left layout design. On iOS 9 and newer, this will be based on the interface layout of `self`, whereas this property is not available on older versions of iOS and therefor uses the character direction of the device language.
     internal var isRightToLeftLanguage: Bool {
         if #available(iOS 9.0, *) {
@@ -305,9 +319,23 @@ public class CardTextField: UITextField, NumberInputTextFieldDelegate {
         numberInputTextField?.cardNumberSeparator = cardNumberSeparator ?? " - "
         numberInputTextField?.placeholder = placeholder
         
-        cvcTextField?.deleteBackwardCallback = {_ -> Void in self.yearTextField?.becomeFirstResponder()}
-        monthTextField?.deleteBackwardCallback = {_ -> Void in self.numberInputTextField?.becomeFirstResponder()}
-        yearTextField?.deleteBackwardCallback = {_ -> Void in self.monthTextField?.becomeFirstResponder()}
+        cvcTextField?.deleteBackwardCallback = {_ -> Void in
+            if self.hideExpiryTextFields {
+                self.numberInputTextField.becomeFirstResponder()
+            } else {
+                self.yearTextField?.becomeFirstResponder()
+            }
+        }
+        monthTextField?.deleteBackwardCallback = {_ -> Void in
+            self.numberInputTextField?.becomeFirstResponder()
+        }
+        yearTextField?.deleteBackwardCallback = {_ -> Void in
+            if self.hideExpiryTextFields {
+                self.numberInputTextField.becomeFirstResponder()
+            } else {
+                self.monthTextField?.becomeFirstResponder()
+            }
+        }
         
         // Set the text alignment of cvc and month text field manually, as there is no
         // counterpart to `right` (in a left-to-right script) that changes based on localization
@@ -450,16 +478,26 @@ public class CardTextField: UITextField, NumberInputTextFieldDelegate {
                                              withValidationResult: result)
     }
     
-    @objc public func numberInputTextFieldDidChangeText(CardTextField: NumberInputTextField) {
+    @objc public func numberInputTextFieldDidChangeText(numberInputTextField: NumberInputTextField) {
         showCardImage()
         notifyDelegate()
+        hideExpiryTextFields = !cardTypeRegister.cardTypeForNumber(numberInputTextField.cardNumber).requiresExpiry
+        hideCVCTextField = !cardTypeRegister.cardTypeForNumber(numberInputTextField.cardNumber).requiresCVC
     }
     
-    public func numberInputTextFieldDidComplete(CardTextField: NumberInputTextField) {
+    public func numberInputTextFieldDidComplete(numberInputTextField: NumberInputTextField) {
         moveCardNumberOutAnimated()
         
         notifyDelegate()
-        monthTextField?.becomeFirstResponder()
+        hideExpiryTextFields = !cardTypeRegister.cardTypeForNumber(numberInputTextField.cardNumber).requiresExpiry
+        hideCVCTextField = !cardTypeRegister.cardTypeForNumber(numberInputTextField.cardNumber).requiresCVC
+        if hideExpiryTextFields && hideCVCTextField {
+            return
+        } else if hideExpiryTextFields {
+            cvcTextField.becomeFirstResponder()
+        } else {
+            monthTextField?.becomeFirstResponder()
+        }
     }
     
     // MARK: - Card 
