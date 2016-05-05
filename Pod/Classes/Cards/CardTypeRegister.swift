@@ -14,22 +14,30 @@ public class CardTypeRegister {
     /**
      The default card type register, shared among all CardTextFields.
      */
-    public static let sharedCardTypeRegister = CardTypeRegister()
+    public static let sharedCardTypeRegister = CardTypeRegister(registeredCardTypes: CardTypeRegister.defaultCardTypes)
     
     /// An array of all registered card types. You can edit this array with `registerCardType`, `unregisterCardType` or `setRegisteredCardTypes`.
     public private(set) var registeredCardTypes: [CardType]
     
     /**
-     Creates a new `CardTypeRegister` with the following card types:
-     - AmericanExpress
-     - DinersClub
-     - Discover
-     - JCB
-     - MasterCard
-     - Visa
+     Creates a new `CardTypeRegister` that accepts no card types.
      */
-    init() {
-        registeredCardTypes = [
+    public init() {
+        registeredCardTypes = []
+    }
+
+    /**
+     Creates a new `CardTypeRegister` with the given sequence of card types.
+     
+     - parameter registeredCardTypes: Any sequence of `CardType` that should be accepted by `self`.
+     */
+    public convenience init<T: SequenceType where T.Generator.Element == CardType>(registeredCardTypes: T) {
+        self.init()
+        setRegisteredCardTypes(registeredCardTypes)
+    }
+
+    /// An array with the default card types provided by Caishen.
+    public static let defaultCardTypes: [CardType] = [
             AmericanExpress(),
             ChinaUnionPay(),
             DinersClub(),
@@ -38,7 +46,6 @@ public class CardTypeRegister {
             MasterCard(),
             Visa()
         ]
-    }
     
     /**
      Adds the provided card type to the array of registered card types.

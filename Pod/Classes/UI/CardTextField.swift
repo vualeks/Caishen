@@ -170,7 +170,11 @@ public class CardTextField: UITextField, NumberInputTextFieldDelegate {
      This card type register contains a list of all valid card types. You can provide separate card type registers for different card number text fields.
      By default, CardTypeRegister.sharedCardTypeRegister is used.
      */
-    public var cardTypeRegister: CardTypeRegister = CardTypeRegister.sharedCardTypeRegister
+    public var cardTypeRegister: CardTypeRegister = CardTypeRegister.sharedCardTypeRegister {
+        didSet {
+            numberInputTextField.cardTypeRegister = cardTypeRegister
+        }
+    }
 
     #if !TARGET_INTERFACE_BUILDER
     public override var placeholder: String? {
