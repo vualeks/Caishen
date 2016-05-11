@@ -98,7 +98,6 @@ public extension CardTextField {
             }
         } else {
             numberInputTextField?.alpha = 1
-            numberInputTextField.becomeFirstResponder()
             numberInputTextField?.transform = CGAffineTransformIdentity
         }
         
