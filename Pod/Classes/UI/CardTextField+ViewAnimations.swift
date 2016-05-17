@@ -90,21 +90,8 @@ public extension CardTextField {
      */
     public func moveCardNumberIn() {
         let infoTextFields: [UITextField?] = [monthTextField, yearTextField, cvcTextField]
-        infoTextFields.forEach({$0?.resignFirstResponder()})
-        if isRightToLeftLanguage {
-            UIView.performWithoutAnimation {
-                self.numberInputTextField?.alpha = 1
-                self.numberInputTextField?.transform = CGAffineTransformIdentity
-            }
-        } else {
-            numberInputTextField?.alpha = 1
-            numberInputTextField.becomeFirstResponder()
-            numberInputTextField?.transform = CGAffineTransformIdentity
-        }
         
-        // Move card info view
-        let offset = isRightToLeftLanguage ? -superview!.bounds.width : superview!.bounds.width
-        cardInfoView?.transform = CGAffineTransformMakeTranslation(offset, 0)
+        translateCardNumberIn()
         
         // If card info view is moved with an animation, wait for it to finish before
         // showing the full card number to avoid overlapping on RTL language.
@@ -115,14 +102,37 @@ public extension CardTextField {
                            dispatch_get_main_queue()) { [weak self] _ in
                 self?.numberInputTextField?.layer.mask = nil
             }
+            
+            // Let the number text field become first responder only after the animation has completed (left to right script)
+            // or half way through the view animation (right to left script)
+            let firstResponderDelay = isRightToLeftLanguage ? viewAnimationDuration / 2.0 : viewAnimationDuration
+            dispatch_after(dispatch_time(
+                DISPATCH_TIME_NOW,
+                Int64(firstResponderDelay * Double(NSEC_PER_SEC))),
+                           dispatch_get_main_queue()) {
+                            infoTextFields.forEach({$0?.resignFirstResponder()})
+                            self.numberInputTextField.becomeFirstResponder()
+            }
         } else {
             numberInputTextField?.layer.mask = nil
+            infoTextFields.forEach({$0?.resignFirstResponder()})
+            numberInputTextField.becomeFirstResponder()
+        }
+    }
+    
+    internal func translateCardNumberIn() {
+        if isRightToLeftLanguage {
+            UIView.performWithoutAnimation {
+                self.numberInputTextField?.alpha = 1
+                self.numberInputTextField?.transform = CGAffineTransformIdentity
+            }
+        } else {
+            numberInputTextField?.alpha = 1
+            numberInputTextField?.transform = CGAffineTransformIdentity
         }
         
-        if isRightToLeftLanguage {
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(viewAnimationDuration / 2.0 * Double(NSEC_PER_SEC))), dispatch_get_main_queue()){
-                self.numberInputTextField.becomeFirstResponder()
-            }
-        }
+        // Move card info view
+        let offset = isRightToLeftLanguage ? -superview!.bounds.width : superview!.bounds.width
+        cardInfoView?.transform = CGAffineTransformMakeTranslation(offset, 0)
     }
 }
