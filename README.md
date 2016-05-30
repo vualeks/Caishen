@@ -110,6 +110,90 @@ Additionally, CardTextField offers attributes tailored to its purpose (accessibl
 
 ---
 
+### Using the different components of the text field separately
+
+Instead of entering the card number, expiry and CVC in a single text field, it is possible to use single text fields to enter this information separately.
+
+```swift
+class ViewController: UIViewController, NumberInputTextFieldDelegate, CardInfoTextFieldDelegate {
+    
+    @IBOutlet weak var cardNumberTextField: NumberInputTextField!
+    @IBOutlet weak var monthInputTextField: MonthInputTextField!
+    @IBOutlet weak var yearInputTextField: YearInputTextField!
+    @IBOutlet weak var cvcInputTextField: CVCInputTextField!
+        
+    // A card that is not nil when valid information has been entered in the text fields:
+    var card: Card? {
+        let number = cardNumberTextField.cardNumber
+        let cvc = CVC(rawValue: cvcInputTextField.text ?? "")
+        let expiry = Expiry(month: monthInputTextField.text ?? "", year: yearInputTextField.text ?? "")
+                        ?? Expiry.invalid
+        
+        let cardType = cardNumberTextField.cardTypeRegister.cardTypeForNumber(cardNumberTextField.cardNumber)
+        if cardType.validateCVC(cvc).union(cardType.validateExpiry(expiry)).union(cardType.validateNumber(number)) == .Valid {
+            return Card(bankCardNumber: number, cardVerificationCode: cvc, expiryDate: expiry)
+        } else {
+            return nil
+        }
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        cardNumberTextField.numberInputTextFieldDelegate = self
+        monthInputTextField.cardInfoTextFieldDelegate = self
+        yearInputTextField.cardInfoTextFieldDelegate = self
+        cvcInputTextField.cardInfoTextFieldDelegate = self
+        
+        // Set the `deleteBackwardCallbacks` - closures which are called whenever a user hits
+        // backspace on an empty text field.
+        monthInputTextField.deleteBackwardCallback = { _ in self.cardNumberTextField.becomeFirstResponder() }
+        yearInputTextField.deleteBackwardCallback = { _ in self.monthInputTextField.becomeFirstResponder() }
+        cvcInputTextField.deleteBackwardCallback = { _ in self.yearInputTextField.becomeFirstResponder() }
+    }
+    
+    func numberInputTextFieldDidComplete(numberInputTextField: NumberInputTextField) {
+        cvcInputTextField.cardType = numberInputTextField.cardTypeRegister.cardTypeForNumber(numberInputTextField.cardNumber)
+        print("Card number: \(numberInputTextField.cardNumber)")
+        print(card)
+        monthInputTextField.becomeFirstResponder()
+    }
+    
+    func numberInputTextFieldDidChangeText(numberInputTextField: NumberInputTextField) {
+        
+    }
+    
+    func textField(textField: UITextField, didEnterValidInfo: String) {
+        switch textField {
+        case is MonthInputTextField:
+            print("Month: \(didEnterValidInfo)")
+            yearInputTextField.becomeFirstResponder()
+        case is YearInputTextField:
+            print("Year: \(didEnterValidInfo)")
+            cvcInputTextField.becomeFirstResponder()
+        case is CVCInputTextField:
+            print("CVC: \(didEnterValidInfo)")
+        default:
+            break
+        }
+        print(card)
+    }
+    
+    func textField(textField: UITextField, didEnterPartiallyValidInfo: String) {
+        // The user entered information that is not valid but might become valid on further input.
+        // Example: Entering "1" for the CVC is partially valid, while entering "a" is not.
+    }
+    
+    func textField(textField: UITextField, didEnterOverflowInfo overFlowDigits: String) {
+        // This function is used in a CardTextField to carry digits to the next text field.
+        // Example: A user entered "02/20" as expiry and now tries to append "5" to the month.
+        //          On a card text field, the year will be replaced with "5" - the overflow digit.
+    }
+    
+    // ...
+}
+```
+
 ### CardIO
 
 CardIO might be among the most powerful tools to let users enter their payment card information. It uses the camera and lets the user scan his or her credit card. However, you might still want to provide users with a visually appealing text field to enter their payment card information, since users might want to restrict access to their camera or simply want to enter this information manually.

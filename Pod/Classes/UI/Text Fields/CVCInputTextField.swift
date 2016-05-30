@@ -12,7 +12,7 @@ import UIKit
 public class CVCInputTextField: DetailInputTextField {
     
     /// The card type for the CVC that should be entered. The length of a CVC can vary based on this card type.
-    var cardType: CardType?
+    public var cardType: CardType?
     override var expectedInputLength: Int {
         return cardType?.CVCLength ?? 3
     }
