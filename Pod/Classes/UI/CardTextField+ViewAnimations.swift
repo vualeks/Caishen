@@ -132,7 +132,7 @@ public extension CardTextField {
         }
         
         // Move card info view
-        let offset = isRightToLeftLanguage ? -superview!.bounds.width : superview!.bounds.width
+        let offset = isRightToLeftLanguage ? -bounds.width : bounds.width
         cardInfoView?.transform = CGAffineTransformMakeTranslation(offset, 0)
     }
 }
