@@ -67,7 +67,7 @@ class MyViewController: UIViewController, CardTextFieldDelegate {
 		...
 	}
 	
-	func cardTextField(cardTextField: CardTextField, didEnterCardInformation information: Card, withValidationResult validationResult: CardValidationResult?) {
+	func cardTextField(cardTextField: CardTextField, didEnterCardInformation information: Card, withValidationResult validationResult: CardValidationResult) {
 		// A valid card has been entered, if information is not nil and validationResult == CardValidationResult.Valid
 	}
 	
@@ -122,7 +122,7 @@ class ViewController: UIViewController, CardTextFieldDelegate, CardIOPaymentView
 	...
 	
 	// MARK: - CardTextFieldDelegate
-    func cardTextField(cardTextField: CardTextField, didEnterCardInformation information: Card, withValidationResult validationResult: CardValidationResult?) {
+    func cardTextField(cardTextField: CardTextField, didEnterCardInformation information: Card, withValidationResult validationResult: CardValidationResult) {
         if validationResult == .Valid {
         	// A valid payment card has been manually entered or CardIO was used to scan one.
         }
