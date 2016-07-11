@@ -31,9 +31,15 @@ extension CardTextField: CardInfoTextFieldDelegate {
     private func selectNextTextField(textField: UITextField, prefillText: String?) {
         var nextTextField: UITextField?
         if textField == monthTextField {
-            nextTextField = yearTextField
+            if hideExpiryTextFields {
+                selectNextTextField(yearTextField, prefillText: prefillText)
+            } else {
+                nextTextField = yearTextField
+            }
         } else if textField == yearTextField {
-            nextTextField = cvcTextField
+            if !hideCVCTextField {
+                nextTextField = cvcTextField
+            }
         }
 
         nextTextField?.becomeFirstResponder()
