@@ -56,7 +56,7 @@ public struct Card {
      - parameter cardVerificationCode: The card verification code as indicated on the user's payment card.
      - parameter expiryDate: The expiration date as indicated on the user's payment card
     */
-    internal init(bankCardNumber: Number, cardVerificationCode: CVC, expiryDate: Expiry) {
+    public init(bankCardNumber: Number, cardVerificationCode: CVC, expiryDate: Expiry) {
         self.bankCardNumber = bankCardNumber
         self.cardVerificationCode = cardVerificationCode
         self.expiryDate = expiryDate

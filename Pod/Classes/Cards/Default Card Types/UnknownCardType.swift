@@ -9,24 +9,24 @@
 /**
  *  The undefined card type
  */
-internal struct UnknownCardType: CardType {
+public struct UnknownCardType: CardType {
 
-    let name = "Unknown"
-    let CVCLength = 0
-    let identifyingDigits: Set<Int> = []
+    public let name = "Unknown"
+    public let CVCLength = 0
+    public let identifyingDigits: Set<Int> = []
 
-    func validateNumber(cardNumber: Number) -> CardValidationResult {
+    public func validateNumber(cardNumber: Number) -> CardValidationResult {
         return CardValidationResult.UnknownType
             .union(lengthMatchesType(cardNumber.length))
             .union(numberIsNumeric(cardNumber))
             .union(numberIsValidLuhn(cardNumber))
     }
 
-    func validateCVC(cvc: CVC) -> CardValidationResult {
+    public func validateCVC(cvc: CVC) -> CardValidationResult {
         return .UnknownType
     }
 
-    func validateExpiry(expiry: Expiry) -> CardValidationResult {
+    public func validateExpiry(expiry: Expiry) -> CardValidationResult {
         return .UnknownType
     }
 

@@ -15,7 +15,7 @@ import UIKit
  */
 public class DetailInputTextField: StylizedTextField {
     
-    var cardInfoTextFieldDelegate: CardInfoTextFieldDelegate?
+    public var cardInfoTextFieldDelegate: CardInfoTextFieldDelegate?
     
     public func textFieldDidBeginEditing(textField: UITextField) {
         if (textField.text ?? "").isEmpty {
