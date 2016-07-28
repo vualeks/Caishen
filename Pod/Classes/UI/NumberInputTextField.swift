@@ -56,7 +56,7 @@ public class NumberInputTextField: StylizedTextField {
                 + ". "
                 + Localization.CardType.localizedStringWithComment("Description for detected card type.")
                 + ": "
-                + cardTypeRegister.cardTypeForNumber(cardNumber).name
+                + cardTypeRegister.cardTypeFor(number: cardNumber).name
         }
         
         set {  }
@@ -104,9 +104,9 @@ public class NumberInputTextField: StylizedTextField {
         }
 
         let parsedCardNumber = Number(rawValue: newTextUnformatted)
-        let oldValidation = cardTypeRegister.cardTypeForNumber(cardNumber).validate(number: cardNumber)
+        let oldValidation = cardTypeRegister.cardTypeFor(number: cardNumber).validate(number: cardNumber)
         let newValidation =
-            cardTypeRegister.cardTypeForNumber(parsedCardNumber).validate(number: parsedCardNumber)
+            cardTypeRegister.cardTypeFor(number: parsedCardNumber).validate(number: parsedCardNumber)
 
         if !newValidation.contains(.NumberTooLong) {
             cardNumberFormatter.replaceRangeFormatted(range, inTextField: textField, withString: string)
@@ -122,7 +122,7 @@ public class NumberInputTextField: StylizedTextField {
         }
 
         let newLengthComplete =
-            parsedCardNumber.length == cardTypeRegister.cardTypeForNumber(parsedCardNumber).maxLength
+            parsedCardNumber.length == cardTypeRegister.cardTypeFor(number: parsedCardNumber).maxLength
 
         if newLengthComplete && newValidation != .Valid {
             addNumberInvalidityObserver()
@@ -147,7 +147,7 @@ public class NumberInputTextField: StylizedTextField {
     public func prefill(text: String) {
         let unformattedCardNumber = String(text.characters.filter({$0.isNumeric()}))
         let cardNumber = Number(rawValue: unformattedCardNumber)
-        let type = cardTypeRegister.cardTypeForNumber(cardNumber)
+        let type = cardTypeRegister.cardTypeFor(number: cardNumber)
         let numberPartiallyValid = type.checkCardNumberPartiallyValid(cardNumber) == .Valid
         
         if numberPartiallyValid {
