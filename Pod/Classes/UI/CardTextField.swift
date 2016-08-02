@@ -597,9 +597,15 @@ public class CardTextField: UITextField, NumberInputTextFieldDelegate {
     
     public override func isFirstResponder() -> Bool {
         // Return true if any of `self`'s subviews is the current first responder.
-        return [numberInputTextField,monthTextField,yearTextField,cvcTextField]
-        .filter({$0.isFirstResponder()})
-        .isEmpty == false
+        // Needs to unwrap the IBOutlets otherwise IBInspectable is crashing when using CardTextField because IBOutlets
+        // are not initialized yet when IBInspectable engine runs.
+        guard let numberInputTextField = numberInputTextField, monthTextField = monthTextField, yearTextField = yearTextField, cvcTextField = cvcTextField else {
+            return false
+        }
+
+        return [numberInputTextField, monthTextField, yearTextField, cvcTextField]
+            .filter({$0.isFirstResponder()})
+            .isEmpty == false
     }
     
     public override func resignFirstResponder() -> Bool {
