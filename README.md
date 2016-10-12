@@ -170,29 +170,42 @@ You can create your own card types and add or remove them to or from card number
 ```swift
 struct MyCardType: CardType {
     
-	// MARK: - Required
-	
-	// The name of your specified card type:
+    // MARK: - Required
+
+    // The name of your specified card type:
     public let name = "My Card Type"
-    
+
     // Note: The image that will be displayed in the card number text field's image view when this card type has been detected will load from an asset with the name `cardType.name`.
-	
-	// If the Issuer Identification Number (the first six digits of the entered card number) of a card number 
-	// starts with anything from 1000 to 1111, the card is identified as being of type "MyCardType":
+
+    // If the Issuer Identification Number (the first six digits of the entered card number) of a card number 
+    // starts with anything from 1000 to 1111, the card is identified as being of type "MyCardType":
     public let identifyingDigits = Set(1000...1111)
-	
-	// MARK: - Optional
-	
-	// Not specifying this will assert a three digits long cvc:
-	public let CVCLength = 4
-	
-	// Not specifying this will load a default cvc image:
+
+    // Not specifying this will assert a three digits long cvc:
+    public let CVCLength = 4
+
+    // MARK: - Optional
+
+    // Not specifying this will load a default cvc image:
     public let cvcImage: UIImage? = UIImage(named: "MyCardTypeCVCImage")
-	
-	// Not specifying this will result in a 16 digit number, separated into 4 groups of 4 digits.
-	// The grouping of your card number type. The following results in a card number format
-	// like "100 - 0000 - 00000 - 000000":
-	public let numberGrouping = [3, 4, 5, 6]
+
+    // Not specifying this will result in a 16 digit number, separated into 4 groups of 4 digits.
+    // The grouping of your card number type. The following results in a card number format
+    // like "100 - 0000 - 00000 - 000000":
+    public let numberGrouping = [3, 4, 5, 6]
+
+    /** 
+     A boolean flag that indicates whether CVC validation is required for this card type or not.
+     Setting this value to false will hide the CVC text field from the `CardTextField` and remove the required validation routine. The default is true.
+     */
+    public let requiresCVC = true
+
+    /**
+     A boolean flag that indicates whether expiry validation is required for this card type or not.
+     Setting this value to false will hide the month and year text field from the `CardTextField` and remove the required
+     validation routine. The default is true.
+     */
+    public let requiresExpiry = true
 	
     public init() {
 		
