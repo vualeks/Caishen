@@ -181,17 +181,14 @@ struct MyCardType: CardType {
     // starts with anything from 1000 to 1111, the card is identified as being of type "MyCardType":
     public let identifyingDigits = Set(1000...1111)
 
-    // Not specifying this will assert a three digits long cvc:
+    // The number of digits expected in the Card Validation Code.
     public let CVCLength = 4
 
     // MARK: - Optional
 
-    // Not specifying this will load a default cvc image:
-    public let cvcImage: UIImage? = UIImage(named: "MyCardTypeCVCImage")
-
-    // Not specifying this will result in a 16 digit number, separated into 4 groups of 4 digits.
     // The grouping of your card number type. The following results in a card number format
     // like "100 - 0000 - 00000 - 000000":
+    // Not specifying this will result in a 16 digit number, separated into 4 groups of 4 digits.
     public let numberGrouping = [3, 4, 5, 6]
 
     /** 
