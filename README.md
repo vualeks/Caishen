@@ -92,7 +92,7 @@ CardTextField is mostly customizable like every other UITextField. Setting any o
 
 | Property           | Type                 | Description                                                                                                            |
 |:-------------------|:---------------------|:-----------------------------------------------------------------------------------------------------------------------|
-| placeholder        | String?              | The card number place holder. This will be automatically formatted at runtime to look like an actual Visa card number. |
+| placeholder        | String?              | The card number place holder. When using a card number as placeholder, make sure to format it appropriately so it uses the `cardNumberSeparator` that has been set for the text field (i.e. when using " - " as separator, set a placeholder like "1234 - 1234 - 1234 - 1234"). |
 | textColor          | UIColor?             | The color of text entered into the CardTextField.                                                                |
 | backgroundColor    | UIColor?             | The background color of the text field.                                                                                |
 | font               | UIFont?              | The font of the entered text.                                                                                          |
