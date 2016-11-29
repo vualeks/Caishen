@@ -33,27 +33,7 @@ public class NumberInputTextField: StylizedTextField {
     /**
      The string that is used to separate different groups in a card number.
      */
-    @IBInspectable public var cardNumberSeparator: String = "-" {
-        didSet {
-            placeholder = cardNumberFormatter.formattedCardNumber(self.placeholder ?? "1234123412341234")
-        }
-    }
-
-    override public var placeholder: String? {
-        didSet {
-            guard let placeholder = placeholder else {
-                return
-            }
-            
-            let isUnformatted = (placeholder == self.cardNumberFormatter.unformattedCardNumber(placeholder))
-            let isCreditString = (placeholder.rangeOfCharacterFromSet(NSCharacterSet(charactersInString: "0123456789\(self.cardNumberFormatter.separator)").invertedSet) == nil)
-            
-            // If this is a Credit Card placeholder and wasn't already formatted, format it
-            if isCreditString && isUnformatted && cardNumberSeparator != "" {
-                self.placeholder = cardNumberFormatter.formattedCardNumber(placeholder)
-            }
-        }
-    }
+    @IBInspectable public var cardNumberSeparator: String = "-"
     
     public override var accessibilityValue: String? {
         get {
