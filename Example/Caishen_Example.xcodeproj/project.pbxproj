@@ -7,14 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		01852754B5C11ED06ACA5AC7 /* Pods_Caishen_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 912757A27E062858A3DBDF90 /* Pods_Caishen_Example.framework */; };
 		08C34F401C971F2F008F57D8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08C34F3F1C971F2F008F57D8 /* AppDelegate.swift */; };
 		08C34F481C971F50008F57D8 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 08C34F441C971F50008F57D8 /* Images.xcassets */; };
 		08C34F491C971F50008F57D8 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08C34F451C971F50008F57D8 /* ViewController.swift */; };
 		08C34F4E1C971F6B008F57D8 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 08C34F4A1C971F6B008F57D8 /* LaunchScreen.xib */; };
 		08C34F4F1C971F6B008F57D8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 08C34F4C1C971F6B008F57D8 /* Main.storyboard */; };
 		08C34F521C9728D6008F57D8 /* Caishen.podspec in Resources */ = {isa = PBXBuildFile; fileRef = 08C34F511C9728D6008F57D8 /* Caishen.podspec */; };
-		39700BCD572BEAB708ACEF67 /* Pods_Caishen_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB68CBF8142CBABD6A62FE56 /* Pods_Caishen_Tests.framework */; };
-		950F416E8EC49777E37A5369 /* Pods_Caishen_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FC9F49747DBE420313DEFF56 /* Pods_Caishen_Example.framework */; };
+		C3BB332FB2E54AD0B92A531E /* Pods_Caishen_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63051052BECC2AC702481F46 /* Pods_Caishen_Tests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -28,7 +28,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		01466240EB0F8DBD9846D92D /* Pods-Caishen_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Caishen_Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Caishen_Tests/Pods-Caishen_Tests.debug.xcconfig"; sourceTree = "<group>"; };
+		01B1F5731BF07579B0F8303E /* Pods-Caishen_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Caishen_Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Caishen_Example/Pods-Caishen_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		08C34F3F1C971F2F008F57D8 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = Caishen/AppDelegate.swift; sourceTree = SOURCE_ROOT; };
 		08C34F441C971F50008F57D8 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = Caishen/Images.xcassets; sourceTree = SOURCE_ROOT; };
 		08C34F451C971F50008F57D8 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ViewController.swift; path = Caishen/ViewController.swift; sourceTree = SOURCE_ROOT; };
@@ -37,19 +37,19 @@
 		08C34F501C97212E008F57D8 /* Caishen_Example-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "Caishen_Example-Bridging-Header.h"; path = "Caishen/Caishen_Example-Bridging-Header.h"; sourceTree = SOURCE_ROOT; };
 		08C34F511C9728D6008F57D8 /* Caishen.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = Caishen.podspec; path = ../Caishen.podspec; sourceTree = "<group>"; };
 		08C34F531C9728EB008F57D8 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Caishen/Info.plist; sourceTree = SOURCE_ROOT; };
-		36D12A2E02DC0EB09CD0A671 /* Pods-Caishen_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Caishen_Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-Caishen_Tests/Pods-Caishen_Tests.release.xcconfig"; sourceTree = "<group>"; };
-		4F1D2B9E0E07343B5D68E2A2 /* Pods-Caishen_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Caishen_Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-Caishen_Example/Pods-Caishen_Example.release.xcconfig"; sourceTree = "<group>"; };
+		2F5F9CCA6140D64E65AE55BC /* Pods-Caishen_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Caishen_Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-Caishen_Example/Pods-Caishen_Example.release.xcconfig"; sourceTree = "<group>"; };
 		607FACD01AFB9204008FA782 /* Caishen_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Caishen_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACE51AFB9204008FA782 /* Caishen_Example.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Caishen_Example.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		63051052BECC2AC702481F46 /* Pods_Caishen_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Caishen_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		890F5CA910E8A5F9D55DA251 /* Pods-Caishen_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Caishen_Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-Caishen_Tests/Pods-Caishen_Tests.release.xcconfig"; sourceTree = "<group>"; };
+		912757A27E062858A3DBDF90 /* Pods_Caishen_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Caishen_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AB2F628D1CB5D379004004E4 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
 		AB2F628E1CB5D379004004E4 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Main.strings"; sourceTree = "<group>"; };
 		AB2F628F1CB5D388004004E4 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		AB2F62901CB5D388004004E4 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Main.strings; sourceTree = "<group>"; };
-		CE358C157BD84C44391BA0B8 /* Pods-Caishen_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Caishen_Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Caishen_Example/Pods-Caishen_Example.debug.xcconfig"; sourceTree = "<group>"; };
+		AFDA4A6398F7CBDF670ACC8A /* Pods-Caishen_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Caishen_Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Caishen_Tests/Pods-Caishen_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		D16F00C251F96816CB5C0F5B /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		D308422F08FF13844BA17BF8 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
-		EB68CBF8142CBABD6A62FE56 /* Pods_Caishen_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Caishen_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		FC9F49747DBE420313DEFF56 /* Pods_Caishen_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Caishen_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,7 +57,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				950F416E8EC49777E37A5369 /* Pods_Caishen_Example.framework in Frameworks */,
+				01852754B5C11ED06ACA5AC7 /* Pods_Caishen_Example.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -65,21 +65,32 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				39700BCD572BEAB708ACEF67 /* Pods_Caishen_Tests.framework in Frameworks */,
+				C3BB332FB2E54AD0B92A531E /* Pods_Caishen_Tests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		42DA73E8F33D353F6A276CEF /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				01B1F5731BF07579B0F8303E /* Pods-Caishen_Example.debug.xcconfig */,
+				2F5F9CCA6140D64E65AE55BC /* Pods-Caishen_Example.release.xcconfig */,
+				AFDA4A6398F7CBDF670ACC8A /* Pods-Caishen_Tests.debug.xcconfig */,
+				890F5CA910E8A5F9D55DA251 /* Pods-Caishen_Tests.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		607FACC71AFB9204008FA782 = {
 			isa = PBXGroup;
 			children = (
 				607FACF51AFB993E008FA782 /* Podspec Metadata */,
 				607FACD21AFB9204008FA782 /* Example for Caishen */,
 				607FACD11AFB9204008FA782 /* Products */,
-				E40E13167F3C4DB2F05FEEB8 /* Pods */,
-				C1E18570AE5FAC2E99D6DD4F /* Frameworks */,
+				42DA73E8F33D353F6A276CEF /* Pods */,
+				9FD9C7FD437E9D09CC8362E2 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -125,24 +136,13 @@
 			name = "Podspec Metadata";
 			sourceTree = "<group>";
 		};
-		C1E18570AE5FAC2E99D6DD4F /* Frameworks */ = {
+		9FD9C7FD437E9D09CC8362E2 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				FC9F49747DBE420313DEFF56 /* Pods_Caishen_Example.framework */,
-				EB68CBF8142CBABD6A62FE56 /* Pods_Caishen_Tests.framework */,
+				912757A27E062858A3DBDF90 /* Pods_Caishen_Example.framework */,
+				63051052BECC2AC702481F46 /* Pods_Caishen_Tests.framework */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		E40E13167F3C4DB2F05FEEB8 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				CE358C157BD84C44391BA0B8 /* Pods-Caishen_Example.debug.xcconfig */,
-				4F1D2B9E0E07343B5D68E2A2 /* Pods-Caishen_Example.release.xcconfig */,
-				01466240EB0F8DBD9846D92D /* Pods-Caishen_Tests.debug.xcconfig */,
-				36D12A2E02DC0EB09CD0A671 /* Pods-Caishen_Tests.release.xcconfig */,
-			);
-			name = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -152,12 +152,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 607FACEF1AFB9204008FA782 /* Build configuration list for PBXNativeTarget "Caishen_Example" */;
 			buildPhases = (
-				45B3A5ACB90A94544C9BF90B /* [CP] Check Pods Manifest.lock */,
+				B70047564B5766DBDE496B2A /* [CP] Check Pods Manifest.lock */,
 				607FACCC1AFB9204008FA782 /* Sources */,
 				607FACCD1AFB9204008FA782 /* Frameworks */,
 				607FACCE1AFB9204008FA782 /* Resources */,
-				EF1D231BE23959118EB04EEF /* [CP] Embed Pods Frameworks */,
-				539FB51F6DF3B1CC6D25DDEB /* [CP] Copy Pods Resources */,
+				643F24BAF4FB1351B6D64F4E /* [CP] Embed Pods Frameworks */,
+				948F3726463365992D31E405 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -172,12 +172,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 607FACF21AFB9204008FA782 /* Build configuration list for PBXNativeTarget "Caishen_Tests" */;
 			buildPhases = (
-				89C44B98C2EC16EB8CC248EF /* [CP] Check Pods Manifest.lock */,
+				B83A566C7F23BC329E14B52B /* [CP] Check Pods Manifest.lock */,
 				607FACE11AFB9204008FA782 /* Sources */,
 				607FACE21AFB9204008FA782 /* Frameworks */,
 				607FACE31AFB9204008FA782 /* Resources */,
-				1253175AFDFDC9B119CE1F9C /* [CP] Embed Pods Frameworks */,
-				292388AF3419F46E64BCE97B /* [CP] Copy Pods Resources */,
+				F250CCBCDDD5DA61BD004F32 /* [CP] Embed Pods Frameworks */,
+				C96374A808E4C8DA4E904C77 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -196,7 +196,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0730;
-				LastUpgradeCheck = 0720;
+				LastUpgradeCheck = 0810;
 				ORGANIZATIONNAME = "Prolific Interactive";
 				TargetAttributes = {
 					607FACCF1AFB9204008FA782 = {
@@ -252,7 +252,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		1253175AFDFDC9B119CE1F9C /* [CP] Embed Pods Frameworks */ = {
+		643F24BAF4FB1351B6D64F4E /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -264,40 +264,10 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Caishen_Tests/Pods-Caishen_Tests-frameworks.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Caishen_Example/Pods-Caishen_Example-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		292388AF3419F46E64BCE97B /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Caishen_Tests/Pods-Caishen_Tests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		45B3A5ACB90A94544C9BF90B /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run \'pod install\' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
-		539FB51F6DF3B1CC6D25DDEB /* [CP] Copy Pods Resources */ = {
+		948F3726463365992D31E405 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -312,7 +282,7 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Caishen_Example/Pods-Caishen_Example-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		89C44B98C2EC16EB8CC248EF /* [CP] Check Pods Manifest.lock */ = {
+		B70047564B5766DBDE496B2A /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -327,7 +297,37 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run \'pod install\' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
-		EF1D231BE23959118EB04EEF /* [CP] Embed Pods Frameworks */ = {
+		B83A566C7F23BC329E14B52B /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run \'pod install\' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		C96374A808E4C8DA4E904C77 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Caishen_Tests/Pods-Caishen_Tests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		F250CCBCDDD5DA61BD004F32 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -339,7 +339,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Caishen_Example/Pods-Caishen_Example-frameworks.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Caishen_Tests/Pods-Caishen_Tests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -399,6 +399,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -408,8 +409,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -444,6 +447,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -453,8 +457,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -473,13 +479,14 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
 		};
 		607FACF01AFB9204008FA782 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = CE358C157BD84C44391BA0B8 /* Pods-Caishen_Example.debug.xcconfig */;
+			baseConfigurationReference = 01B1F5731BF07579B0F8303E /* Pods-Caishen_Example.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -493,13 +500,13 @@
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Caishen/Caishen_Example-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 2.3;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
 		607FACF11AFB9204008FA782 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4F1D2B9E0E07343B5D68E2A2 /* Pods-Caishen_Example.release.xcconfig */;
+			baseConfigurationReference = 2F5F9CCA6140D64E65AE55BC /* Pods-Caishen_Example.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -512,13 +519,14 @@
 				PRODUCT_NAME = Caishen_Example;
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Caishen/Caishen_Example-Bridging-Header.h";
-				SWIFT_VERSION = 2.3;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
 		607FACF31AFB9204008FA782 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 01466240EB0F8DBD9846D92D /* Pods-Caishen_Tests.debug.xcconfig */;
+			baseConfigurationReference = AFDA4A6398F7CBDF670ACC8A /* Pods-Caishen_Tests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -533,14 +541,14 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = Caishen_Example;
-				SWIFT_VERSION = 2.3;
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Caishen_Example.app/Caishen_Example";
 			};
 			name = Debug;
 		};
 		607FACF41AFB9204008FA782 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 36D12A2E02DC0EB09CD0A671 /* Pods-Caishen_Tests.release.xcconfig */;
+			baseConfigurationReference = 890F5CA910E8A5F9D55DA251 /* Pods-Caishen_Tests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -551,7 +559,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = Caishen_Example;
-				SWIFT_VERSION = 2.3;
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Caishen_Example.app/Caishen_Example";
 			};
 			name = Release;

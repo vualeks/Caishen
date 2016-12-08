@@ -29,14 +29,14 @@ class CardNumberFormatterTests: XCTestCase {
     func testCorrectSeparator() {
         let testNumber = Number(rawValue: "4123123412341234")
         
-        let formattedTestNumber = self.formatter.formattedCardNumber(testNumber.description)
+        let formattedTestNumber = self.formatter.format(cardNumber: testNumber.description)
         
         XCTAssertEqual(formattedTestNumber, "4123-1234-1234-1234")
     }
     
     func testPerformanceExample() {
         // This is an example of a performance test case.
-        self.measureBlock {
+        self.measure {
             // Put the code you want to measure the time of here.
         }
     }

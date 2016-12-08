@@ -98,7 +98,7 @@
 		2FDD15481CC7B1AC0086CEAC /* CardTextField+InterfaceBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CardTextField+InterfaceBuilder.swift"; sourceTree = "<group>"; };
 		2FDD15491CC7B1AC0086CEAC /* CardTextField+PrefillInformation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CardTextField+PrefillInformation.swift"; sourceTree = "<group>"; };
 		2FDD154A1CC7B1AC0086CEAC /* CardTextField+ViewAnimations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CardTextField+ViewAnimations.swift"; sourceTree = "<group>"; };
-		2FDD154B1CC7B1AC0086CEAC /* CardTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardTextField.swift; sourceTree = "<group>"; };
+		2FDD154B1CC7B1AC0086CEAC /* CardTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CardTextField.swift; path = ../UI/CardTextField.swift; sourceTree = "<group>"; };
 		2FDD154C1CC7B1AC0086CEAC /* CardTextFieldDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardTextFieldDelegate.swift; sourceTree = "<group>"; };
 		2FDD154D1CC7B1AC0086CEAC /* CardTypeImageStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardTypeImageStore.swift; sourceTree = "<group>"; };
 		2FDD154E1CC7B1AC0086CEAC /* CardView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CardView.xib; sourceTree = "<group>"; };
@@ -250,11 +250,11 @@
 		2FDD15461CC7B1AC0086CEAC /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				2FDD154B1CC7B1AC0086CEAC /* CardTextField.swift */,
 				2FDD15471CC7B1AC0086CEAC /* CardTextField+CardInfoTextFieldDelegate.swift */,
 				2FDD15481CC7B1AC0086CEAC /* CardTextField+InterfaceBuilder.swift */,
 				2FDD15491CC7B1AC0086CEAC /* CardTextField+PrefillInformation.swift */,
 				2FDD154A1CC7B1AC0086CEAC /* CardTextField+ViewAnimations.swift */,
-				2FDD154B1CC7B1AC0086CEAC /* CardTextField.swift */,
 				2FDD154C1CC7B1AC0086CEAC /* CardTextFieldDelegate.swift */,
 				2FDD154D1CC7B1AC0086CEAC /* CardTypeImageStore.swift */,
 				2FDD154E1CC7B1AC0086CEAC /* CardView.xib */,
@@ -361,7 +361,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0730;
-				LastUpgradeCheck = 0730;
+				LastUpgradeCheck = 0810;
 				ORGANIZATIONNAME = "Prolific Interactive";
 				TargetAttributes = {
 					2FDD150F1CC7B0B90086CEAC = {
@@ -494,8 +494,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -543,8 +545,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -574,6 +578,7 @@
 		2FDD15251CC7B0B90086CEAC /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -584,13 +589,14 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.prolificinteractive.Caishen;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 2.3;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
 		2FDD15261CC7B0B90086CEAC /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -601,7 +607,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.prolificinteractive.Caishen;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 2.3;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -612,7 +619,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.prolificinteractive.CaishenTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 2.3;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -623,7 +630,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.prolificinteractive.CaishenTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 2.3;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
