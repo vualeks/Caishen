@@ -152,6 +152,8 @@ public class NumberInputTextField: StylizedTextField {
         
         if numberPartiallyValid {
             // Set text and apply text color changes if the prefilled card type is unknown
+            text = cardNumber.rawValue
+
             textField(self,
                       shouldChangeCharactersInRange: NSRange(location: 0, length: text?.characters.count ?? 0),
                       replacementString: cardNumber.rawValue)
