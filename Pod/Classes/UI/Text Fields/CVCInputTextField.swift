@@ -9,7 +9,7 @@
 import UIKit
 
 /// A text field which can be used to enter CVCs and provides validation of the same.
-public class CVCInputTextField: DetailInputTextField {
+open class CVCInputTextField: DetailInputTextField {
     
     /// The card type for the CVC that should be entered. The length of a CVC can vary based on this card type.
     public var cardType: CardType?

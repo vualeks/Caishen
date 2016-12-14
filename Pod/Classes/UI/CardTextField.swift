@@ -23,7 +23,7 @@ import UIKit
  In order to create a custom CardTextField, you can create a subclass which overrides `getNibName()` and `getNibBundle()` in order to load a nib from a specific bundle, which follows this structure
  */
 @IBDesignable
-public class CardTextField: UITextField, NumberInputTextFieldDelegate {
+open class CardTextField: UITextField, NumberInputTextFieldDelegate {
     
     // MARK: - Public variables
     
@@ -177,7 +177,7 @@ public class CardTextField: UITextField, NumberInputTextFieldDelegate {
     }
 
     #if !TARGET_INTERFACE_BUILDER
-    public override var placeholder: String? {
+    open override var placeholder: String? {
         didSet {
             numberInputTextField?.placeholder = placeholder
             super.placeholder = nil
@@ -185,14 +185,14 @@ public class CardTextField: UITextField, NumberInputTextFieldDelegate {
     }
     #endif
 
-    public override var attributedPlaceholder: NSAttributedString? {
+    open override var attributedPlaceholder: NSAttributedString? {
         didSet {
             numberInputTextField?.attributedPlaceholder = attributedPlaceholder
             super.attributedPlaceholder = nil
         }
     }
 
-    public override var isFirstResponder: Bool {
+    open override var isFirstResponder: Bool {
         // Return true if any of `self`'s subviews is the current first responder.
         return [numberInputTextField,monthTextField,yearTextField,cvcTextField]
             .filter({$0.isFirstResponder})
@@ -440,7 +440,7 @@ public class CardTextField: UITextField, NumberInputTextFieldDelegate {
     
     // MARK: - View lifecycle
     
-    public override func willMove(toSuperview newSuperview: UIView?) {
+    open override func willMove(toSuperview newSuperview: UIView?) {
         super.willMove(toSuperview: newSuperview)
         if let secondaryView = cardInfoView {
             if secondaryView.superview != superview {
@@ -451,7 +451,7 @@ public class CardTextField: UITextField, NumberInputTextFieldDelegate {
         cardInfoView?.frame = bounds
     }
     
-    public override func didMoveToSuperview() {
+    open override func didMoveToSuperview() {
         super.didMoveToSuperview()
         translateCardNumberIn()
     }
@@ -540,7 +540,7 @@ public class CardTextField: UITextField, NumberInputTextFieldDelegate {
     
     // MARK: - UIView
     
-    public override func layoutSubviews() {
+    open override func layoutSubviews() {
         super.layoutSubviews()
         
         // If moving to a larger screen size and not showing the detail view, make sure that it is outside the view.
@@ -549,7 +549,7 @@ public class CardTextField: UITextField, NumberInputTextFieldDelegate {
         }
     }
     
-    public override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+    open override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         // Detect touches in card number text field as long as the detail view is on top of it
         touches.forEach({ touch -> () in
             let point = touch.location(in: numberInputTextField)
@@ -571,7 +571,7 @@ public class CardTextField: UITextField, NumberInputTextFieldDelegate {
      
      - returns: total number accessibility elements in the container CardTextField
      */
-    public override func accessibilityElementCount() -> Int {
+    open override func accessibilityElementCount() -> Int {
         return 5
     }
 
@@ -582,7 +582,7 @@ public class CardTextField: UITextField, NumberInputTextFieldDelegate {
      
      - returns: The accessibility element at the specified index, or nil if none exists
      */
-    public override func accessibilityElement(at index: Int) -> Any? {
+    open override func accessibilityElement(at index: Int) -> Any? {
         switch index {
         case 0:
             return numberInputTextField
@@ -599,7 +599,7 @@ public class CardTextField: UITextField, NumberInputTextFieldDelegate {
         }
     }
     
-    public override func becomeFirstResponder() -> Bool {
+    open override func becomeFirstResponder() -> Bool {
         // Return false if any of this text field's subviews is already first responder. 
         // Otherwise let `numberInputTextField` become the first responder.
         if [numberInputTextField,monthTextField,yearTextField,cvcTextField]
@@ -610,7 +610,7 @@ public class CardTextField: UITextField, NumberInputTextFieldDelegate {
         return numberInputTextField.becomeFirstResponder()
     }
     
-    public override func resignFirstResponder() -> Bool {
+    open override func resignFirstResponder() -> Bool {
         // If any of `self`'s subviews is first responder, resign first responder status.
         return [numberInputTextField,monthTextField,yearTextField,cvcTextField]
             .filter({$0.isFirstResponder})

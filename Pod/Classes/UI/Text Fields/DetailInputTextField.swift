@@ -13,7 +13,7 @@ import UIKit
  You can subclass `DetailInputTextField` and override `isInputValid` to specify the validation routine.
  The default implementation accepts any input.
  */
-public class DetailInputTextField: StylizedTextField {
+open class DetailInputTextField: StylizedTextField {
     
     public var cardInfoTextFieldDelegate: CardInfoTextFieldDelegate?
     

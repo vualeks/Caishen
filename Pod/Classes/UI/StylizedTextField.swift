@@ -10,7 +10,7 @@ import UIKit
 
 /// A text field that provides additional UI customization.
 @IBDesignable
-public class StylizedTextField: UITextField, UITextFieldDelegate {
+open class StylizedTextField: UITextField, UITextFieldDelegate {
     
     /**
      Changes to this parameter draw the border of `self` in the given width.
@@ -55,7 +55,7 @@ public class StylizedTextField: UITextField, UITextFieldDelegate {
      */
     public var deleteBackwardCallback: ((UITextField) -> Void)?
     
-    public override var text: String? {
+    open override var text: String? {
         didSet {
             if (text ?? "").isEmpty {
                 deleteBackwardCallback?(self)
@@ -85,19 +85,19 @@ public class StylizedTextField: UITextField, UITextFieldDelegate {
     
     // MARK: - Override functions
 
-    public override var placeholder: String? {
+    open override var placeholder: String? {
         didSet {
             setNeedsDisplay()
         }
     }
     
     @discardableResult
-    override public func becomeFirstResponder() -> Bool {
+    override open func becomeFirstResponder() -> Bool {
         UIAccessibilityPostNotification(UIAccessibilityScreenChangedNotification, self)
         return super.becomeFirstResponder()
     }
     
-    public override func draw(_ rect: CGRect) {
+    open override func draw(_ rect: CGRect) {
         if text == "" || text == UITextField.emptyTextFieldCharacter {
             super.drawPlaceholder(in: rect)
         } else {
@@ -105,7 +105,7 @@ public class StylizedTextField: UITextField, UITextFieldDelegate {
         }
     }
     
-    public override func drawPlaceholder(in rect: CGRect) {
+    open override func drawPlaceholder(in rect: CGRect) {
         
     }
     

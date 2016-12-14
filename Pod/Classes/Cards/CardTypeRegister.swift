@@ -9,7 +9,7 @@
 import UIKit
 
 /// A `CardTypeRegister` is used to maintain the range of accepted card types. You can provide different card type registers for different CardTextField's and customize the range of accepted card types individually.
-public class CardTypeRegister {
+open class CardTypeRegister {
     
     /**
      The default card type register, shared among all CardTextFields.
