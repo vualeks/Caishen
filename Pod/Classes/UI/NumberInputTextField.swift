@@ -12,7 +12,7 @@ import UIKit
  This kind of text field only allows entering card numbers and provides means to customize the appearance of entered card numbers by changing the card number group separator.
  */
 @IBDesignable
-public class NumberInputTextField: StylizedTextField {
+open class NumberInputTextField: StylizedTextField {
 
     // MARK: - Variables
     
@@ -35,7 +35,7 @@ public class NumberInputTextField: StylizedTextField {
      */
     @IBInspectable public var cardNumberSeparator: String = "-"
     
-    public override var accessibilityValue: String? {
+    open override var accessibilityValue: String? {
         get {
             // In order to read digits of the card number one by one, return them as "4 1 1 ..." separated by single spaces and commas inbetween groups for pauses
             var singleDigits: [Character] = []
@@ -64,7 +64,7 @@ public class NumberInputTextField: StylizedTextField {
     
     /// Variable to store the text color of this text field. The actual property `textColor` (as inherited from UITextField) will change based on whether or not the entered card number was invalid and may be `invalidInputColor` in this case. In order to always set and retreive the actual text color for this text field, it is saved and retreived to and from this private property.
     private var _textColor: UIColor?
-    override public var textColor: UIColor? {
+    override open var textColor: UIColor? {
         get {
             return _textColor
         }
