@@ -24,7 +24,7 @@ import UIKit
  */
 open class CardTextField: UITextField, NumberInputTextFieldDelegate {
     
-    // MARK: - open variables
+    // MARK: - Public variables
     
     /**
     The image view which is used to display the detected card type.
