@@ -46,7 +46,7 @@ public protocol CardTextFieldDelegate {
 }
 
 public extension CardTextFieldDelegate {
-    public func cardTextFieldShouldProvideAccessoryButtonAccessibilityLabel(_ cardTextField: CardTextField) -> String? {
+    func cardTextFieldShouldProvideAccessoryButtonAccessibilityLabel(_ cardTextField: CardTextField) -> String? {
         return Localization.AccessoryButtonAccessibilityLabel.localizedStringWithComment("Accessibility label for accessory button")
     }
 }

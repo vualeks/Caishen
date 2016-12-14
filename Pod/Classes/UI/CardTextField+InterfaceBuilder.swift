@@ -6,7 +6,7 @@
 //  Copyright © 2016 Prolific Interactive. All rights reserved.
 //
 
-public extension CardTextField {
+extension CardTextField {
     override public final var textColor: UIColor? {
         didSet {
             let textFieldArray: [UITextField?] = [numberInputTextField, cvcTextField, monthTextField, yearTextField]

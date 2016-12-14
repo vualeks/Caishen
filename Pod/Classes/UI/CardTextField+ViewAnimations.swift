@@ -8,13 +8,13 @@
 
 import UIKit
 
-public extension CardTextField {
+extension CardTextField {
     // MARK: - View animations
     
     /**
      Moves the card number input field to the left outside of the screen with an animation of the duration `viewAnimationDuration`, so that only the last group of the card number is visible. At the same time, the card detail (expiration month and year and CVC) slide in from the right.
      */
-    public func moveCardNumberOutAnimated() {
+    open func moveCardNumberOutAnimated() {
         UIView.animate(withDuration: viewAnimationDuration, animations: { [weak self] _ in
             self?.moveCardNumberOut()
             })
@@ -23,7 +23,7 @@ public extension CardTextField {
     /**
      Moves the full card number input field to inside the screen with an animation of the duration `viewAnimationDuration`. At the same time, the card detail (expiration month and year and CVC) slide outside the view.
      */
-    public func moveCardNumberInAnimated() {
+    open func moveCardNumberInAnimated() {
         UIView.animate(withDuration: viewAnimationDuration, animations: { [weak self] _ in
             self?.moveCardNumberIn()
             })
@@ -32,7 +32,7 @@ public extension CardTextField {
     /**
      Moves the card number input field to the left outside of the screen, so that only the last group of the card number is visible. At the same time, the card detail (expiration month and year and CVC) are displayed to its right.
      */
-    public func moveCardNumberOut() {
+    open func moveCardNumberOut() {
         // If the card number is invalid, do not allow to move to the card detail
         if cardType?.validate(number: card.bankCardNumber) != .Valid {
             return
@@ -92,7 +92,7 @@ public extension CardTextField {
     /**
      Moves the full card number input field to inside the screen. At the same time, the card detail (expiration month and year and CVC) are moved outside the view.
      */
-    public func moveCardNumberIn() {
+    open func moveCardNumberIn() {
         let infoTextFields: [UITextField?] = [monthTextField, yearTextField, cvcTextField]
         
         translateCardNumberIn()
@@ -118,7 +118,7 @@ public extension CardTextField {
         }
     }
     
-    internal func translateCardNumberIn() {
+    open func translateCardNumberIn() {
         if isRightToLeftLanguage {
             UIView.performWithoutAnimation {
                 self.numberInputTextField?.alpha = 1
