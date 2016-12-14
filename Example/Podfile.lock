@@ -1,5 +1,5 @@
 PODS:
-  - Caishen (1.5.0)
+  - Caishen (1.5.1)
   - CardIO (5.3.2)
 
 DEPENDENCIES:
@@ -11,7 +11,7 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  Caishen: 19c73df58634c898c8cab66b870b9159d60ce9e2
+  Caishen: 718800ad9f9f687df26b7fd4862cc13fcf7472bd
   CardIO: 92c45caef0d986c4a303a7afba0c9b76ff2b1f6e
 
 PODFILE CHECKSUM: 171ac2de78bae9fd3012144f2669334669aef0d6
