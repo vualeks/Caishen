@@ -13,30 +13,30 @@ extension CardTextField {
             textFieldArray.forEach({$0?.textColor = textColor})
         }
     }
-    public override final var backgroundColor: UIColor? {
+    override public final var backgroundColor: UIColor? {
         didSet {
             numberInputTextField?.backgroundColor = backgroundColor
         }
     }
-    public override final var font: UIFont? {
+    override public final var font: UIFont? {
         didSet {
             let textFieldArray: [UITextField?] = [numberInputTextField, cvcTextField, monthTextField, yearTextField]
             textFieldArray.forEach({$0?.font = font})
         }
     }
-    public override final var keyboardType: UIKeyboardType {
+    override public final var keyboardType: UIKeyboardType {
         didSet {
             let textFieldArray: [UITextField?] = [numberInputTextField, cvcTextField, monthTextField, yearTextField]
             textFieldArray.forEach({$0?.keyboardType = keyboardType})
         }
     }
-    public override final var isSecureTextEntry: Bool {
+    override public final var isSecureTextEntry: Bool {
         didSet {
             let textFieldArray: [UITextField?] = [numberInputTextField, cvcTextField, monthTextField, yearTextField]
             textFieldArray.forEach({$0?.isSecureTextEntry = isSecureTextEntry})
         }
     }
-    public override final var keyboardAppearance: UIKeyboardAppearance {
+    override public final var keyboardAppearance: UIKeyboardAppearance {
         didSet {
             let textFieldArray: [UITextField?] = [numberInputTextField, cvcTextField, monthTextField, yearTextField]
             textFieldArray.forEach({$0?.keyboardAppearance = keyboardAppearance})

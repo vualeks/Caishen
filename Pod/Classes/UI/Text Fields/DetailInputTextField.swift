@@ -15,15 +15,15 @@ import UIKit
  */
 open class DetailInputTextField: StylizedTextField {
     
-    public var cardInfoTextFieldDelegate: CardInfoTextFieldDelegate?
+    open var cardInfoTextFieldDelegate: CardInfoTextFieldDelegate?
     
-    public func textFieldDidBeginEditing(_ textField: UITextField) {
+    open func textFieldDidBeginEditing(_ textField: UITextField) {
         if (textField.text ?? "").isEmpty {
             textField.text = UITextField.emptyTextFieldCharacter
         }
     }
     
-    public override func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+    open override func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         let newText = NSString(string: (textField.text ?? "")).replacingCharacters(in: range, with: string).replacingOccurrences(of: UITextField.emptyTextFieldCharacter, with: "")
         
         let deletingLastCharacter = !(textField.text ?? "").isEmpty && textField.text != UITextField.emptyTextFieldCharacter && newText.isEmpty
@@ -53,7 +53,7 @@ open class DetailInputTextField: StylizedTextField {
         return false
     }
     
-    public func prefill(_ text: String) {
+    open func prefill(_ text: String) {
         if isInputValid(text, partiallyValid: false) {
             self.text = text
             cardInfoTextFieldDelegate?.textField(self, didEnterValidInfo: text)

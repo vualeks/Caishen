@@ -21,19 +21,19 @@ open class NumberInputTextField: StylizedTextField {
      
      - note: This card number may be incomplete and invalid while the user is entering a card number. Be sure to validate it against a proper card type before assuming it is valid.
      */
-    public var cardNumber: Number {
+    open var cardNumber: Number {
         let textFieldTextUnformatted = cardNumberFormatter.unformat(cardNumber: text ?? "")
         return Number(rawValue: textFieldTextUnformatted)
     }
     
     /**
      */
-    @IBOutlet public weak var numberInputTextFieldDelegate: NumberInputTextFieldDelegate?
+    @IBOutlet open weak var numberInputTextFieldDelegate: NumberInputTextFieldDelegate?
     
     /**
      The string that is used to separate different groups in a card number.
      */
-    @IBInspectable public var cardNumberSeparator: String = "-"
+    @IBInspectable open var cardNumberSeparator: String = "-"
     
     open override var accessibilityValue: String? {
         get {
@@ -78,7 +78,7 @@ open class NumberInputTextField: StylizedTextField {
     /**
      The card type register that holds information about which card types are accepted and which ones are not.
      */
-    public var cardTypeRegister: CardTypeRegister = CardTypeRegister.sharedCardTypeRegister
+    open var cardTypeRegister: CardTypeRegister = CardTypeRegister.sharedCardTypeRegister
     
     /**
      A card number formatter used to format the input
@@ -89,7 +89,7 @@ open class NumberInputTextField: StylizedTextField {
     
     // MARK: - UITextFieldDelegate
     
-    public override func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+    open override func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         // Current text in text field, formatted and unformatted:
         let textFieldTextFormatted = NSString(string: textField.text ?? "")
         // Text in text field after applying changes, formatted and unformatted:
@@ -144,7 +144,7 @@ open class NumberInputTextField: StylizedTextField {
      
      - parameter text: The card number which should be displayed in `self`.
      */
-    public func prefill(_ text: String) {
+    open func prefill(_ text: String) {
         let unformattedCardNumber = String(text.characters.filter({$0.isNumeric()}))
         let cardNumber = Number(rawValue: unformattedCardNumber)
         let type = cardTypeRegister.cardType(for: cardNumber)
@@ -191,7 +191,7 @@ open class NumberInputTextField: StylizedTextField {
      
      - returns: The CGRect in `self` that contains the last group of the card number.
      */
-    public func rectForLastGroup() -> CGRect? {
+    open func rectForLastGroup() -> CGRect? {
         guard let lastGroupLength = text?.components(separatedBy: cardNumberFormatter.separator).last?.characters.count else {
             return nil
         }
