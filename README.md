@@ -318,7 +318,7 @@ If you wish to contribute to the project, fork this repo and submit a pull reque
 
 ## License
 
-Caishen is Copyright (c) 2016 Prolific Interactive. It may be redistributed under the terms specified in the [LICENSE] file.
+Caishen is Copyright (c) 2017 Prolific Interactive. It may be redistributed under the terms specified in the [LICENSE] file.
 
 [LICENSE]: /LICENSE
 
