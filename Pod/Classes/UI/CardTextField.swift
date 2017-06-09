@@ -64,7 +64,7 @@ open class CardTextField: UITextField, NumberInputTextFieldDelegate {
     /// The image store for the card number text field.
     open var cardTypeImageStore: CardTypeImageStore = Bundle(for: CardTextField.self)
 
-    open var cardTextFieldDelegate: CardTextFieldDelegate? {
+    open weak var cardTextFieldDelegate: CardTextFieldDelegate? {
         didSet {
             setupAccessoryButton()
         }
