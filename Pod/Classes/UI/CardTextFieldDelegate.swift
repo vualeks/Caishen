@@ -8,7 +8,7 @@
 
 import Foundation
 
-public protocol CardTextFieldDelegate {
+public protocol CardTextFieldDelegate: class {
     
     /**
      Callback for a CardTextField, which is called whenever the entered Card information has changed.
