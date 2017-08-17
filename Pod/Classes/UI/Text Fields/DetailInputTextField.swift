@@ -13,7 +13,7 @@ import UIKit
  You can subclass `DetailInputTextField` and override `isInputValid` to specify the validation routine.
  The default implementation accepts any input.
  */
-open class DetailInputTextField: StylizedTextField {
+open class DetailInputTextField: StylizedTextField, TextFieldValidation, AutoCompletingTextField {
     
     open var cardInfoTextFieldDelegate: CardInfoTextFieldDelegate?
     
@@ -62,24 +62,7 @@ open class DetailInputTextField: StylizedTextField {
             cardInfoTextFieldDelegate?.textField(self, didEnterPartiallyValidInfo: text)
         }
     }
-    
-    private func split(_ text: String) -> (currentText: String, overflowText: String) {
-        let hasOverflow = text.characters.count > expectedInputLength
-        let index = (hasOverflow) ?
-            text.characters.index(text.startIndex, offsetBy: expectedInputLength) :
-            text.characters.index(text.startIndex, offsetBy: text.characters.count)
-        return (text.substring(to: index), text.substring(from: index))
-    }
-}
 
-extension DetailInputTextField: AutoCompletingTextField {
-
-    func autocomplete(_ text: String) -> String {
-        return text
-    }
-}
-
-extension DetailInputTextField: TextFieldValidation {
     /**
      Default number of expected digits for MonthInputTextField and YearInputTextField
      */
@@ -89,5 +72,17 @@ extension DetailInputTextField: TextFieldValidation {
 
     func isInputValid(_ input: String, partiallyValid: Bool) -> Bool {
         return true
+    }
+
+    func autocomplete(_ text: String) -> String {
+        return text
+    }
+    
+    private func split(_ text: String) -> (currentText: String, overflowText: String) {
+        let hasOverflow = text.characters.count > expectedInputLength
+        let index = (hasOverflow) ?
+            text.characters.index(text.startIndex, offsetBy: expectedInputLength) :
+            text.characters.index(text.startIndex, offsetBy: text.characters.count)
+        return (String(text[..<index]), String(text[index...]))
     }
 }

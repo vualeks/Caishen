@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="vXZ-lx-hvc">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13178.6" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="vXZ-lx-hvc">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13156.2"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -41,7 +41,7 @@
                                 <rect key="frame" x="134.5" y="608" width="106" height="39"/>
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="106" id="8q3-FQ-ghf"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="106" id="8q3-FQ-ghf"/>
                                     <constraint firstAttribute="height" constant="39" id="qGo-Uv-gR0"/>
                                 </constraints>
                                 <state key="normal" title="BUY NOW">
@@ -104,11 +104,8 @@
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="0000 - 0000 - 0000 - 0000" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="xhV-mK-kcC" customClass="CardTextField" customModule="Caishen">
-                                            <rect key="frame" x="57.5" y="325.5" width="260" height="17"/>
+                                            <rect key="frame" x="30" y="325.5" width="315" height="17"/>
                                             <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
-                                            <constraints>
-                                                <constraint firstAttribute="width" constant="260" id="MsE-Yo-sBn"/>
-                                            </constraints>
                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                             <textInputTraits key="textInputTraits"/>
                                         </textField>
@@ -129,21 +126,23 @@
                                             </connections>
                                         </button>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please enter your credit card information for Checkout" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XRC-Y1-VLm">
-                                            <rect key="frame" x="57.5" y="297.5" width="260" height="20"/>
+                                            <rect key="frame" x="30" y="297.5" width="315" height="20"/>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="xhV-mK-kcC" firstAttribute="centerX" secondItem="CDz-9F-L0o" secondAttribute="centerX" id="0oX-04-ZYU"/>
                                         <constraint firstItem="XRC-Y1-VLm" firstAttribute="trailing" secondItem="xhV-mK-kcC" secondAttribute="trailing" id="59g-rp-jq8"/>
                                         <constraint firstItem="xhV-mK-kcC" firstAttribute="centerY" secondItem="CDz-9F-L0o" secondAttribute="centerY" id="CUf-H1-3Rs"/>
                                         <constraint firstItem="Ipi-TI-Rgi" firstAttribute="leading" secondItem="CDz-9F-L0o" secondAttribute="leading" constant="25" id="ETN-pa-yPc"/>
                                         <constraint firstItem="Ipi-TI-Rgi" firstAttribute="top" secondItem="CDz-9F-L0o" secondAttribute="top" constant="28" id="FTo-Yg-xJn"/>
                                         <constraint firstItem="xhV-mK-kcC" firstAttribute="top" secondItem="XRC-Y1-VLm" secondAttribute="bottom" constant="8" symbolic="YES" id="Kwv-VD-nds"/>
+                                        <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="xhV-mK-kcC" secondAttribute="trailing" constant="30" id="OMw-Ut-5Io"/>
                                         <constraint firstAttribute="trailing" secondItem="iAI-hi-hV7" secondAttribute="trailing" constant="25" id="Xm5-Mj-CSq"/>
+                                        <constraint firstItem="iAI-hi-hV7" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Ipi-TI-Rgi" secondAttribute="trailing" id="ZJk-HV-wbO"/>
                                         <constraint firstItem="iAI-hi-hV7" firstAttribute="baseline" secondItem="Ipi-TI-Rgi" secondAttribute="baseline" id="aXB-Hc-vKH"/>
+                                        <constraint firstItem="xhV-mK-kcC" firstAttribute="leading" secondItem="CDz-9F-L0o" secondAttribute="leading" constant="30" id="gHg-0S-tQG"/>
                                         <constraint firstItem="XRC-Y1-VLm" firstAttribute="leading" secondItem="xhV-mK-kcC" secondAttribute="leading" id="gqM-q8-LXh"/>
                                     </constraints>
                                 </view>
@@ -161,7 +160,6 @@
                     <connections>
                         <outlet property="buyButton" destination="iAI-hi-hV7" id="iDO-bF-0FZ"/>
                         <outlet property="cardNumberTextField" destination="xhV-mK-kcC" id="8L8-EK-bT0"/>
-                        <outlet property="view" destination="ogN-FM-6lq" id="wJc-0m-Y2W"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="J9l-iT-8Dt" userLabel="First Responder" sceneMemberID="firstResponder"/>
