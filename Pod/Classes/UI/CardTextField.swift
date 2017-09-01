@@ -314,7 +314,7 @@ open class CardTextField: UITextField, NumberInputTextFieldDelegate {
         
         setupTextFieldDelegates()
         setupTextFieldAttributes()
-        setupTargetsForEditinBegin()
+        setupTargetsForEditingBegin()
         setupAccessoryButton()
         setupAccessibilityLabels()
     }
@@ -333,21 +333,21 @@ open class CardTextField: UITextField, NumberInputTextFieldDelegate {
         numberInputTextField?.cardNumberSeparator = cardNumberSeparator ?? " - "
         numberInputTextField?.placeholder = placeholder
         
-        cvcTextField?.deleteBackwardCallback = {_ -> Void in
-            if self.hideExpiryTextFields {
-                self.numberInputTextField.becomeFirstResponder()
+        cvcTextField?.deleteBackwardCallback = { [weak self] _ in
+            if self?.hideExpiryTextFields == true {
+                self?.numberInputTextField.becomeFirstResponder()
             } else {
-                self.yearTextField?.becomeFirstResponder()
+                self?.yearTextField?.becomeFirstResponder()
             }
         }
-        monthTextField?.deleteBackwardCallback = {_ -> Void in
-            self.numberInputTextField?.becomeFirstResponder()
+        monthTextField?.deleteBackwardCallback = { [weak self] _ in
+            self?.numberInputTextField?.becomeFirstResponder()
         }
-        yearTextField?.deleteBackwardCallback = {_ -> Void in
-            if self.hideExpiryTextFields {
-                self.numberInputTextField.becomeFirstResponder()
+        yearTextField?.deleteBackwardCallback = { [weak self] _ in
+            if self?.hideExpiryTextFields == true {
+                self?.numberInputTextField.becomeFirstResponder()
             } else {
-                self.monthTextField?.becomeFirstResponder()
+                self?.monthTextField?.becomeFirstResponder()
             }
         }
         
@@ -398,7 +398,7 @@ open class CardTextField: UITextField, NumberInputTextFieldDelegate {
     /**
      Adds a callback to `numberInputTextField`, `monthTextField` and `yearTextField` to show the card type image in `cardImageView` when editing on any of these text fields began. Adds a callback to cvcTextField to show the CVC image in this view in this case.
      */
-    private func setupTargetsForEditinBegin() {
+    private func setupTargetsForEditingBegin() {
         // Show the full number text field, if editing began on it
         numberInputTextField?.addTarget(self, action: #selector(moveCardNumberInAnimated), for: UIControlEvents.editingDidBegin)
         
