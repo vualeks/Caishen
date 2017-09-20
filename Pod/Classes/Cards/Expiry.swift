@@ -52,14 +52,14 @@ public struct Expiry: RawRepresentable {
         }
         
         let monthRange = match.range(at: 1)
-        if monthRange.length > 0, let range = string.rangeFrom(monthRange) {
+        if monthRange.length > 0, let range = Range(monthRange, in: string) {
             monthStr = String(string[range])
         } else {
             return nil
         }
         
         let yearRange = match.range(at: 2)
-        if yearRange.length > 0, let range = string.rangeFrom(yearRange) {
+        if yearRange.length > 0, let range = Range(yearRange, in: string) {
             yearStr = String(string[range])
         } else {
             return nil
