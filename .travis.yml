@@ -3,15 +3,15 @@
 # * https://github.com/supermarin/xcpretty#usage
 
 language: objective-c
-osx_image: xcode8
+osx_image: xcode9
 # cache: cocoapods
 # podfile: Example/Podfile
 # before_install:
 # - gem install cocoapods # Since Travis is not always on latest version
 # - pod install --project-directory=Example
 script:
-- xcodebuild test -project Caishen.xcodeproj -scheme CaishenTests -destination 'platform=iOS Simulator,name=iPhone 6,OS=10.0'
-- pod lib lint --quick
+- xcodebuild test -project Caishen.xcodeproj -scheme CaishenTests -destination 'platform=iOS Simulator,name=iPhone 6,OS=11.0'
+- pod lib lint --allow-warnings
 
 before_install:
 - rvm install ruby-2.3.1 && rvm use 2.3.1 
