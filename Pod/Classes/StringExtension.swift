@@ -21,11 +21,11 @@ extension String {
      - returns: Substring starting with the character at index `fromInclusiveley` and ending before the character at index `toExclusively`.
     */
     subscript(fromInclusively: Int, toExclusively: Int) -> String? {
-        if characters.count < toExclusively || fromInclusively >= toExclusively {
+        if count < toExclusively || fromInclusively >= toExclusively {
             return nil
         }
-        let startIndex = self.characters.index(self.startIndex, offsetBy: fromInclusively)
-        let endIndex = self.characters.index(self.startIndex, offsetBy: toExclusively)
+        let startIndex = self.index(self.startIndex, offsetBy: fromInclusively)
+        let endIndex = self.index(self.startIndex, offsetBy: toExclusively)
         return String(self[startIndex..<endIndex])
     }
     
@@ -33,7 +33,7 @@ extension String {
      - returns: True if this string contains only digits.
      */
     func isNumeric() -> Bool {
-        return characters.reduce(true, { (result, value) in
+        return reduce(true, { (result, value) in
             let string = String(value)
             guard let firstChar = string.utf16.first else {
                 return result

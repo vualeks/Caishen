@@ -19,7 +19,7 @@ public struct Number: RawRepresentable {
 
     /// The number of digits in `self`.
     public var length: Int {
-        return rawValue.characters.count
+        return rawValue.count
     }
     
     public init(rawValue: String) {

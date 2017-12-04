@@ -19,7 +19,7 @@ public struct CVC: RawRepresentable {
 
     /// The count of digits in the CVC.
     public var length: Int {
-        return rawValue.characters.count
+        return rawValue.count
     }
 
     public let rawValue: String

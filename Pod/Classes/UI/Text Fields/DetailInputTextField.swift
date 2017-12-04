@@ -46,7 +46,7 @@ open class DetailInputTextField: StylizedTextField, TextFieldValidation, AutoCom
             }
         }
         
-        if !overflowTextFieldText.characters.isEmpty {
+        if !overflowTextFieldText.isEmpty {
             cardInfoTextFieldDelegate?.textField(self, didEnterOverflowInfo: overflowTextFieldText)
         }
         
@@ -79,10 +79,10 @@ open class DetailInputTextField: StylizedTextField, TextFieldValidation, AutoCom
     }
     
     private func split(_ text: String) -> (currentText: String, overflowText: String) {
-        let hasOverflow = text.characters.count > expectedInputLength
+        let hasOverflow = text.count > expectedInputLength
         let index = (hasOverflow) ?
-            text.characters.index(text.startIndex, offsetBy: expectedInputLength) :
-            text.characters.index(text.startIndex, offsetBy: text.characters.count)
+            text.index(text.startIndex, offsetBy: expectedInputLength) :
+            text.index(text.startIndex, offsetBy: text.count)
         return (String(text[..<index]), String(text[index...]))
     }
 }
