@@ -302,7 +302,7 @@ open class CardTextField: UITextField, NumberInputTextFieldDelegate {
         // Reset gesture recognizers
         [firstObjectInNib, cardInfoView].forEach({$0?.gestureRecognizers = []})
         
-        let hideCardNumberSwipeRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(moveCardNumberOutAnimated))
+        let hideCardNumberSwipeRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(swipeHideCardNumber))
         hideCardNumberSwipeRecognizer.direction = isRightToLeftLanguage ? .right : .left
         firstObjectInNib.addGestureRecognizer(hideCardNumberSwipeRecognizer)
         
@@ -414,7 +414,12 @@ open class CardTextField: UITextField, NumberInputTextFieldDelegate {
     @objc internal func buttonReceivedAction() {
         cardTextFieldDelegate?.cardTextFieldShouldProvideAccessoryAction(self)?()
     }
-    
+
+    /// Function for the swipe gesture recognizer for moving out the card number.
+    @objc private func swipeHideCardNumber() {
+        moveCardNumberOutAnimated(remainFirstResponder: isFirstResponder)
+    }
+
     /**
      Sets up the card text field's accessory button if one is provided.
      */
@@ -500,12 +505,13 @@ open class CardTextField: UITextField, NumberInputTextFieldDelegate {
     }
     
     open func numberInputTextFieldDidComplete(_ numberInputTextField: NumberInputTextField) {
-        moveCardNumberOutAnimated()
+        // Retain the first responder status if currently first responder.
+        moveCardNumberOutAnimated(remainFirstResponder: isFirstResponder)
         
         notifyDelegate()
         hideExpiryTextFields = !cardTypeRegister.cardType(for: numberInputTextField.cardNumber).requiresExpiry
         hideCVCTextField = !cardTypeRegister.cardType(for: numberInputTextField.cardNumber).requiresCVC
-        if hideExpiryTextFields && hideCVCTextField {
+        if hideExpiryTextFields && hideCVCTextField || !isFirstResponder {
             return
         } else if hideExpiryTextFields {
             cvcTextField.becomeFirstResponder()

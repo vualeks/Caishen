@@ -42,13 +42,8 @@ extension CardTextField {
         if let cvc = cvc {
             cvcTextField?.prefill(cvc)
         }
-        
-        OperationQueue().addOperation({
-            Thread.sleep(forTimeInterval: 0.5)
-            OperationQueue.main.addOperation({ [weak self] in
-                self?.moveCardNumberOutAnimated()
-            })
-        })
+
+        moveCardNumberOutAnimated(remainFirstResponder: isFirstResponder)
         
         notifyDelegate()
     }

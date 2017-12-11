@@ -42,7 +42,11 @@ extension CardTextField: CardInfoTextFieldDelegate {
             }
         }
 
-        nextTextField?.becomeFirstResponder()
+        // Let the next text field become first responder if one of the contained text fields
+        // already is first responder.
+        if isFirstResponder {
+            nextTextField?.becomeFirstResponder()
+        }
 
         guard let prefillText = prefillText else {
             return

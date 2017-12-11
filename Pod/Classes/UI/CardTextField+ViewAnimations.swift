@@ -13,10 +13,13 @@ extension CardTextField {
     
     /**
      Moves the card number input field to the left outside of the screen with an animation of the duration `viewAnimationDuration`, so that only the last group of the card number is visible. At the same time, the card detail (expiration month and year and CVC) slide in from the right.
+
+     - Parameters:
+        - remainFirstResponder: Indicates whether the text field should remain first responder after finishing the animation.
      */
-    @objc open func moveCardNumberOutAnimated() {
+    @objc open func moveCardNumberOutAnimated(remainFirstResponder: Bool = true) {
         UIView.animate(withDuration: viewAnimationDuration, animations: { [weak self] in
-            self?.moveCardNumberOut()
+            self?.moveCardNumberOut(remainFirstResponder: remainFirstResponder)
             })
     }
     
@@ -31,8 +34,11 @@ extension CardTextField {
     
     /**
      Moves the card number input field to the left outside of the screen, so that only the last group of the card number is visible. At the same time, the card detail (expiration month and year and CVC) are displayed to its right.
+
+     - Parameters:
+        - remainFirstResponder: Indicates whether the text field should remain first responder after finishing the animation.
      */
-    @objc open func moveCardNumberOut() {
+    @objc open func moveCardNumberOut(remainFirstResponder: Bool = true) {
         // If the card number is invalid, do not allow to move to the card detail
         if cardType?.validate(number: card.bankCardNumber) != .Valid {
             return
@@ -86,7 +92,9 @@ extension CardTextField {
                 self?.cardInfoView?.transform = CGAffineTransform.identity
             }
         }
-		monthTextField.becomeFirstResponder()
+        if remainFirstResponder {
+            monthTextField.becomeFirstResponder()
+        }
     }
     
     /**
