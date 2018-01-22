@@ -39,7 +39,7 @@ public struct Expiry: RawRepresentable {
      */
     public init?(string: String) {
         // Make sure that there is only one non-numeric separation character in the entire string
-        guard string.trimmingCharacters(in: CharacterSet.decimalDigits).characters.count == 1 else {
+        guard string.trimmingCharacters(in: CharacterSet.decimalDigits).count == 1 else {
             return nil
         }
         
@@ -47,7 +47,7 @@ public struct Expiry: RawRepresentable {
         var monthStr: String = ""
         var yearStr: String = ""
         
-        guard let match = regex.firstMatch(in: string, options: .reportProgress, range: NSMakeRange(0, string.characters.count)) else {
+        guard let match = regex.firstMatch(in: string, options: .reportProgress, range: NSMakeRange(0, string.count)) else {
             return nil
         }
         
@@ -77,7 +77,7 @@ public struct Expiry: RawRepresentable {
      - returns:             `nil`, if the expiration date could not be created because of invalid month or year strings.
      */
     public init?(month: String, year: String) {
-        guard let monthVal = UInt(month), let yearVal = UInt(year), year.characters.count >= 2 else {
+        guard let monthVal = UInt(month), let yearVal = UInt(year), year.count >= 2 else {
             return nil
         }
 

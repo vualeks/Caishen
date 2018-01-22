@@ -82,7 +82,7 @@ public final class CardNumberFormatter {
             return nil
         }
 
-        let addedCharacters = text.characters.count - (textField.text ?? "").characters.count
+        let addedCharacters = text.count - (textField.text ?? "").count
         let position = textField.offset(from: textField.beginningOfDocument, to: selectedRange.start) + addedCharacters
         let components = text.components(separatedBy: self.separator)
         
@@ -90,15 +90,15 @@ public final class CardNumberFormatter {
         var componentContainingCursor = 0
         var stringParsingIndex = 0
         for i in 0..<components.count {
-            stringParsingIndex += components[i].characters.count
+            stringParsingIndex += components[i].count
             if position <= stringParsingIndex {
                 componentContainingCursor = i
                 break
             }
-            stringParsingIndex += self.separator.characters.count
+            stringParsingIndex += self.separator.count
         }
         
-        return position - componentContainingCursor * self.separator.characters.count
+        return position - componentContainingCursor * self.separator.count
     }
     
     /**
@@ -115,16 +115,16 @@ public final class CardNumberFormatter {
         var componentWithIndex = 0
         var charCount = 0
         for component in formattedString.components(separatedBy: self.separator) {
-            charCount += component.characters.count
+            charCount += component.count
             if charCount >= indexInFormattedString {
                 break
             } else {
                 componentWithIndex += 1
-                charCount += self.separator.characters.count
+                charCount += self.separator.count
             }
         }
         
-        return indexInFormattedString - componentWithIndex * self.separator.characters.count
+        return indexInFormattedString - componentWithIndex * self.separator.count
     }
     
     /**
@@ -144,11 +144,11 @@ public final class CardNumberFormatter {
         let groups = formattedString.components(separatedBy: self.separator)
         
         for i in 0..<groups.count {
-            let groupChars = groups[i].characters.count
+            let groupChars = groups[i].count
             
             charIdx += groupChars
             if charIdx >= index {
-                return min(index + i * self.separator.characters.count, formattedString.characters.count)
+                return min(index + i * self.separator.count, formattedString.count)
             }
         }
         
@@ -173,7 +173,7 @@ public final class CardNumberFormatter {
         if let start = textField.selectedTextRange?.start {
             let oldCursorPosition = textField.offset(from: textField.beginningOfDocument, to: start)
             let oldCursorPositionUnformatted = indexInUnformattedString(oldCursorPosition, formattedString: oldValue)
-            let newCursorPositionUnformatted = oldCursorPositionUnformatted + (newValueUnformatted.characters.count - oldValueUnformatted.characters.count)
+            let newCursorPositionUnformatted = oldCursorPositionUnformatted + (newValueUnformatted.count - oldValueUnformatted.count)
             let newCursorPositionFormatted = indexInFormattedString(newCursorPositionUnformatted, unformattedString: newValueUnformatted)
             
             position = textField.position(from: textField.beginningOfDocument, offset: newCursorPositionFormatted)
@@ -194,7 +194,7 @@ public final class CardNumberFormatter {
      - returns: An array of all matches found in string for `regex`.
      */
     private func split(string: String, with regex: NSRegularExpression) -> [String] {
-        let matches = regex.matches(in: string, options: NSRegularExpression.MatchingOptions(), range: NSMakeRange(0, string.characters.count))
+        let matches = regex.matches(in: string, options: NSRegularExpression.MatchingOptions(), range: NSMakeRange(0, string.count))
         var result = [String]()
         
         matches.forEach {

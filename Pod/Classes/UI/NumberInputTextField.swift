@@ -40,7 +40,7 @@ open class NumberInputTextField: StylizedTextField {
             // In order to read digits of the card number one by one, return them as "4 1 1 ..." separated by single spaces and commas inbetween groups for pauses
             var singleDigits: [Character] = []
             var lastCharWasReplacedWithComma = false
-            text?.characters.forEach({
+            text?.forEach({
                 if !$0.isNumeric() {
                     if !lastCharWasReplacedWithComma {
                         singleDigits.append(",")
@@ -132,7 +132,7 @@ open class NumberInputTextField: StylizedTextField {
         
         /// If the number is incomplete or valid, assume it's valid and show it in `textColor`
         /// Also, if the number is of unknown type and the full IIN has not been entered yet, assume it's valid.
-        if (newValidation.contains(.UnknownType) && newTextUnformatted.characters.count <= 6) || newValidation.contains(.NumberIncomplete) || newValidation == .Valid {
+        if (newValidation.contains(.UnknownType) && newTextUnformatted.count <= 6) || newValidation.contains(.NumberIncomplete) || newValidation == .Valid {
             super.textColor = _textColor
         }
 
@@ -145,7 +145,7 @@ open class NumberInputTextField: StylizedTextField {
      - parameter text: The card number which should be displayed in `self`.
      */
     open func prefill(_ text: String) {
-        let unformattedCardNumber = String(text.characters.filter({$0.isNumeric()}))
+        let unformattedCardNumber = String(text.filter({$0.isNumeric()}))
         let cardNumber = Number(rawValue: unformattedCardNumber)
         let type = cardTypeRegister.cardType(for: cardNumber)
         let numberPartiallyValid = type.checkCardNumberPartiallyValid(cardNumber) == .Valid
@@ -155,7 +155,7 @@ open class NumberInputTextField: StylizedTextField {
             self.text = text
 
             _ = textField(self,
-                          shouldChangeCharactersIn: NSRange(location: 0, length: text.characters.count),
+                          shouldChangeCharactersIn: NSRange(location: 0, length: text.count),
                           replacementString: cardNumber.rawValue)
         }
     }
@@ -192,10 +192,10 @@ open class NumberInputTextField: StylizedTextField {
      - returns: The CGRect in `self` that contains the last group of the card number.
      */
     open func rectForLastGroup() -> CGRect? {
-        guard let lastGroupLength = text?.components(separatedBy: cardNumberFormatter.separator).last?.characters.count else {
+        guard let lastGroupLength = text?.components(separatedBy: cardNumberFormatter.separator).last?.count else {
             return nil
         }
-        guard let textLength = text?.characters.count else {
+        guard let textLength = text?.count else {
             return nil
         }
         

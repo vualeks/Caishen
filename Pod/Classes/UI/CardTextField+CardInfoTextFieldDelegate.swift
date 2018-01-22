@@ -48,7 +48,7 @@ extension CardTextField: CardInfoTextFieldDelegate {
             return
         }
         
-        _ = nextTextField?.delegate?.textField?(nextTextField!, shouldChangeCharactersIn: NSMakeRange(0, (nextTextField?.text ?? "").characters.count), replacementString: prefillText)
+        _ = nextTextField?.delegate?.textField?(nextTextField!, shouldChangeCharactersIn: NSMakeRange(0, (nextTextField?.text ?? "").count), replacementString: prefillText)
     }
     
     /**
