@@ -16,4 +16,5 @@ script:
 before_install:
 - rvm install ruby-2.3.1 && rvm use 2.3.1
 - gem install bundler
+- gem uninstall cocoapods -a
 - gem install cocoapods --no-rdoc --no-ri --no-document --quiet
