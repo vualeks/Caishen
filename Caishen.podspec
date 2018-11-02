@@ -15,7 +15,7 @@ Pod::Spec.new do |s|
 #   * Think: What does it do? Why did you write it? What is the focus?
 #   * Try to keep it short, snappy and to the point.
 #   * Write the description between the DESC delimiters below.
-#   * Finally, don't worry about the indent, CocoaPods strips it!  
+#   * Finally, don't worry about the indent, CocoaPods strips it!
   s.description      = <<-DESC
                        Caishen provides a text field to enter credit card (or other card) information and validates most of this information on its own.
                        DESC
@@ -27,6 +27,7 @@ Pod::Spec.new do |s|
 
   s.platform     = :ios, '8.0'
   s.requires_arc = true
+  s.swift_version = '4.2'
 
   s.source_files = 'Pod/Classes/**/*'
   s.resources = ['Pod/Assets/*', 'Pod/Resources/*']
